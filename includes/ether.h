@@ -1,9 +1,9 @@
 #include <stdint.h>
-#define ETH_ALEN 6
+//#define ETH_ALEN 6
 
 typedef struct _ether_addr
 {
-    char eth_addr[ETH_ALEN];
+    char eth_addr[6];
 } ether_addr;
 
 typedef struct _ether_h

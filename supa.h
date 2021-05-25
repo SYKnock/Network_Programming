@@ -2,36 +2,46 @@
 
 void sig_handler(int signo);
 void command();
-void packet_sniffer();
+void packet_sniffer(FILE *fp, char *argv[]);
 void errProc(const char *str);
 
-void packet_sniffer(FILE *fp)
+void packet_sniffer(FILE *fp, char *argv[])
 {
     int socket_sd;
     int addr_len;
     char rbuff[BUFSIZ];
     ether_h *eth = malloc(sizeof(ether_h));
+    arp_head *arp = malloc(sizeof(arp_head));
     uint16_t eth_proto;
+    struct ifreq ifr;
 
     if ((socket_sd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) < 0)
         errProc("Socket error");
 
+    strncpy((char *)ifr.ifr_name, argv[1], IF_NAMESIZE);
+    ifr.ifr_flags |= IFF_PROMISC;
+    if (ioctl(socket_sd, SIOCGIFFLAGS, &ifr) == -1)
+        perror("Ioctl error");
+
+    printf("---------Program Start---------\n\n");
     while (1)
     {
         if (recv(socket_sd, rbuff, BUFSIZ - 1, 0) < 0)
             errProc("Recv error");
-
-        ether_parser(rbuff, eth, fp);
+        
+        memcpy(eth, rbuff, ETH_HLEN);
+        
         eth_proto = ntohs(eth->type);
 
         switch (eth_proto)
         {
         case ETH_P_ARP:
-            arp_parser(rbuff, fp);
+            ether_parser(rbuff, eth, fp);
+            arp_parser(rbuff, arp, fp);
             break;
 
         case ETH_P_IP:
-            printf("IP\n");
+            //ether_parser(rbuff, eth, fp);
             break;
 
         default:
@@ -72,11 +82,4 @@ void command()
                 printf("wrong command\n");
         }
     }
-}
-
-void sig_handler(int signo)
-{
-    printf("\n\nProgram Stop\n");
-    printf("bye\n");
-    exit(0);
 }

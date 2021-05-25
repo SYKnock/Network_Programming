@@ -1,5 +1,9 @@
 #include <stdint.h>
 
+#define ARP_HLEN 28
+#define ARP_MAC 6
+#define ARP_IP 4
+
 typedef struct _arp_mac
 {
     unsigned char hw_addr[6];
