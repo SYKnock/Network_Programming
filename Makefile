@@ -1,16 +1,16 @@
 CC=gcc
-CFLAGS= -Wall -g -I.
+CFLAGS= -g -I.
 
 DEPS = arp.h dns.h http.h https.h dhcp.h
 
-OBJ = limited_wireshark.o 
+OBJ = supa.o 
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-limited_wireshark: $(OBJ)
+supa: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm -rf *.o limited_wireshark
+	rm -rf *.o supa
 

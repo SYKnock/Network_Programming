@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "socket.h": "c",
+        "if_ether.h": "c",
+        "arp.h": "c",
+        "http.h": "c",
+        "https.h": "c",
+        "dhcp.h": "c",
+        "mether.h": "c",
+        "supa.h": "c",
+        "dns.h": "c",
+        "stdio.h": "c",
+        "string.h": "c",
+        "signal.h": "c"
+    }
+}
