@@ -85,7 +85,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
         printf("re request");
     printf(" detect\n");
 
-    fprintf(fp, "---------------------------------\n");
+    fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "Address Resolution Protocol(ARP)\n");
 
     fprintf(fp, "Hardware type: ");
