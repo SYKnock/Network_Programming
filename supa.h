@@ -1,17 +1,20 @@
-#include "parser.h"
+#include "./includes/parser.h"
 
 void sig_handler(int signo);
 void command();
 void packet_sniffer(FILE *fp, char *argv[]);
 void errProc(const char *str);
+void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth);
 
 void packet_sniffer(FILE *fp, char *argv[])
 {
     int socket_sd;
     int addr_len;
     char rbuff[BUFSIZ];
-    ether_h *eth = malloc(sizeof(ether_h));
+    ether_head *eth = malloc(sizeof(ether_head));
     arp_head *arp = malloc(sizeof(arp_head));
+    ip_head *ip = malloc(sizeof(ip_head));
+    
     uint16_t eth_proto;
     struct ifreq ifr;
 
@@ -41,13 +44,18 @@ void packet_sniffer(FILE *fp, char *argv[])
             break;
 
         case ETH_P_IP:
-            //ether_parser(rbuff, eth, fp);
+            memcpy(ip, rbuff+ETH_HLEN, IPHRD_SIZE);
+            ip_protocol(rbuff, ip, fp, eth);
             break;
 
         default:
             break;
         }
     }
+    free(eth);
+    free(ip);
+    free(arp);
+    
 }
 
 void errProc(const char *str)
@@ -82,4 +90,27 @@ void command()
                 printf("wrong command\n");
         }
     }
+}
+
+void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
+{
+    tcp_head *tcp = malloc(sizeof(tcp_head));
+    udp_head *udp = malloc(sizeof(udp_head));
+    int captured_byte = ntohs(ip->ip_tot_len) + ETH_HLEN;
+    fprintf(fp, "Captured byte: %d\n", captured_byte);
+
+    //ether_parser(buff, eth, fp);
+    ipv4_parser(buff, ip, fp, captured_byte);
+    free(tcp);
+    free(udp);
+}
+
+void tcp_protocol(char *buf, tcp_head *tcp, FILE *fp)
+{
+
+}
+
+void udp_protocol(char *buf, udp_head *udp, FILE *fp)
+{
+
 }

@@ -6,9 +6,9 @@ typedef struct _ether_addr
     char eth_addr[6];
 } ether_addr;
 
-typedef struct _ether_h
+typedef struct _ether_head
 {
     ether_addr eth_dest_addr;
     ether_addr eth_src_addr;
     uint16_t type;
-} ether_h;
+} ether_head;

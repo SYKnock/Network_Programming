@@ -3,6 +3,7 @@
 #define ARP_HLEN 28
 #define ARP_MAC 6
 #define ARP_IP 4
+#define ARP_PADDING 18
 
 typedef struct _arp_mac
 {
@@ -26,3 +27,4 @@ typedef struct _arp_head
     arp_mac arp_dest_mac;
     arp_ip arp_dest_ip;
 }arp_head;
+
