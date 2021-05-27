@@ -71,7 +71,7 @@ void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte)
 {
     //printf("IP detect. Captured byte: %d\n", byte);
     fprintf(fp, "-----------------------------------------------\n");
-    fprintf(fp, "< IPv4 protocol >\n");
+    fprintf(fp, "< Internet Protocl Version 4 protocol(IPv4) >\n");
     fprintf(fp, "Version: %d\n", ip->ip_version);
     fprintf(fp, "Header Length: %d bytes (%d)\n", ip->ip_hdr_len * 4, ip->ip_hdr_len);
     fprintf(fp, "Type Of Servie: 0x%02hhx\n", ip->ip_tos & 0xff);
@@ -101,16 +101,20 @@ void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
 {
     printf("TCP detect\n");
     fprintf(fp, "-----------------------------------------------\n");
-    fprintf(fp, "< TCP protocol >\n");
+    fprintf(fp, "< TCP Transmission Control Protocol(TCP) >\n");
     fprintf(fp, "Source Port: %d\n", ntohs(tcp->tcp_src));
     fprintf(fp, "Destination Port: %d\n", ntohs(tcp->tcp_dst));
     fprintf(fp, "Sequence Number: %u\n", (unsigned int)ntohl(tcp->tcp_seq));
     fprintf(fp, "Acknowledgment Number: %u\n", (unsigned int)ntohl(tcp->tcp_ackno));
     unsigned int hlen = 0;
-    if ((tcp->tcp_off) & 0x08) hlen += 8;
-    if ((tcp->tcp_off) & 0x04) hlen += 4;
-    if ((tcp->tcp_off) & 0x02) hlen += 2;
-    if ((tcp->tcp_off) & 0x01) hlen += 1;
+    if ((tcp->tcp_off) & 0x08)
+        hlen += 8;
+    if ((tcp->tcp_off) & 0x04)
+        hlen += 4;
+    if ((tcp->tcp_off) & 0x02)
+        hlen += 2;
+    if ((tcp->tcp_off) & 0x01)
+        hlen += 1;
 
     fprintf(fp, "TCP Header Length: %u bytes (%u)\n", hlen * 4, hlen);
     fprintf(fp, "Reserved: %c%c%c\n", ((tcp->tcp_rsv & 0x04) ? '1' : '0'), ((tcp->tcp_rsv & 0x02) ? '1' : '0'), ((tcp->tcp_rsv & 0x01) ? '1' : '0'));
@@ -126,8 +130,7 @@ void udp_parser(char *buff, udp_head *udp, FILE *fp)
 {
     //printf("UDP detect\n");
     fprintf(fp, "-----------------------------------------------\n");
-
-    fprintf(fp, "< UDP protocol >\n");
+    fprintf(fp, "< User Datagram Protocol(UDP) >\n");
     fprintf(fp, "Source Port: %d\n", ntohs(udp->udp_src));
     fprintf(fp, "Destination Port: %d\n", ntohs(udp->udp_dst));
     fprintf(fp, "Length: %d\n", ntohs(udp->udp_len));

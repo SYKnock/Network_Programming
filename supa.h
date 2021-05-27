@@ -58,7 +58,6 @@ void packet_sniffer(FILE *fp, char *argv[])
     free(eth);
     free(ip);
     free(arp);
-    
 }
 
 void errProc(const char *str)
@@ -100,8 +99,7 @@ void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
     tcp_head *tcp = malloc(sizeof(tcp_head));
     udp_head *udp = malloc(sizeof(udp_head));
     int captured_byte = ntohs(ip->ip_tot_len) + ETH_HLEN;
-    fprintf(fp, "Captured byte: %d\n", captured_byte);
-
+    
     if(ip->ip_protocol == IPPROTO_TCP)
         tcp_protocol(buff, tcp, fp, eth, ip, captured_byte);
     
@@ -114,6 +112,7 @@ void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
 
 void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
 {
+    fprintf(fp, "Captured byte: %d\n", c_byte);
     int ip_head_length = ip->ip_hdr_len * 4;
     int tcp_head_length = 0;
     if ((tcp->tcp_off) & 0x08) tcp_head_length += 8;
@@ -127,13 +126,36 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
     memcpy(tcp, buff + ETH_HLEN + ip_head_length, TCP_HLEN);
     tcp_parser(buff, tcp, fp);
 
+    if((ntohs(tcp->tcp_src) == 53) || (ntohs(tcp->tcp_dst) == 53))
+    {
+
+    }
+    else if((ntohs(tcp->tcp_src) == 80) || (ntohs(tcp->tcp_dst) == 80))
+    {
+
+    }
+    else if((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443))
+    {
+
+    }
 }
 
 void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
 {
     int ip_head_length = ip->ip_hdr_len * 4;
-    ether_parser(buff, eth, fp);
-    ipv4_parser(buff, ip, fp, c_byte);
+    
+    // ether_parser(buff, eth, fp);
+    // ipv4_parser(buff, ip, fp, c_byte);
     memcpy(udp, buff + ETH_HLEN + ip_head_length, UDP_HLEN);
-    udp_parser(buff, udp, fp);
+    // udp_parser(buff, udp, fp);
+    if((ntohs(udp->udp_src) == 53) || (ntohs(udp->udp_dst) == 53))
+    {
+
+    }
+    else if((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80))
+    {
+
+    }
+    
+
 }
