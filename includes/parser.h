@@ -104,19 +104,34 @@ void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
     fprintf(fp, "< TCP protocol >\n");
     fprintf(fp, "Source Port: %d\n", ntohs(tcp->tcp_src));
     fprintf(fp, "Destination Port: %d\n", ntohs(tcp->tcp_dst));
+    fprintf(fp, "Sequence Number: %u\n", (unsigned int)ntohl(tcp->tcp_seq));
+    fprintf(fp, "Acknowledgment Number: %u\n", (unsigned int)ntohl(tcp->tcp_ackno));
+    unsigned int hlen = 0;
+    if ((tcp->tcp_off) & 0x08) hlen += 8;
+    if ((tcp->tcp_off) & 0x04) hlen += 4;
+    if ((tcp->tcp_off) & 0x02) hlen += 2;
+    if ((tcp->tcp_off) & 0x01) hlen += 1;
 
+    fprintf(fp, "TCP Header Length: %u bytes (%u)\n", hlen * 4, hlen);
+    fprintf(fp, "Reserved: %c%c%c\n", ((tcp->tcp_rsv & 0x04) ? '1' : '0'), ((tcp->tcp_rsv & 0x02) ? '1' : '0'), ((tcp->tcp_rsv & 0x01) ? '1' : '0'));
+    fprintf(fp, "Flags: %c%c%c%c%c%c%c%c%c\n", (tcp->tcp_ns ? 'N' : 'X'), (tcp->tcp_cwr ? 'C' : 'X'), (tcp->tcp_ece ? 'E' : 'X'), (tcp->tcp_urg ? 'U' : 'X'),
+            (tcp->tcp_ack ? 'A' : 'X'), (tcp->tcp_psh ? 'P' : 'X'), (tcp->tcp_rst ? 'R' : 'X'), (tcp->tcp_syn ? 'S' : 'X'), (tcp->tcp_fin ? 'F' : 'X'));
+    fprintf(fp, "Window size value: %d\n", ntohs(tcp->tcp_win_size));
+    //fprintf(fp, "Calculted window size value: %d\n"); // tcp, ip option 에 대한 구현이 필요
+    fprintf(fp, "Checksum: 0x%04x\n", ntohs(tcp->tcp_checksum));
+    fprintf(fp, "Urgent Pointer: %d\n", ntohs(tcp->tcp_urg_ptr));
 }
 
 void udp_parser(char *buff, udp_head *udp, FILE *fp)
 {
-    printf("UDP detect\n");
+    //printf("UDP detect\n");
     fprintf(fp, "-----------------------------------------------\n");
+
     fprintf(fp, "< UDP protocol >\n");
     fprintf(fp, "Source Port: %d\n", ntohs(udp->udp_src));
     fprintf(fp, "Destination Port: %d\n", ntohs(udp->udp_dst));
     fprintf(fp, "Length: %d\n", ntohs(udp->udp_len));
     fprintf(fp, "Checksum: 0x%04x\n", ntohs(udp->udp_checksum));
-
 }
 
 void arp_parser(char *buff, arp_head *arp, FILE *fp)

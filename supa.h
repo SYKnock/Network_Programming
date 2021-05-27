@@ -106,8 +106,7 @@ void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
         tcp_protocol(buff, tcp, fp, eth, ip, captured_byte);
     
     else if(ip->ip_protocol == IPPROTO_UDP)
-        udp_protocol(buff, udp, fp, eth, ip, captured_byte);
-    
+        //udp_protocol(buff, udp, fp, eth, ip, captured_byte);
     
     free(tcp);
     free(udp);
@@ -116,7 +115,13 @@ void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
 void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
 {
     int ip_head_length = ip->ip_hdr_len * 4;
-    int tcp_head_length = tcp->tcp_off * 4;
+    int tcp_head_length = 0;
+    if ((tcp->tcp_off) & 0x08) tcp_head_length += 8;
+    if ((tcp->tcp_off) & 0x04) tcp_head_length += 4;
+    if ((tcp->tcp_off) & 0x02) tcp_head_length += 2;
+    if ((tcp->tcp_off) & 0x01) tcp_head_length += 1;
+    tcp_head_length *= 4;
+    
     ether_parser(buff, eth, fp);
     ipv4_parser(buff, ip, fp, c_byte);
     memcpy(tcp, buff + ETH_HLEN + ip_head_length, TCP_HLEN);
