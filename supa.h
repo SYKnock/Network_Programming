@@ -5,6 +5,9 @@ void command();
 void packet_sniffer(FILE *fp, char *argv[]);
 void errProc(const char *str);
 void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth);
+void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte);
+void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte);
+
 
 void packet_sniffer(FILE *fp, char *argv[])
 {
@@ -99,18 +102,33 @@ void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
     int captured_byte = ntohs(ip->ip_tot_len) + ETH_HLEN;
     fprintf(fp, "Captured byte: %d\n", captured_byte);
 
-    //ether_parser(buff, eth, fp);
-    ipv4_parser(buff, ip, fp, captured_byte);
+    if(ip->ip_protocol == IPPROTO_TCP)
+        tcp_protocol(buff, tcp, fp, eth, ip, captured_byte);
+    
+    else if(ip->ip_protocol == IPPROTO_UDP)
+        udp_protocol(buff, udp, fp, eth, ip, captured_byte);
+    
+    
     free(tcp);
     free(udp);
 }
 
-void tcp_protocol(char *buf, tcp_head *tcp, FILE *fp)
+void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
 {
+    int ip_head_length = ip->ip_hdr_len * 4;
+    int tcp_head_length = tcp->tcp_off * 4;
+    ether_parser(buff, eth, fp);
+    ipv4_parser(buff, ip, fp, c_byte);
+    memcpy(tcp, buff + ETH_HLEN + ip_head_length, TCP_HLEN);
+    tcp_parser(buff, tcp, fp);
 
 }
 
-void udp_protocol(char *buf, udp_head *udp, FILE *fp)
+void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
 {
-
+    int ip_head_length = ip->ip_hdr_len * 4;
+    ether_parser(buff, eth, fp);
+    ipv4_parser(buff, ip, fp, c_byte);
+    memcpy(udp, buff + ETH_HLEN + ip_head_length, UDP_HLEN);
+    udp_parser(buff, udp, fp);
 }

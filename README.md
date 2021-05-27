@@ -1,3 +1,3 @@
 Network Packet Parser
 ---
-Including THERNET, TCP, UDP, IP, ARP, DNS, HTTP, HTTPS, DHCP
+Including ETHERNET, TCP, UDP, IP, ARP, DNS, HTTP, HTTPS, DHCP

@@ -37,7 +37,7 @@ void dump_mem(const void *mem, size_t len, FILE *fp);
 void ether_parser(char *buff, ether_head *eth, FILE *fp)
 {
     fprintf(fp, "===============================================\n");
-    fprintf(fp, "Ethernet\n");
+    fprintf(fp, "< Ethernet >\n");
     fprintf(fp, "Destination: ");
     for (int i = 0; i < ETH_ALEN; i++)
     {
@@ -59,19 +59,19 @@ void ether_parser(char *buff, ether_head *eth, FILE *fp)
 
     fprintf(fp, "Type: ");
     if (ntohs(eth->type) == ETH_P_ARP)
-        fprintf(fp, "ARP (0x%04x)", eth->type);
+        fprintf(fp, "ARP (0x%04x)", ntohs(eth->type));
     else if (ntohs(eth->type) == ETH_P_IP)
-        fprintf(fp, "IPv4 (0x%04x)", eth->type);
+        fprintf(fp, "IPv4 (0x%04x)", ntohs(eth->type));
     else
-        fprintf(fp, "Others (0x%04x)", eth->type);
+        fprintf(fp, "Others (0x%04x)", ntohs(eth->type));
     fprintf(fp, "\n");
 }
 
 void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte)
 {
-    printf("IP detect. Captured byte: %d\n", byte);
+    //printf("IP detect. Captured byte: %d\n", byte);
     fprintf(fp, "-----------------------------------------------\n");
-    fprintf(fp, "IPv4 protocol\n");
+    fprintf(fp, "< IPv4 protocol >\n");
     fprintf(fp, "Version: %d\n", ip->ip_version);
     fprintf(fp, "Header Length: %d bytes (%d)\n", ip->ip_hdr_len * 4, ip->ip_hdr_len);
     fprintf(fp, "Type Of Servie: 0x%02hhx\n", ip->ip_tos & 0xff);
@@ -99,10 +99,24 @@ void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte)
 
 void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
 {
+    printf("TCP detect\n");
+    fprintf(fp, "-----------------------------------------------\n");
+    fprintf(fp, "< TCP protocol >\n");
+    fprintf(fp, "Source Port: %d\n", ntohs(tcp->tcp_src));
+    fprintf(fp, "Destination Port: %d\n", ntohs(tcp->tcp_dst));
+
 }
 
 void udp_parser(char *buff, udp_head *udp, FILE *fp)
 {
+    printf("UDP detect\n");
+    fprintf(fp, "-----------------------------------------------\n");
+    fprintf(fp, "< UDP protocol >\n");
+    fprintf(fp, "Source Port: %d\n", ntohs(udp->udp_src));
+    fprintf(fp, "Destination Port: %d\n", ntohs(udp->udp_dst));
+    fprintf(fp, "Length: %d\n", ntohs(udp->udp_len));
+    fprintf(fp, "Checksum: 0x%04x\n", ntohs(udp->udp_checksum));
+
 }
 
 void arp_parser(char *buff, arp_head *arp, FILE *fp)
@@ -162,7 +176,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     printf(" Captured byte: %d\n", ARP_HLEN + ETH_HLEN);
 
     fprintf(fp, "-----------------------------------------------\n");
-    fprintf(fp, "Address Resolution Protocol(ARP)\n");
+    fprintf(fp, "< Address Resolution Protocol(ARP) >\n");
 
     fprintf(fp, "Hardware type: ");
     if (ntohs(arp->arp_hw_type) == ARPHRD_ETHER)
@@ -253,7 +267,7 @@ void dhcp_parser(char *buff, FILE *fp)
 
 void dump_mem(const void *mem, size_t len, FILE *fp)
 {
-    fprintf(fp, "\nMemory\n");
+    fprintf(fp, "\n< Memory >\n");
     const char *buffer = mem;
     size_t i;
     for (i = 0; i < len; i++)

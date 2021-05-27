@@ -1,5 +1,7 @@
 #include <netinet/udp.h>
 
+#define UDP_HLEN 8
+
 typedef struct _udp_head
 {
     uint16_t udp_src;

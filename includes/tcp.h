@@ -1,5 +1,7 @@
 #include <netinet/tcp.h>
 
+#define TCP_HLEN 20
+
 typedef struct _tcp_head
 {
     uint16_t tcp_src;
