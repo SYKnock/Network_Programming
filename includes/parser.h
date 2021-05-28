@@ -28,7 +28,7 @@ void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte);
 void tcp_parser(char *buff, tcp_head *tcp, FILE *fp);
 void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
-void dns_parser(char *buff, FILE *fp);
+void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte);
 void http_parser(char *buff, FILE *fp);
 void https_parser(char *buff, FILE *fp);
 void dhcp_parser(char *buff, FILE *fp);
@@ -99,9 +99,8 @@ void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte)
 
 void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
 {
-    printf("TCP detect\n");
     fprintf(fp, "-----------------------------------------------\n");
-    fprintf(fp, "< TCP Transmission Control Protocol(TCP) >\n");
+    fprintf(fp, "< Transmission Control Protocol(TCP) >\n");
     fprintf(fp, "Source Port: %d\n", ntohs(tcp->tcp_src));
     fprintf(fp, "Destination Port: %d\n", ntohs(tcp->tcp_dst));
     fprintf(fp, "Sequence Number: %u\n", (unsigned int)ntohl(tcp->tcp_seq));
@@ -156,7 +155,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
         printf("re reply");
     else if (ntohs(arp->arp_op) == ARPOP_RREQUEST)
         printf("re request");
-    printf(" detect: ");
+    printf(" detected: ");
 
     if (ntohs(arp->arp_op) == ARPOP_REPLY)
     {
@@ -262,13 +261,56 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
             fprintf(fp, ".");
     }
     fprintf(fp, "\n");
-    fprintf(fp, "Captured byte : %d\n", ARP_HLEN + ETH_HLEN);
-
     dump_mem(buff, ETH_HLEN + ARP_HLEN, fp);
 }
 
-void dns_parser(char *buff, FILE *fp)
+void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte)
 {
+    unsigned int opcode = dns->dns_opcode;
+    unsigned int rcode = dns->dns_rcode;
+
+    fprintf(fp, "-----------------------------------------------\n");
+    fprintf(fp, "< Domain Name System Protocol(DNS) >\n");
+    fprintf(fp, "Transaction ID: 0x%04x\n", ntohs(dns->dns_id));
+    fprintf(fp, "QR: %s (%c)\n", (dns->dns_qr ? "DNS response" : "DNS query"), (dns->dns_qr ? '1' : '0'));
+    
+    if(opcode == 0)
+        fprintf(fp, "Opcode: Standard query (0)\n");
+    else if(opcode == 1)
+        fprintf(fp, "Opcode: Reverse query (1)\n");
+    else if(opcode == 2)
+        fprintf(fp, "Opcode: Server status request (2)\n");
+    else
+        fprintf(fp, "Opcode: (%d)\n", opcode);
+
+    fprintf(fp, "Authoritative: Server %s an authority for domain (%c)\n", (dns->dns_aa ? "is" : "is not"), (dns->dns_aa ? '1' : '0'));
+    fprintf(fp, "Truncated: Message %s truncated (%c)\n", (dns->dns_tc ? "is" : "is not"), (dns->dns_tc ? '1' : '0'));
+    fprintf(fp, "Recursion desired: %s query recursively (%c)\n", (dns->dns_rd ? "Do" : "Do not"), (dns->dns_rd ? '1' : '0'));
+    fprintf(fp, "Recursion available: Sever %s do recursive queries (%c)\n", (dns->dns_ra ? "can" : "can't"), (dns->dns_ra ? '1' : '0'));
+    unsigned int z = dns->dns_z;
+    fprintf(fp, "Z: %u\n", z);
+
+    if(rcode == 0)
+        fprintf(fp, "Reply code: No error (0)\n");
+    else if(rcode == 1)
+        fprintf(fp, "Reply code: Format error (1)\n");
+    else if(rcode == 2)
+        fprintf(fp, "Reply code: Server failure (2)\n");
+    else if(rcode == 3)
+        fprintf(fp, "Reply code: Name error (3)\n");
+    else if(rcode == 4)
+        fprintf(fp, "Reply code: Not implemented (4)\n");
+    else if(rcode == 5)
+        fprintf(fp, "Reply code: Refused (5)\n");
+    else  
+        fprintf(fp, "Reply code: (%d)\n", rcode);
+
+    fprintf(fp, "Questions: %d\n", ntohs(dns->dns_qdc));
+    fprintf(fp, "Answer RRs: %d\n", ntohs(dns->dns_anc));
+    fprintf(fp, "Authority RRs: %d\n", ntohs(dns->dns_nsc));
+    fprintf(fp, "Additional RRs: %d\n", ntohs(dns->dns_arc));
+
+    printf("DNS %s detected: ", (dns->dns_qr ? "response" : "query"));
 }
 
 void http_parser(char *buff, FILE *fp)
@@ -286,6 +328,7 @@ void dhcp_parser(char *buff, FILE *fp)
 void dump_mem(const void *mem, size_t len, FILE *fp)
 {
     fprintf(fp, "\n< Memory >\n");
+    fprintf(fp, "Captured byte : %ld\n", len);
     const char *buffer = mem;
     size_t i;
     for (i = 0; i < len; i++)
