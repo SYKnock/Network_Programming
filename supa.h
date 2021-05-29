@@ -133,6 +133,24 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
 
     if ((ntohs(tcp->tcp_src) == 53) || (ntohs(tcp->tcp_dst) == 53))
     {
+        if ((ntohl(ip->ip_src) == 0x7f000001) || (ntohl(ip->ip_dst) == 0x7f000035))
+        {}
+        else if((ntohl(ip->ip_src) == 0x7f000035) || (ntohl(ip->ip_dst) == 0x7f000001))
+        {}
+        else
+        {
+            dns_head *dns = malloc(sizeof(dns_head));
+            memcpy(dns, buff + ETH_HLEN + ip_head_length + tcp_head_length, DNS_HLEN);
+            int dns_message_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
+            int offset = ETH_HLEN + ip_head_length + tcp_head_length;
+            ether_parser(buff, eth, fp);
+            ipv4_parser(buff, ip, fp, c_byte);
+            tcp_parser(buff, tcp, fp);
+            dns_parser(buff, dns, fp, dns_message_length, offset);
+            dump_mem(buff, c_byte, fp);
+            printf(" Captured byte: %d\n", c_byte);
+            free(dns);
+        }
     }
     else if ((ntohs(tcp->tcp_src) == 80) || (ntohs(tcp->tcp_dst) == 80))
     {
@@ -158,11 +176,12 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
         {
             dns_head *dns = malloc(sizeof(dns_head));
             memcpy(dns, buff + ETH_HLEN + ip_head_length + UDP_HLEN, DNS_HLEN);
-            int dns_message_length = c_byte - ETH_HLEN - ip_head_length - UDP_HLEN - DNS_HLEN;
+            int dns_message_length = c_byte - ETH_HLEN - ip_head_length - UDP_HLEN;
+            int offset = ETH_HLEN + ip_head_length + UDP_HLEN;
             ether_parser(buff, eth, fp);
             ipv4_parser(buff, ip, fp, c_byte);
             udp_parser(buff, udp, fp);
-            dns_parser(buff, dns, fp, dns_message_length);
+            dns_parser(buff, dns, fp, dns_message_length, offset);
             dump_mem(buff, c_byte, fp);
             printf(" Captured byte: %d\n", c_byte);
             free(dns);

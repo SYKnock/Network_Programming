@@ -8,45 +8,133 @@ Type: IPv4 (0x0800)
 Version: 4
 Header Length: 20 bytes (5)
 Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4ca (46282)
+Total Length: 94
+Identification: 0xa9de (43486)
 Flags: 0x4000, Do not fragment
 Fragment Offset: 0
 Time to Live: 64
 Protocol: UDP (17)
-Header Checksum: 0xf117
-Source: 172.30.1.36
+Header Checksum: 0xfbfc
+Source: 172.30.1.22
 Destination: 168.126.63.1
 -----------------------------------------------
 < User Datagram Protocol(UDP) >
-Source Port: 53228
+Source Port: 43621
 Destination Port: 53
-Length: 53
-Checksum: 0x0c98
+Length: 74
+Checksum: 0x3d26
 -----------------------------------------------
 < Domain Name System Protocol(DNS) >
-Transaction ID: 0x64d7
+Transaction ID: 0xdb5e
 QR: DNS query (0)
 Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
 Truncated: Message is not truncated (0)
 Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
 Z: 0
-Reply code: No error (0)
 Questions: 1
 Answer RRs: 0
 Authority RRs: 0
 Additional RRs: 1
+[Queries]
+#(1)
+Name: global.vortex.data.trafficmanager.net
+Type: AAAA, IPv6 (28)
+Class: IN (0x0001)
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 512
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
 
 < Memory >
-Captured byte : 87
+Captured byte : 108
 88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 ca 40 00 40 11 f1 17 ac 1e 01 24 a8 7e 
-3f 01 cf ec 00 35 00 35 0c 98 64 d7 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
+00 5e a9 de 40 00 40 11 fb fc ac 1e 01 16 a8 7e 
+3f 01 aa 65 00 35 00 4a 3d 26 db 5e 01 00 00 01 
+00 00 00 00 00 01 06 67 6c 6f 62 61 6c 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 1c 00 
+01 00 00 29 02 00 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 88:3c:1c:cc:02:66
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 155
+Identification: 0xf71c (63260)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 57
+Protocol: UDP (17)
+Header Checksum: 0xf581
+Source: 168.126.63.1
+Destination: 172.30.1.22
+-----------------------------------------------
+< User Datagram Protocol(UDP) >
+Source Port: 53
+Destination Port: 43621
+Length: 135
+Checksum: 0x2864
+-----------------------------------------------
+< Domain Name System Protocol(DNS) >
+Transaction ID: 0xdb5e
+QR: DNS response (1)
+Opcode: Standard query (0)
+Authoritative: Server is not an authority for domain (0)
+Truncated: Message is not truncated (0)
+Recursion desired: Do query recursively (1)
+Recursion available: Sever can do recursive queries (1)
+Z: 0
+Reply code: No error (0)
+Questions: 1
+Answer RRs: 0
+Authority RRs: 1
+Additional RRs: 1
+[Queries]
+#(1)
+Name: global.vortex.data.trafficmanager.net
+Type: AAAA, IPv6 (28)
+Class: IN (0x0001)
+[Autohrity]
+#(1)
+Name: trafficmanager.net
+Type: Others (6)
+Class: IN (0x0001)
+TTL: 30
+Data length: 49
+This type is not supported in SUPA
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 1232
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
+
+< Memory >
+Captured byte : 169
+00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
+00 9b f7 1c 00 00 39 11 f5 81 a8 7e 3f 01 ac 1e 
+01 16 00 35 aa 65 00 87 28 64 db 5e 81 80 00 01 
+00 00 00 01 00 01 06 67 6c 6f 62 61 6c 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 1c 00 
+01 c0 1f 00 06 00 01 00 00 00 1e 00 31 03 74 6d 
+31 06 64 6e 73 2d 74 6d 03 63 6f 6d 00 0a 68 6f 
+73 74 6d 61 73 74 65 72 c0 1f 07 0b ea 85 00 00 
+03 84 00 00 01 2c 00 24 ea 00 00 00 00 1e 00 00 
+29 04 d0 00 00 00 00 00 00 
 ===============================================
 
 
@@ -60,155 +148,56 @@ Type: IPv4 (0x0800)
 Version: 4
 Header Length: 20 bytes (5)
 Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4cb (46283)
+Total Length: 94
+Identification: 0xac7f (44159)
 Flags: 0x4000, Do not fragment
 Fragment Offset: 0
 Time to Live: 64
 Protocol: UDP (17)
-Header Checksum: 0xf116
-Source: 172.30.1.36
+Header Checksum: 0xf95b
+Source: 172.30.1.22
 Destination: 168.126.63.1
 -----------------------------------------------
 < User Datagram Protocol(UDP) >
-Source Port: 58608
+Source Port: 44686
 Destination Port: 53
-Length: 53
-Checksum: 0x06a8
+Length: 74
+Checksum: 0x3f85
 -----------------------------------------------
 < Domain Name System Protocol(DNS) >
-Transaction ID: 0x55a8
+Transaction ID: 0xd3d4
 QR: DNS query (0)
 Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
 Truncated: Message is not truncated (0)
 Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
 Z: 0
-Reply code: No error (0)
 Questions: 1
 Answer RRs: 0
 Authority RRs: 0
 Additional RRs: 1
+[Queries]
+#(1)
+Name: asimov.vortex.data.trafficmanager.net
+Type: A, Host Address (1)
+Class: IN (0x0001)
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 512
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
 
 < Memory >
-Captured byte : 87
+Captured byte : 108
 88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 cb 40 00 40 11 f1 16 ac 1e 01 24 a8 7e 
-3f 01 e4 f0 00 35 00 35 06 a8 55 a8 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0xb277 (45687)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0x3a22
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 53228
-Length: 126
-Checksum: 0x45d6
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x64d7
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 b2 77 00 00 39 11 3a 22 a8 7e 3f 01 ac 1e 
-01 24 00 35 cf ec 00 7e 45 d6 64 d7 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0x2597 (9623)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xc702
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 58608
-Length: 126
-Checksum: 0x3fe6
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x55a8
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 25 97 00 00 39 11 c7 02 a8 7e 3f 01 ac 1e 
-01 24 00 35 e4 f0 00 7e 3f e6 55 a8 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
+00 5e ac 7f 40 00 40 11 f9 5b ac 1e 01 16 a8 7e 
+3f 01 ae 8e 00 35 00 4a 3f 85 d3 d4 01 00 00 01 
+00 00 00 00 00 01 06 61 73 69 6d 6f 76 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 01 00 
+01 00 00 29 02 00 00 00 00 00 00 00 
 ===============================================
 
 
@@ -222,257 +211,225 @@ Type: IPv4 (0x0800)
 Version: 4
 Header Length: 20 bytes (5)
 Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4cd (46285)
+Total Length: 94
+Identification: 0xac80 (44160)
 Flags: 0x4000, Do not fragment
 Fragment Offset: 0
 Time to Live: 64
 Protocol: UDP (17)
-Header Checksum: 0xf11f
-Source: 172.30.1.36
+Header Checksum: 0xf95a
+Source: 172.30.1.22
 Destination: 168.126.63.1
 -----------------------------------------------
 < User Datagram Protocol(UDP) >
-Source Port: 53228
+Source Port: 58973
 Destination Port: 53
-Length: 42
-Checksum: 0x35b1
+Length: 74
+Checksum: 0x5a13
 -----------------------------------------------
 < Domain Name System Protocol(DNS) >
-Transaction ID: 0x64d7
+Transaction ID: 0x6677
 QR: DNS query (0)
 Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
 Truncated: Message is not truncated (0)
 Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
 Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 cd 40 00 40 11 f1 1f ac 1e 01 24 a8 7e 
-3f 01 cf ec 00 35 00 2a 35 b1 64 d7 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4ce (46286)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf11e
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 58608
-Destination Port: 53
-Length: 42
-Checksum: 0x2fc1
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x55a8
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 ce 40 00 40 11 f1 1e ac 1e 01 24 a8 7e 
-3f 01 e4 f0 00 35 00 2a 2f c1 55 a8 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0xb27b (45691)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0x3a29
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 53228
-Length: 115
-Checksum: 0x4ae6
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x64d7
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 b2 7b 00 00 39 11 3a 29 a8 7e 3f 01 ac 1e 
-01 24 00 35 cf ec 00 73 4a e6 64 d7 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0x259b (9627)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xc709
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 58608
-Length: 115
-Checksum: 0x44f6
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x55a8
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 25 9b 00 00 39 11 c7 09 a8 7e 3f 01 ac 1e 
-01 24 00 35 e4 f0 00 73 44 f6 55 a8 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4cf (46287)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf112
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53099
-Destination Port: 53
-Length: 53
-Checksum: 0x94f4
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xdcfb
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
 Questions: 1
 Answer RRs: 0
 Authority RRs: 0
 Additional RRs: 1
+[Queries]
+#(1)
+Name: asimov.vortex.data.trafficmanager.net
+Type: AAAA, IPv6 (28)
+Class: IN (0x0001)
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 512
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
 
 < Memory >
-Captured byte : 87
+Captured byte : 108
 88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 cf 40 00 40 11 f1 12 ac 1e 01 24 a8 7e 
-3f 01 cf 6b 00 35 00 35 94 f4 dc fb 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
+00 5e ac 80 40 00 40 11 f9 5a ac 1e 01 16 a8 7e 
+3f 01 e6 5d 00 35 00 4a 5a 13 66 77 01 00 00 01 
+00 00 00 00 00 01 06 61 73 69 6d 6f 76 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 1c 00 
+01 00 00 29 02 00 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 88:3c:1c:cc:02:66
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 131
+Identification: 0x92e4 (37604)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 57
+Protocol: UDP (17)
+Header Checksum: 0x59d2
+Source: 168.126.63.1
+Destination: 172.30.1.22
+-----------------------------------------------
+< User Datagram Protocol(UDP) >
+Source Port: 53
+Destination Port: 44686
+Length: 111
+Checksum: 0x5f7e
+-----------------------------------------------
+< Domain Name System Protocol(DNS) >
+Transaction ID: 0xd3d4
+QR: DNS response (1)
+Opcode: Standard query (0)
+Authoritative: Server is not an authority for domain (0)
+Truncated: Message is not truncated (0)
+Recursion desired: Do query recursively (1)
+Recursion available: Sever can do recursive queries (1)
+Z: 0
+Reply code: No error (0)
+Questions: 1
+Answer RRs: 2
+Authority RRs: 0
+Additional RRs: 1
+[Queries]
+#(1)
+Name: asimov.vortex.data.trafficmanager.net
+Type: A, Host Address (1)
+Class: IN (0x0001)
+[Answer]
+#(1)
+Name: asimov.vortex.data.trafficmanager.net
+Type: CNAME, Canonical Recode Name (5)
+Class: IN (0x0001)
+TTL: 6
+Data length: 9
+Rdata: CNAME, global.vortex.data.trafficmanager.net
+#(2)
+Name: global.vortex.data.trafficmanager.net
+Type: A, Host Address (1)
+Class: IN (0x0001)
+TTL: 36
+Data length: 4
+Rdata: Address, 111.221.29.254
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 1232
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
+
+< Memory >
+Captured byte : 145
+00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
+00 83 92 e4 00 00 39 11 59 d2 a8 7e 3f 01 ac 1e 
+01 16 00 35 ae 8e 00 6f 5f 7e d3 d4 81 80 00 01 
+00 02 00 00 00 01 06 61 73 69 6d 6f 76 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 01 00 
+01 c0 0c 00 05 00 01 00 00 00 06 00 09 06 67 6c 
+6f 62 61 6c c0 13 c0 43 00 01 00 01 00 00 00 24 
+00 04 6f dd 1d fe 00 00 29 04 d0 00 00 00 00 00 
+00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 88:3c:1c:cc:02:66
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 176
+Identification: 0xa247 (41543)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 57
+Protocol: UDP (17)
+Header Checksum: 0x4a42
+Source: 168.126.63.1
+Destination: 172.30.1.22
+-----------------------------------------------
+< User Datagram Protocol(UDP) >
+Source Port: 53
+Destination Port: 58973
+Length: 156
+Checksum: 0x9b7a
+-----------------------------------------------
+< Domain Name System Protocol(DNS) >
+Transaction ID: 0x6677
+QR: DNS response (1)
+Opcode: Standard query (0)
+Authoritative: Server is not an authority for domain (0)
+Truncated: Message is not truncated (0)
+Recursion desired: Do query recursively (1)
+Recursion available: Sever can do recursive queries (1)
+Z: 0
+Reply code: No error (0)
+Questions: 1
+Answer RRs: 1
+Authority RRs: 1
+Additional RRs: 1
+[Queries]
+#(1)
+Name: asimov.vortex.data.trafficmanager.net
+Type: AAAA, IPv6 (28)
+Class: IN (0x0001)
+[Answer]
+#(1)
+Name: asimov.vortex.data.trafficmanager.net
+Type: CNAME, Canonical Recode Name (5)
+Class: IN (0x0001)
+TTL: 60
+Data length: 9
+Rdata: CNAME, global.vortex.data.trafficmanager.net
+[Autohrity]
+#(1)
+Name: trafficmanager.net
+Type: Others (6)
+Class: IN (0x0001)
+TTL: 14
+Data length: 49
+This type is not supported in SUPA
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 1232
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
+
+< Memory >
+Captured byte : 190
+00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
+00 b0 a2 47 00 00 39 11 4a 42 a8 7e 3f 01 ac 1e 
+01 16 00 35 e6 5d 00 9c 9b 7a 66 77 81 80 00 01 
+00 01 00 01 00 01 06 61 73 69 6d 6f 76 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 1c 00 
+01 c0 0c 00 05 00 01 00 00 00 3c 00 09 06 67 6c 
+6f 62 61 6c c0 13 c0 1f 00 06 00 01 00 00 00 0e 
+00 31 03 74 6d 31 06 64 6e 73 2d 74 6d 03 63 6f 
+6d 00 0a 68 6f 73 74 6d 61 73 74 65 72 c0 1f 07 
+0b ea 85 00 00 03 84 00 00 01 2c 00 24 ea 00 00 
+00 00 1e 00 00 29 04 d0 00 00 00 00 00 00 
 ===============================================
 
 
@@ -486,45 +443,56 @@ Type: IPv4 (0x0800)
 Version: 4
 Header Length: 20 bytes (5)
 Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4d0 (46288)
+Total Length: 94
+Identification: 0xac81 (44161)
 Flags: 0x4000, Do not fragment
 Fragment Offset: 0
 Time to Live: 64
 Protocol: UDP (17)
-Header Checksum: 0xf111
-Source: 172.30.1.36
+Header Checksum: 0xf959
+Source: 172.30.1.22
 Destination: 168.126.63.1
 -----------------------------------------------
 < User Datagram Protocol(UDP) >
-Source Port: 60236
+Source Port: 42677
 Destination Port: 53
-Length: 53
-Checksum: 0xd722
+Length: 74
+Checksum: 0xb3c1
 -----------------------------------------------
 < Domain Name System Protocol(DNS) >
-Transaction ID: 0x7ed1
+Transaction ID: 0x6873
 QR: DNS query (0)
 Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
 Truncated: Message is not truncated (0)
 Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
 Z: 0
-Reply code: No error (0)
 Questions: 1
 Answer RRs: 0
 Authority RRs: 0
 Additional RRs: 1
+[Queries]
+#(1)
+Name: global.vortex.data.trafficmanager.net
+Type: AAAA, IPv6 (28)
+Class: IN (0x0001)
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 512
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
 
 < Memory >
-Captured byte : 87
+Captured byte : 108
 88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 d0 40 00 40 11 f1 11 ac 1e 01 24 a8 7e 
-3f 01 eb 4c 00 35 00 35 d7 22 7e d1 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
+00 5e ac 81 40 00 40 11 f9 59 ac 1e 01 16 a8 7e 
+3f 01 a6 b5 00 35 00 4a b3 c1 68 73 01 00 00 01 
+00 00 00 00 00 01 06 67 6c 6f 62 61 6c 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 1c 00 
+01 00 00 29 02 00 00 00 00 00 00 00 
 ===============================================
 
 
@@ -537,24 +505,24 @@ Type: IPv4 (0x0800)
 < Internet Protocl Version 4 protocol(IPv4) >
 Version: 4
 Header Length: 20 bytes (5)
-Type Of Servie: 0x08
-Total Length: 146
-Identification: 0x1d1c (7452)
+Type Of Servie: 0x00
+Total Length: 155
+Identification: 0xffb8 (65464)
 Flags: 0x0000, Fragment Offset: 0
 Time to Live: 57
 Protocol: UDP (17)
-Header Checksum: 0xcf75
+Header Checksum: 0xece5
 Source: 168.126.63.1
-Destination: 172.30.1.36
+Destination: 172.30.1.22
 -----------------------------------------------
 < User Datagram Protocol(UDP) >
 Source Port: 53
-Destination Port: 53099
-Length: 126
-Checksum: 0xce32
+Destination Port: 42677
+Length: 135
+Checksum: 0xa2ff
 -----------------------------------------------
 < Domain Name System Protocol(DNS) >
-Transaction ID: 0xdcfb
+Transaction ID: 0x6873
 QR: DNS response (1)
 Opcode: Standard query (0)
 Authoritative: Server is not an authority for domain (0)
@@ -562,24 +530,71 @@ Truncated: Message is not truncated (0)
 Recursion desired: Do query recursively (1)
 Recursion available: Sever can do recursive queries (1)
 Z: 0
-Reply code: Name error (3)
+Reply code: No error (0)
 Questions: 1
 Answer RRs: 0
 Authority RRs: 1
 Additional RRs: 1
+[Queries]
+#(1)
+Name: global.vortex.data.trafficmanager.net
+Type: AAAA, IPv6 (28)
+Class: IN (0x0001)
+[Autohrity]
+#(1)
+Name: trafficmanager.net
+Type: Others (6)
+Class: IN (0x0001)
+TTL: 26
+Data length: 49
+This type is not supported in SUPA
+[Additional]
+Name: <root>
+Type: OPT (41)
+UDP payload size: 1232
+Higher bits in extended RCODE: 0x00
+EDNS0 version: 0
+Z: 0x0000
+Data length: 0
 
 < Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 08 
-00 92 1d 1c 00 00 39 11 cf 75 a8 7e 3f 01 ac 1e 
-01 24 00 35 cf 6b 00 7e ce 32 dc fb 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
+Captured byte : 169
+00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
+00 9b ff b8 00 00 39 11 ec e5 a8 7e 3f 01 ac 1e 
+01 16 00 35 a6 b5 00 87 a2 ff 68 73 81 80 00 01 
+00 00 00 01 00 01 06 67 6c 6f 62 61 6c 06 76 6f 
+72 74 65 78 04 64 61 74 61 0e 74 72 61 66 66 69 
+63 6d 61 6e 61 67 65 72 03 6e 65 74 00 00 1c 00 
+01 c0 1f 00 06 00 01 00 00 00 1a 00 31 03 74 6d 
+31 06 64 6e 73 2d 74 6d 03 63 6f 6d 00 0a 68 6f 
+73 74 6d 61 73 74 65 72 c0 1f 07 0b ea 85 00 00 
+03 84 00 00 01 2c 00 24 ea 00 00 00 00 1e 00 00 
+29 04 d0 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 88:3c:1c:cc:02:66
+Type: ARP (0x0806)
+-----------------------------------------------
+< Address Resolution Protocol(ARP) >
+Hardware type: Ethernet (0x0001)
+Protocol type: IPv4 (0x0800)
+Hardware size: 6
+Protocol size: 4
+Opcode: request (0x0001)
+Sender MAC address: 88:3c:1c:cc:02:66
+Sender IP address: 172.30.1.254
+Target MAC address: 00:00:00:00:00:00
+Target IP address: 172.30.1.22
+
+< Memory >
+Captured byte : 42
+00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 06 00 01 
+08 00 06 04 00 01 88 3c 1c cc 02 66 ac 1e 01 fe 
+00 00 00 00 00 00 ac 1e 01 16 
 ===============================================
 
 
@@ -587,1118 +602,24 @@ Captured byte : 160
 < Ethernet >
 Destination: 88:3c:1c:cc:02:66(Broadcast)
 Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
+Type: ARP (0x0806)
 -----------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4d1 (46289)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf11b
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53099
-Destination Port: 53
-Length: 42
-Checksum: 0xbe0d
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xdcfb
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
+< Address Resolution Protocol(ARP) >
+Hardware type: Ethernet (0x0001)
+Protocol type: IPv4 (0x0800)
+Hardware size: 6
+Protocol size: 4
+Opcode: reply (0x0002)
+Sender MAC address: 00:0c:29:1b:08:d3
+Sender IP address: 172.30.1.22
+Target MAC address: 88:3c:1c:cc:02:66
+Target IP address: 172.30.1.254
 
 < Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 d1 40 00 40 11 f1 1b ac 1e 01 24 a8 7e 
-3f 01 cf 6b 00 35 00 2a be 0d dc fb 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0xb283 (45699)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0x3a16
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 60236
-Length: 126
-Checksum: 0x1061
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x7ed1
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 b2 83 00 00 39 11 3a 16 a8 7e 3f 01 ac 1e 
-01 24 00 35 eb 4c 00 7e 10 61 7e d1 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4d2 (46290)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf11a
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 60236
-Destination Port: 53
-Length: 42
-Checksum: 0x003c
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x7ed1
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 d2 40 00 40 11 f1 1a ac 1e 01 24 a8 7e 
-3f 01 eb 4c 00 35 00 2a 00 3c 7e d1 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0x259e (9630)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xc706
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 60236
-Length: 115
-Checksum: 0x1571
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x7ed1
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 25 9e 00 00 39 11 c7 06 a8 7e 3f 01 ac 1e 
-01 24 00 35 eb 4c 00 73 15 71 7e d1 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0xb286 (45702)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0x3a1e
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 53099
-Length: 115
-Checksum: 0xd342
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xdcfb
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 b2 86 00 00 39 11 3a 1e a8 7e 3f 01 ac 1e 
-01 24 00 35 cf 6b 00 73 d3 42 dc fb 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4d5 (46293)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf10c
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 60165
-Destination Port: 53
-Length: 53
-Checksum: 0x723f
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xe416
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 1
-
-< Memory >
-Captured byte : 87
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 d5 40 00 40 11 f1 0c ac 1e 01 24 a8 7e 
-3f 01 eb 05 00 35 00 35 72 3f e4 16 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0x1d49 (7497)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xcf50
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 60165
-Length: 126
-Checksum: 0xab7d
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xe416
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 1d 49 00 00 39 11 cf 50 a8 7e 3f 01 ac 1e 
-01 24 00 35 eb 05 00 7e ab 7d e4 16 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4d6 (46294)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf116
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 60165
-Destination Port: 53
-Length: 42
-Checksum: 0x9b58
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xe416
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 d6 40 00 40 11 f1 16 ac 1e 01 24 a8 7e 
-3f 01 eb 05 00 35 00 2a 9b 58 e4 16 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4d7 (46295)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf10a
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53191
-Destination Port: 53
-Length: 53
-Checksum: 0xcbd5
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xa5a3
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 1
-
-< Memory >
-Captured byte : 87
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 d7 40 00 40 11 f1 0a ac 1e 01 24 a8 7e 
-3f 01 cf c7 00 35 00 35 cb d5 a5 a3 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0x25c1 (9665)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xc6e3
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 60165
-Length: 115
-Checksum: 0xb08d
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xe416
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 25 c1 00 00 39 11 c6 e3 a8 7e 3f 01 ac 1e 
-01 24 00 35 eb 05 00 73 b0 8d e4 16 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0xa298 (41624)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0x4a01
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 53191
-Length: 126
-Checksum: 0x1414
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xa5a3
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 a2 98 00 00 39 11 4a 01 a8 7e 3f 01 ac 1e 
-01 24 00 35 cf c7 00 7e 14 14 a5 a3 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 3d 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4d8 (46296)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf114
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53191
-Destination Port: 53
-Length: 42
-Checksum: 0xf4ee
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xa5a3
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 d8 40 00 40 11 f1 14 ac 1e 01 24 a8 7e 
-3f 01 cf c7 00 35 00 2a f4 ee a5 a3 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0x25c2 (9666)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xc6e2
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 53191
-Length: 115
-Checksum: 0x0a24
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xa5a3
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 25 c2 00 00 39 11 c6 e2 a8 7e 3f 01 ac 1e 
-01 24 00 35 cf c7 00 73 0a 24 a5 a3 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4d9 (46297)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf108
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 54577
-Destination Port: 53
-Length: 53
-Checksum: 0x9c93
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xcf96
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 1
-
-< Memory >
-Captured byte : 87
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 d9 40 00 40 11 f1 08 ac 1e 01 24 a8 7e 
-3f 01 d5 31 00 35 00 35 9c 93 cf 96 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 73
-Identification: 0xb4da (46298)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf107
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 34896
-Destination Port: 53
-Length: 53
-Checksum: 0x4957
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x6f99
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 1
-
-< Memory >
-Captured byte : 87
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 49 b4 da 40 00 40 11 f1 07 ac 1e 01 24 a8 7e 
-3f 01 88 50 00 35 00 35 49 57 6f 99 01 00 00 01 
-00 00 00 00 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 00 00 29 02 
-00 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0x1d4e (7502)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xcf4b
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 34896
-Length: 126
-Checksum: 0x8295
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x6f99
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 1d 4e 00 00 39 11 cf 4b a8 7e 3f 01 ac 1e 
-01 24 00 35 88 50 00 7e 82 95 6f 99 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 146
-Identification: 0x1d4f (7503)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xcf4a
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 54577
-Length: 126
-Checksum: 0xd5d1
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xcf96
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 1
-
-< Memory >
-Captured byte : 160
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 92 1d 4f 00 00 39 11 cf 4a a8 7e 3f 01 ac 1e 
-01 24 00 35 d5 31 00 7e d5 d1 cf 96 81 83 00 01 
-00 00 00 01 00 01 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 00 00 29 04 d0 00 00 00 00 00 00 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4db (46299)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf111
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 34896
-Destination Port: 53
-Length: 42
-Checksum: 0x7270
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x6f99
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 db 40 00 40 11 f1 11 ac 1e 01 24 a8 7e 
-3f 01 88 50 00 35 00 2a 72 70 6f 99 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 88:3c:1c:cc:02:66(Broadcast)
-Source: 00:0c:29:1b:08:d3
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 62
-Identification: 0xb4dc (46300)
-Flags: 0x4000, Do not fragment
-Fragment Offset: 0
-Time to Live: 64
-Protocol: UDP (17)
-Header Checksum: 0xf110
-Source: 172.30.1.36
-Destination: 168.126.63.1
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 54577
-Destination Port: 53
-Length: 42
-Checksum: 0xc5ac
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xcf96
-QR: DNS query (0)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can't do recursive queries (0)
-Z: 0
-Reply code: No error (0)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 0
-Additional RRs: 0
-
-< Memory >
-Captured byte : 76
-88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 00 45 00 
-00 3e b4 dc 40 00 40 11 f1 10 ac 1e 01 24 a8 7e 
-3f 01 d5 31 00 35 00 2a c5 ac cf 96 01 00 00 01 
-00 00 00 00 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0x1d50 (7504)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0xcf54
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 34896
-Length: 115
-Checksum: 0x87a5
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0x6f99
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 1d 50 00 00 39 11 cf 54 a8 7e 3f 01 ac 1e 
-01 24 00 35 88 50 00 73 87 a5 6f 99 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 1c 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 4c 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
-===============================================
-
-
-===============================================
-< Ethernet >
-Destination: 00:0c:29:1b:08:d3(Broadcast)
-Source: 88:3c:1c:cc:02:66
-Type: IPv4 (0x0800)
------------------------------------------------
-< Internet Protocl Version 4 protocol(IPv4) >
-Version: 4
-Header Length: 20 bytes (5)
-Type Of Servie: 0x00
-Total Length: 135
-Identification: 0xa299 (41625)
-Flags: 0x0000, Fragment Offset: 0
-Time to Live: 57
-Protocol: UDP (17)
-Header Checksum: 0x4a0b
-Source: 168.126.63.1
-Destination: 172.30.1.36
------------------------------------------------
-< User Datagram Protocol(UDP) >
-Source Port: 53
-Destination Port: 54577
-Length: 115
-Checksum: 0xe9e1
------------------------------------------------
-< Domain Name System Protocol(DNS) >
-Transaction ID: 0xcf96
-QR: DNS response (1)
-Opcode: Standard query (0)
-Authoritative: Server is not an authority for domain (0)
-Truncated: Message is not truncated (0)
-Recursion desired: Do query recursively (1)
-Recursion available: Sever can do recursive queries (1)
-Z: 0
-Reply code: Name error (3)
-Questions: 1
-Answer RRs: 0
-Authority RRs: 1
-Additional RRs: 0
-
-< Memory >
-Captured byte : 149
-00 0c 29 1b 08 d3 88 3c 1c cc 02 66 08 00 45 00 
-00 87 a2 99 00 00 39 11 4a 0b a8 7e 3f 01 ac 1e 
-01 24 00 35 d5 31 00 73 e9 e1 cf 96 81 83 00 01 
-00 00 00 01 00 00 03 77 77 77 08 6e 61 76 65 72 
-72 72 72 03 63 6f 6d 00 00 01 00 01 c0 19 00 06 
-00 01 00 00 02 4e 00 3d 01 61 0c 67 74 6c 64 2d 
-73 65 72 76 65 72 73 03 6e 65 74 00 05 6e 73 74 
-6c 64 0c 76 65 72 69 73 69 67 6e 2d 67 72 73 c0 
-19 60 b0 8d 3d 00 00 07 08 00 00 03 84 00 09 3a 
-80 00 01 51 80 
+Captured byte : 42
+88 3c 1c cc 02 66 00 0c 29 1b 08 d3 08 06 00 01 
+08 00 06 04 00 02 00 0c 29 1b 08 d3 ac 1e 01 16 
+88 3c 1c cc 02 66 ac 1e 01 fe 
 ===============================================
 
 

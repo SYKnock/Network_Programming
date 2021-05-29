@@ -28,11 +28,15 @@ void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte);
 void tcp_parser(char *buff, tcp_head *tcp, FILE *fp);
 void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
-void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte);
+void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
 void http_parser(char *buff, FILE *fp);
 void https_parser(char *buff, FILE *fp);
 void dhcp_parser(char *buff, FILE *fp);
 void dump_mem(const void *mem, size_t len, FILE *fp);
+
+unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsigned char *end, FILE *fp);
+unsigned char *dns_query(unsigned char *dns_buf, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
+unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
 
 void ether_parser(char *buff, ether_head *eth, FILE *fp)
 {
@@ -264,7 +268,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     dump_mem(buff, ETH_HLEN + ARP_HLEN, fp);
 }
 
-void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte)
+void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
 {
     unsigned int opcode = dns->dns_opcode;
     unsigned int rcode = dns->dns_rcode;
@@ -273,44 +277,253 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte)
     fprintf(fp, "< Domain Name System Protocol(DNS) >\n");
     fprintf(fp, "Transaction ID: 0x%04x\n", ntohs(dns->dns_id));
     fprintf(fp, "QR: %s (%c)\n", (dns->dns_qr ? "DNS response" : "DNS query"), (dns->dns_qr ? '1' : '0'));
-    
-    if(opcode == 0)
+
+    if (opcode == 0)
         fprintf(fp, "Opcode: Standard query (0)\n");
-    else if(opcode == 1)
+    else if (opcode == 1)
         fprintf(fp, "Opcode: Reverse query (1)\n");
-    else if(opcode == 2)
+    else if (opcode == 2)
         fprintf(fp, "Opcode: Server status request (2)\n");
     else
-        fprintf(fp, "Opcode: (%d)\n", opcode);
-
-    fprintf(fp, "Authoritative: Server %s an authority for domain (%c)\n", (dns->dns_aa ? "is" : "is not"), (dns->dns_aa ? '1' : '0'));
+        fprintf(fp, "Opcode: ? (%d)\n", opcode);
+    if (dns->dns_qr) 
+        fprintf(fp, "Authoritative: Server %s an authority for domain (%c)\n", (dns->dns_aa ? "is" : "is not"), (dns->dns_aa ? '1' : '0'));
     fprintf(fp, "Truncated: Message %s truncated (%c)\n", (dns->dns_tc ? "is" : "is not"), (dns->dns_tc ? '1' : '0'));
     fprintf(fp, "Recursion desired: %s query recursively (%c)\n", (dns->dns_rd ? "Do" : "Do not"), (dns->dns_rd ? '1' : '0'));
-    fprintf(fp, "Recursion available: Sever %s do recursive queries (%c)\n", (dns->dns_ra ? "can" : "can't"), (dns->dns_ra ? '1' : '0'));
+
+    if (dns->dns_qr)
+        fprintf(fp, "Recursion available: Sever %s do recursive queries (%c)\n", (dns->dns_ra ? "can" : "can't"), (dns->dns_ra ? '1' : '0'));
     unsigned int z = dns->dns_z;
     fprintf(fp, "Z: %u\n", z);
 
-    if(rcode == 0)
-        fprintf(fp, "Reply code: No error (0)\n");
-    else if(rcode == 1)
-        fprintf(fp, "Reply code: Format error (1)\n");
-    else if(rcode == 2)
-        fprintf(fp, "Reply code: Server failure (2)\n");
-    else if(rcode == 3)
-        fprintf(fp, "Reply code: Name error (3)\n");
-    else if(rcode == 4)
-        fprintf(fp, "Reply code: Not implemented (4)\n");
-    else if(rcode == 5)
-        fprintf(fp, "Reply code: Refused (5)\n");
-    else  
-        fprintf(fp, "Reply code: (%d)\n", rcode);
+    if (dns->dns_qr)
+    {
+        if (rcode == 0)
+            fprintf(fp, "Reply code: No error (0)\n");
+        else if (rcode == 1)
+            fprintf(fp, "Reply code: Format error (1)\n");
+        else if (rcode == 2)
+            fprintf(fp, "Reply code: Server failure (2)\n");
+        else if (rcode == 3)
+            fprintf(fp, "Reply code: Name error (3)\n");
+        else if (rcode == 4)
+            fprintf(fp, "Reply code: Not implemented (4)\n");
+        else if (rcode == 5)
+            fprintf(fp, "Reply code: Refused (5)\n");
+        else
+            fprintf(fp, "Reply code: ? (%d)\n", rcode);
+    }
 
     fprintf(fp, "Questions: %d\n", ntohs(dns->dns_qdc));
+    int qdc = ntohs(dns->dns_qdc);
     fprintf(fp, "Answer RRs: %d\n", ntohs(dns->dns_anc));
+    int anc = ntohs(dns->dns_anc);
     fprintf(fp, "Authority RRs: %d\n", ntohs(dns->dns_nsc));
+    int asc = ntohs(dns->dns_nsc);
     fprintf(fp, "Additional RRs: %d\n", ntohs(dns->dns_arc));
+    int arc = ntohs(dns->dns_arc);
+
+    unsigned char *dns_buff = (unsigned char *)malloc(sizeof(char) * 1000);
+    memcpy(dns_buff, buff + offset, dns_byte);
+    unsigned char *dns_message_buff = dns_buff + DNS_HLEN;
+    unsigned char *dns_buff_end = dns_buff + dns_byte;
+
+    if (qdc)
+    {
+        fprintf(fp, "[Queries]\n");
+        for (int i = 0; i < qdc; i++)
+        {
+            fprintf(fp, "#(%d)\n", i + 1);
+            dns_message_buff = dns_query(dns_buff, dns_message_buff, dns_buff_end, fp);
+        }
+    }
+
+    if (anc)
+    {
+        fprintf(fp, "[Answer]\n");
+        for (int i = 0; i < anc; i++)
+        {
+            fprintf(fp, "#(%d)\n", i + 1);
+            dns_message_buff = dns_answer(dns_buff, dns_message_buff, dns_buff_end, fp);
+        }
+    }
+
+    if (asc)
+    {
+        fprintf(fp, "[Autohrity]\n");
+        for (int i = 0; i < asc; i++)
+        {
+            fprintf(fp, "#(%d)\n", i + 1);
+            dns_message_buff = dns_answer(dns_buff, dns_message_buff, dns_buff_end, fp);
+        }
+    }
+
+    if (arc)
+    {
+        fprintf(fp, "[Additional]\n"); 
+        for (int i = 0; i < arc; i++)
+        {
+            if(dns_message_buff[0] == 0x00) // OPT type
+            {
+                fprintf(fp, "Name: <Root>\n");
+                dns_message_buff++;
+                int dns_opt_type =  (dns_message_buff[0] << 8) + (dns_message_buff[1]);
+                if(dns_opt_type == 0x0029)
+                {
+                    fprintf(fp, "Type: OPT (%d)\n", dns_opt_type);
+                    dns_message_buff += 2;
+                    
+                    int udp_size = (dns_message_buff[0] << 8) + (dns_message_buff[1]);
+                    fprintf(fp, "UDP payload size: %d\n", udp_size);
+                    fprintf(fp, "Higher bits in extended RCODE: 0x%02x\n", dns_message_buff[2]);
+                    fprintf(fp, "EDNS0 version: %d\n", dns_message_buff[3]);
+                    dns_message_buff += 4;
+
+                    int opt_z = (dns_message_buff[0] << 8) + (dns_message_buff[1]);
+                    fprintf(fp, "Z: 0x%04x\n", opt_z);
+                    dns_message_buff += 2;
+
+                    int opt_data_len = (dns_message_buff[0] << 8) + (dns_message_buff[1]);
+                    fprintf(fp, "Data length: %d\n", opt_data_len);
+                    dns_message_buff += 2;
+                    if(opt_data_len != 0)
+                    {
+                        fprintf(fp, "Data: '%.*s'\n", opt_data_len - 1, dns_message_buff + 1);
+                        dns_message_buff += opt_data_len;
+                    }
+                }  
+                else fprintf(fp, "Type: ? (%d)", dns_opt_type);
+            }
+            else
+            {
+                fprintf(fp, "#(%d)\n", i + 1);
+                dns_message_buff = dns_answer(dns_buff, dns_message_buff, dns_buff_end, fp);
+            }
+        }
+    }
 
     printf("DNS %s detected: ", (dns->dns_qr ? "response" : "query"));
+    if (opcode == 0) printf("Standard query ");
+    else if (opcode == 1) printf("Reverse query ");
+    else if (opcode == 2) printf("Server status request ");
+    free(dns_buff);
+}
+
+unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp)
+{
+    dns_message_buff = dns_query(dns_buff, dns_message_buff, dns_buff_end, fp);
+
+    unsigned int dns_ttl = (dns_message_buff[0] << 24) + (dns_message_buff[1] << 16) + (dns_message_buff[2] << 8) + (dns_message_buff[3]);
+    fprintf(fp, "TTL: %u\n", dns_ttl);
+    dns_message_buff += 4;
+    int dns_rdl= (dns_message_buff[0] << 8) + (dns_message_buff[1]);
+    fprintf(fp, "Data length: %d\n", dns_rdl);
+    dns_message_buff += 2;
+    char *dns_tmp = dns_message_buff - 2 - 4 - 4;
+    int qtype = (dns_tmp[0] << 8) + dns_tmp[1];
+
+    if(dns_rdl == 4 && qtype == 1)
+    {
+        fprintf(fp, "Rdata: Address, ");
+        fprintf(fp, "%d.%d.%d.%d\n", (int)dns_message_buff[0], (int)dns_message_buff[1], (int)dns_message_buff[2], (int)dns_message_buff[3]);
+    }
+    else if(dns_rdl == 16 && qtype == 28)
+    {
+        fprintf(fp, "Rdata: IPv6, ");
+        for(int i = 0; i < dns_rdl; i+=2)
+        {
+            fprintf(fp, "%02x%02x", dns_message_buff[i], dns_message_buff[i + 1]);
+            if(i + 2 < dns_rdl) fprintf(fp, ":");
+        }
+        fprintf(fp, "\n");
+
+    }
+    else if(qtype == 5)
+    {
+        fprintf(fp, "Rdata: CNAME, ");
+        dns_print_name(dns_buff, dns_message_buff, dns_buff_end, fp);
+        fprintf(fp, "\n");
+    }
+
+    else if(dns_rdl > 3 && qtype == 15)
+    {
+        int p = (dns_message_buff[0] << 8) + dns_message_buff[1];
+        fprintf(fp, "Rdata: MX, pref : %d, ", p);
+        dns_print_name(dns_buff, dns_message_buff + 2, dns_buff_end, fp);
+        fprintf(fp, "\n");
+    }
+    else if(qtype == 16) fprintf(fp, "Rdata: TXT, '%.*s'\n", dns_rdl - 1, dns_message_buff + 1);
+
+    else fprintf(fp, "This type is not supported in SUPA\n");
+    
+
+    dns_message_buff += dns_rdl;
+    
+    return dns_message_buff;
+}
+
+unsigned char *dns_query(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp)
+{
+    fprintf(fp, "Name: ");
+    dns_message_buff = dns_print_name(dns_buff, dns_message_buff, dns_buff_end, fp);
+    fprintf(fp, "\n");
+
+    int qtype = (dns_message_buff[0] << 8) + dns_message_buff[1];
+    if (qtype == 1)
+        fprintf(fp, "Type: A, Host Address (%d)\n", qtype);
+    else if (qtype == 28)
+        fprintf(fp, "Type: AAAA, IPv6 (%d)\n", qtype);
+    else if (qtype == 5)
+        fprintf(fp, "Type: CNAME, Canonical Recode Name (%d)\n", qtype);
+    else if (qtype == 15)
+        fprintf(fp, "Type: MX, Mail Exchange (%d)\n", qtype);
+    else if (qtype == 16)
+        fprintf(fp, "Type: TXT, Text Recode (%d)\n", qtype);
+    else
+        fprintf(fp, "Type: Others (%d)\n", qtype);
+    int qclass = (dns_message_buff[2] << 8) + (dns_message_buff[3]);
+    if (qclass == 0x0001)
+        fprintf(fp, "Class: IN (0x%04x)\n", qclass);
+    else
+        fprintf(fp, "Class: NOT IN (0x%04x)\n", qclass);
+    dns_message_buff = dns_message_buff + 4;
+
+    return dns_message_buff;
+}
+
+unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsigned char *end, FILE *fp)
+{
+    if (pointer + 2 > end)
+    {
+        fprintf(stderr, "<Error> : Print name 1\n");
+        exit(1);
+    }
+
+    if ((*pointer & 0xc0) == 0xc0)
+    {
+        int k = ((*pointer & 0x3f) << 8) + pointer[1];
+        pointer += 2;
+        dns_print_name(msg, msg + k, end, fp);
+        return pointer;
+    }
+    else
+    {
+        int length = *pointer++;
+        if (pointer + length + 1 > end)
+        {
+            fprintf(stderr, "<Error> : Print name 2\n");
+            exit(1);
+        }
+        fprintf(fp, "%.*s", length, pointer);
+        pointer += length;
+        if (*pointer != 0x00)
+        {
+            fprintf(fp, ".");
+            return dns_print_name(msg, pointer, end, fp);
+        }
+        else
+            return pointer + 1;
+    }
 }
 
 void http_parser(char *buff, FILE *fp)

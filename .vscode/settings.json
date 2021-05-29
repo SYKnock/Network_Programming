@@ -11,6 +11,8 @@
         "dns.h": "c",
         "stdio.h": "c",
         "string.h": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "string_view": "cpp",
+        "tuple": "cpp"
     }
 }
