@@ -32,7 +32,7 @@ void tcp_parser(char *buff, tcp_head *tcp, FILE *fp);
 void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
 void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
-void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag);
+void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte);
 void https_parser(char *buff, FILE *fp);
 void dhcp_parser(char *buff, FILE *fp);
 void dump_mem(const void *mem, size_t len, FILE *fp);
@@ -534,13 +534,17 @@ unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsign
     }
 }
 
-void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag)
+void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte)
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< HyperText Transfer Protocol(HTTP) >\n");
 
     unsigned char *end_point = strstr(http_buff, "\r\n\r\n");
     int http_message_length = end_point - http_buff;
+
+    unsigned char *http_head = (char *)malloc(sizeof(char) * http_message_length + 1);
+    strncpy(http_head, http_buff, http_message_length);
+    http_head[http_message_length] = '\0';
 
     printf("HTTP ");
     if (r_flag == HTTP_REQUEST)
@@ -564,23 +568,70 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
 
     if (end_point != NULL)
     {
-        for (int i = 0; i < http_message_length; i++)
-        {
-            fprintf(fp, "%c", http_buff[i]);
-        }
+        fprintf(fp, "%s", http_head);
         fprintf(fp, "\n");
     }
 
-    if (r_flag == HTTP_RESPONSE)
-    {
-        char *data_length_field = strstr(http_buff, "Content-Length: ");    
-        
-        if(data_length_field != NULL)
-        {
-            
+    char *data_length_field = strstr(http_head, "Content-Length: ");
 
+    int chunk_flag = 0;
+    int http_body_byte = -1;
+    if (data_length_field != NULL)
+    {
+        data_length_field = strchr(data_length_field, ' ');
+        data_length_field += 1;
+
+        http_body_byte = strtol(data_length_field, 0, 10);
+        fprintf(fp, "File data: %d bytes\n", http_body_byte);
+    }
+    else
+    {
+        char *data_chunk_field = strstr(http_head, "Transfer-Encoding: chunked");
+        if (data_chunk_field != NULL)
+            chunk_flag = 1;
+        
+        else
+        {
+            data_chunk_field = strstr(http_head, "transfer-encoding: chunked");
+            if (data_chunk_field != NULL)
+                chunk_flag = 1;
+        }
+    }
+
+    unsigned char *http_body = end_point + 4;
+    int real_body = http_length - (http_body - http_buff);
+
+    if(chunk_flag == 1)
+        fprintf(fp, "Data chunked, %d bytes in this packet\n", real_body);
+
+    if (http_body != NULL)
+    {
+        if (chunk_flag == 1)
+        {
+            fprintf(fp, "\n");
+            fprintf(fp, "<HTTP Body>\n");
+            fprintf(fp, "\n");
+
+            for (int i = 0; i < real_body; i++)
+            {
+                fprintf(fp, "%c", http_body[i]);
+            }
+            fprintf(fp, "\n");
+        }
+        else if (http_body_byte > 0)
+        {
+            fprintf(fp, "\n");
+            fprintf(fp, "<HTTP Body>\n");
+            fprintf(fp, "\n");
+
+            for (int i = 0; i < real_body; i++)
+            {
+                fprintf(fp, "%c", http_body[i]);
+            }
+            fprintf(fp, "\n");
         }
 
+        free(http_head);
     }
 }
 

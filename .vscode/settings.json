@@ -13,6 +13,7 @@
         "string.h": "c",
         "signal.h": "c",
         "string_view": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "cstddef": "cpp"
     }
 }

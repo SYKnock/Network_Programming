@@ -194,7 +194,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                     ether_parser(buff, eth, fp);
                     ipv4_parser(buff, ip, fp, c_byte);
                     tcp_parser(buff, tcp, fp);
-                    http_parser(buff, http_buff, http_length, fp, r_flag);
+                    http_parser(buff, http_buff, http_length, fp, r_flag, c_byte);
                     dump_mem(buff, c_byte, fp);
                     printf("Captured byte: %d\n", c_byte);
                 }
@@ -242,7 +242,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
             }
         }
     }
-    else if ((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80)) // 80 port는 HTTP이다.
+    if ((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80)) // 80 port는 HTTP이다.
     {
         if (mode == MODE_ALL || mode == MODE_HTTP)
         {
@@ -271,7 +271,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
                     ether_parser(buff, eth, fp);
                     ipv4_parser(buff, ip, fp, c_byte);
                     udp_parser(buff, udp, fp);
-                    http_parser(buff, http_buff, http_length, fp, r_flag);
+                    http_parser(buff, http_buff, http_length, fp, r_flag, c_byte);
                     dump_mem(buff, c_byte, fp);
                     printf("Captured byte: %d\n", c_byte);
                 }
