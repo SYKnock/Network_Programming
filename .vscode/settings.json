@@ -15,6 +15,8 @@
         "string_view": "cpp",
         "tuple": "cpp",
         "cstddef": "cpp",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "array": "c",
+        "string": "c"
     }
 }

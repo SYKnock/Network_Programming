@@ -680,12 +680,11 @@ void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
     for (int i = 6; i < 16; i++)
         fprintf(fp, "%02x", dhcp->dhcp_chaddr.chaddr[i] & 0xff);
 
-    
     fprintf(fp, "\nServer host name: ");
     char compare[6];
     memset(compare, 0, 6);
 
-    if(memcmp(compare, dhcp->dhcp_sname.sname, 6) == 0)
+    if (memcmp(compare, dhcp->dhcp_sname.sname, 6) == 0)
         fprintf(fp, "not given");
     else
     {
@@ -694,14 +693,14 @@ void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
     }
 
     fprintf(fp, "\nBoot file name: ");
-    if(memcmp(compare, dhcp->dhcp_file.file, 6) == 0)
+    if (memcmp(compare, dhcp->dhcp_file.file, 6) == 0)
         fprintf(fp, "not given");
     else
     {
         for (int i = 0; i < 64; i++)
             fprintf(fp, "%c", (dhcp->dhcp_file.file[i]) & 0xff);
     }
-    
+
     unsigned char magic_cookie[4];
     magic_cookie[0] = DHCP_MAGIC_1;
     magic_cookie[1] = DHCP_MAGIC_2;
@@ -709,14 +708,15 @@ void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
     magic_cookie[3] = DHCP_MAGIC_4;
 
     unsigned char *dhcp_magic = buff + offset + DHCP_HLEN;
-    
-    if(memcmp(magic_cookie, dhcp_magic, 4) == 0)
+
+    if (memcmp(magic_cookie, dhcp_magic, 4) == 0)
     {
         fprintf(fp, "\nMagic cookie: DHCP\n");
-        char *dhcp_option = dhcp_magic +4;
+        char *dhcp_option = dhcp_magic + 4;
         dhcp_option_parser(buff, dhcp, offset, fp, dhcp_option);
     }
-    
+
+    printf("Transaction ID: 0x%08x ", ntohl(dhcp->dhcp_xid));
 }
 
 void dump_mem(const void *mem, size_t len, FILE *fp)
@@ -737,8 +737,207 @@ void dump_mem(const void *mem, size_t len, FILE *fp)
     fprintf(fp, "\n\n");
 }
 
-
-void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option)
+void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option) // there are many many options in dhcp field, so this function will be very very long
 {
+    unsigned char option;
+    unsigned char length;
+    char *dhcp_option_point = dhcp_option;
+    unsigned char tmp;
 
+    int i = 0;
+
+    while (1)
+    {
+        option = (unsigned char)(*dhcp_option_point);
+
+        if (option == DHCP_End_Of_Options)
+        {
+            fprintf(fp, "Options: (%d) END\n", option);
+            fprintf(fp, "   Option END 255\n");
+            break;
+        }
+        else
+        {
+            if (option == DHCP_Message_Type)
+            {
+                fprintf(fp, "Options: (%d) DHCP Message Type\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                dhcp_option_point++;
+                tmp = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+
+                switch (tmp)
+                {
+                case DHCP_Discover:
+                    fprintf(fp, "   DHCP: Discover (%d)\n", tmp);
+                    printf("DHCP Discover detected: ");
+                    break;
+                case DHCP_Offer:
+                    fprintf(fp, "   DHCP: Offer (%d)\n", tmp);
+                    printf("DHCP Offer detected: ");
+                    break;
+                case DHCP_Request:
+                    fprintf(fp, "   DHCP: Request (%d)\n", tmp);
+                    printf("DHCP Request detected: ");
+                    break;
+                case DHCP_Decline:
+                    fprintf(fp, "   DHCP: Decline (%d)\n", tmp);
+                    printf("DHCP Decline detected: ");
+                    break;
+                case DHCP_Ack:
+                    fprintf(fp, "   DHCP: Ack (%d)\n", tmp);
+                    printf("DHCP Ack detected: ");
+                    break;
+                case DHCP_NAK:
+                    fprintf(fp, "   DHCP: NAK (%d)\n", tmp);
+                    printf("DHCP NAK detected: ");
+                    break;
+                case DHCP_Release:
+                    fprintf(fp, "   DHCP: Release (%d)\n", tmp);
+                    printf("DHCP Release detected: ");
+                    break;
+                case DHCP_Inform:
+                    fprintf(fp, "   DHCP: Inform (%d)\n", tmp);
+                    printf("DHCP Inform detected: ");
+                    break;
+                case DHCP_Force_Renew:
+                    fprintf(fp, "   DHCP: Force Renew (%d)\n", tmp);
+                    printf("DHCP Force Renew detected: ");
+                    break;
+                }
+            }
+            else if (option == DHCP_Client_Identifier)
+            {
+                fprintf(fp, "Options: (%d) Client Identifier\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+
+                dhcp_option_point++;
+                tmp = (unsigned char)(*dhcp_option_point);
+                if(tmp == 0x01)
+                {
+                    fprintf(fp, "   Hardware type: Ethernet (0x%02x)\n", tmp);
+                    dhcp_option_point++;
+                    fprintf(fp, "   Client MAC address: ");
+                    for(int i = 0; i < 6; i++)
+                    {
+                        if(i != 5)
+                            fprintf(fp, "%02x:", dhcp_option_point[i] & 0xff);
+
+                        else
+                            fprintf(fp, "%02x\n", dhcp_option_point[i] & 0xff);
+                    }
+                    dhcp_option_point += (length - 2);
+                }
+                    
+                else
+                {
+                    fprintf(fp, "   Hardware type: (0x%02x)\n", tmp);
+                    dhcp_option_point += (length - 1);
+                }
+            }
+            else if (option == DHCP_Requested_IP_Address)
+            {
+                fprintf(fp, "Options: (%d) Requested IP Address\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+                dhcp_option_point++;
+                fprintf(fp, "   Requested IP Address: %d.%d.%d.%d\n", dhcp_option_point[0] & 0xff, dhcp_option_point[1] & 0xff, dhcp_option_point[2] & 0xff, dhcp_option_point[3] & 0xff);
+                dhcp_option_point += (length - 1);
+            }
+            else if (option == DHCP_Hostname)
+            {
+                fprintf(fp, "Options: (%d) Host name\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+                dhcp_option_point++;
+
+                fprintf(fp, "   Host Name: ");
+                for(int i = 0; i < length; i++)
+                    fprintf(fp, "%c", dhcp_option_point[i]);
+                fprintf(fp, "\n");
+
+                dhcp_option_point += (length - 1);
+            }
+            else if (option == DHCP_Client_FQDN)
+            {
+                fprintf(fp, "Options: (%d) Client Fully Qualified Domain Name\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+                dhcp_option_point++;
+                fprintf(fp, "   Flags: 0x%02x\n", *dhcp_option_point & 0xff);
+                dhcp_option_point++;
+                fprintf(fp, "   A-RR result: %d\n", *dhcp_option_point & 0xff);
+                dhcp_option_point++;
+                fprintf(fp, "   PTR-RR result: %d\n", *dhcp_option_point & 0xff);
+                dhcp_option_point++;
+                fprintf(fp, "   Client Name: ");
+                for(int i = 0; i < length - 3; i++)
+                    fprintf(fp, "%c", dhcp_option_point[i]);
+                fprintf(fp, "\n");
+
+                dhcp_option_point += (length - 4);
+
+            }
+            else if (option == DHCP_Vendor_Class_Identifier)
+            {
+                fprintf(fp, "Options: (%d) Vendor class identifier\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+                dhcp_option_point++;
+                fprintf(fp, "   Vendor class identifier: ");
+                for(int i = 0; i < length; i++)
+                    fprintf(fp, "%c", dhcp_option_point[i]);
+                fprintf(fp, "\n");
+
+                dhcp_option_point += (length - 1);
+            }
+            else if (option == DHCP_Parameter_Request_List)
+            {
+                fprintf(fp, "Options: (%d) Parameter Request List\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+                dhcp_option_point++;
+
+                for(int i = 0; i < length; i++)
+                {
+                    int prl_list = dhcp_option_point[i] &0xff;
+                    fprintf(fp, "   Parameter Request List Item: (%d) ", prl_list);
+                    if(prl_list < 136)
+                        fprintf(fp, "%s\n", DHCP_PRL[prl_list]);
+                    else if(prl_list == DHCP_Private_Classless_Static_Route_Microsoft)
+                        fprintf(fp, "Private/Classless Static Route (Microsoft)\n");
+                    else if(prl_list == DHCP_Private_Proxy_autodiscovery)
+                        fprintf(fp, "Private/Proxy autodiscovery\n");
+                    else
+                        fprintf(fp, "Undefined\n");
+                }
+
+                dhcp_option_point += (length - 1);
+            }
+            else
+            {
+                fprintf(fp, "Options: (%d) Not defined\n", option);
+                dhcp_option_point++;
+                length = (unsigned char)(*dhcp_option_point);
+                fprintf(fp, "   Length: %d\n", length);
+                fprintf(fp, "   Dump: 0x");
+                dhcp_option_point++;
+                for(int i = 0; i < length; i++)
+                    fprintf(fp, "%02x ", dhcp_option_point[i] & 0xff);
+                fprintf(fp, "\n");
+                dhcp_option_point += (length - 1);
+            }
+            
+        }
+
+        dhcp_option_point++;
+    }
 }
