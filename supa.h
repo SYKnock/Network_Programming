@@ -206,7 +206,9 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
 
     if ((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443))
     {
+        
     }
+
 }
 
 void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
@@ -242,7 +244,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
             }
         }
     }
-    if ((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80)) // 80 port는 HTTP이다.
+    if ((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80)) // 80번 port는 HTTP이다.
     {
         if (mode == MODE_ALL || mode == MODE_HTTP)
         {
@@ -276,6 +278,23 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
                     printf("Captured byte: %d\n", c_byte);
                 }
             }
+        }
+    }
+
+    if ((ntohs(udp->udp_src) == 67) || (ntohs(udp->udp_dst) == 67) || (ntohs(udp->udp_src) == 68) || (ntohs(udp->udp_dst) == 68)) // 67, 68번 port는 DHCP이다.
+    {
+        if(mode == MODE_ALL || mode == MODE_DHCP)
+        {
+            dhcp_head *dhcp = (dhcp_head *)malloc(sizeof(dhcp_head));
+            int offset = ETH_HLEN + ip_head_length + UDP_HLEN;
+            memcpy(dhcp, buff + offset, DHCP_HLEN);
+            fprintf(fp, "#DHCP#\n");
+            ether_parser(buff, eth, fp);
+            ipv4_parser(buff, ip, fp, c_byte);
+            udp_parser(buff, udp, fp);
+            dhcp_parser(buff, dhcp, fp, offset);
+            dump_mem(buff, c_byte, fp);
+            printf("Captured byte: %d\n", c_byte);
         }
     }
 }

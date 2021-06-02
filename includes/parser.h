@@ -15,7 +15,6 @@
 
 #include "arp.h"
 #include "dns.h"
-#include "http.h"
 #include "https.h"
 #include "dhcp.h"
 #include "ether.h"
@@ -34,8 +33,9 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp);
 void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
 void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte);
 void https_parser(char *buff, FILE *fp);
-void dhcp_parser(char *buff, FILE *fp);
+void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset);
 void dump_mem(const void *mem, size_t len, FILE *fp);
+void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option);
 
 unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsigned char *end, FILE *fp);
 unsigned char *dns_query(unsigned char *dns_buf, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
@@ -589,7 +589,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
         char *data_chunk_field = strstr(http_head, "Transfer-Encoding: chunked");
         if (data_chunk_field != NULL)
             chunk_flag = 1;
-        
+
         else
         {
             data_chunk_field = strstr(http_head, "transfer-encoding: chunked");
@@ -601,7 +601,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
     unsigned char *http_body = end_point + 4;
     int real_body = http_length - (http_body - http_buff);
 
-    if(chunk_flag == 1)
+    if (chunk_flag == 1)
         fprintf(fp, "Data chunked, %d bytes in this packet\n", real_body);
 
     if (http_body != NULL)
@@ -639,8 +639,84 @@ void https_parser(char *buff, FILE *fp)
 {
 }
 
-void dhcp_parser(char *buff, FILE *fp)
+void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
 {
+    fprintf(fp, "-----------------------------------------------\n");
+    fprintf(fp, "< Dynamic Host Configuration Protocol(DHCP) >\n");
+
+    if (dhcp->dhcp_op == 1)
+        fprintf(fp, "Message type: Boot Request (%d)\n", dhcp->dhcp_op);
+    else if (dhcp->dhcp_op == 2)
+        fprintf(fp, "Message type: Boot Response (%d)\n", dhcp->dhcp_op);
+
+    if (dhcp->dhcp_htype == 0x01)
+        fprintf(fp, "Hardware type: Ethernet (0x%02x)\n", dhcp->dhcp_htype & 0xff);
+    else
+        fprintf(fp, "Hardware type: ? (0x%02x)\n", dhcp->dhcp_htype & 0xff);
+
+    fprintf(fp, "Hardware address length: %d\n", dhcp->dhcp_hlen);
+    fprintf(fp, "Hops: %d\n", dhcp->dhcp_hops);
+    fprintf(fp, "Transaction ID: 0x%08x\n", ntohl(dhcp->dhcp_xid));
+    fprintf(fp, "Seconds elapsed: %d\n", ntohs(dhcp->dhcp_secs));
+    if (ntohs(dhcp->dhcp_flags == 0))
+        fprintf(fp, "Bootp flags: 0x%04x (Unicast)\n", ntohs(dhcp->dhcp_flags));
+    else
+        fprintf(fp, "Bootp flags: 0x%04x\n", ntohs(dhcp->dhcp_flags));
+    fprintf(fp, "Client IP address: %d.%d.%d.%d\n", (dhcp->dhcp_ciaddr) & 0xff, (dhcp->dhcp_ciaddr >> 8) & 0xff, (dhcp->dhcp_ciaddr >> 16) & 0xff, (dhcp->dhcp_ciaddr >> 24) & 0xff);
+    fprintf(fp, "Your (client) IP address: %d.%d.%d.%d\n", (dhcp->dhcp_yiaddr) & 0xff, (dhcp->dhcp_yiaddr >> 8) & 0xff, (dhcp->dhcp_yiaddr >> 16) & 0xff, (dhcp->dhcp_yiaddr >> 24) & 0xff);
+    fprintf(fp, "Next server IP address: %d.%d.%d.%d\n", (dhcp->dhcp_siaddr) & 0xff, (dhcp->dhcp_siaddr >> 8) & 0xff, (dhcp->dhcp_siaddr >> 16) & 0xff, (dhcp->dhcp_siaddr >> 24) & 0xff);
+    fprintf(fp, "Relay agent IP address: %d.%d.%d.%d\n", (dhcp->dhcp_giaddr) & 0xff, (dhcp->dhcp_giaddr >> 8) & 0xff, (dhcp->dhcp_giaddr >> 16) & 0xff, (dhcp->dhcp_giaddr >> 24) & 0xff);
+
+    fprintf(fp, "Client MAC address: ");
+    for (int i = 0; i < 6; i++)
+    {
+        if (i != 5)
+            fprintf(fp, "%02x:", dhcp->dhcp_chaddr.chaddr[i] & 0xff);
+        else
+            fprintf(fp, "%02x", dhcp->dhcp_chaddr.chaddr[i] & 0xff);
+    }
+
+    fprintf(fp, "\nClient hardware address padding: ");
+    for (int i = 6; i < 16; i++)
+        fprintf(fp, "%02x", dhcp->dhcp_chaddr.chaddr[i] & 0xff);
+
+    
+    fprintf(fp, "\nServer host name: ");
+    char compare[6];
+    memset(compare, 0, 6);
+
+    if(memcmp(compare, dhcp->dhcp_sname.sname, 6) == 0)
+        fprintf(fp, "not given");
+    else
+    {
+        for (int i = 0; i < 64; i++)
+            fprintf(fp, "%c", (dhcp->dhcp_sname.sname[i]) & 0xff);
+    }
+
+    fprintf(fp, "\nBoot file name: ");
+    if(memcmp(compare, dhcp->dhcp_file.file, 6) == 0)
+        fprintf(fp, "not given");
+    else
+    {
+        for (int i = 0; i < 64; i++)
+            fprintf(fp, "%c", (dhcp->dhcp_file.file[i]) & 0xff);
+    }
+    
+    unsigned char magic_cookie[4];
+    magic_cookie[0] = DHCP_MAGIC_1;
+    magic_cookie[1] = DHCP_MAGIC_2;
+    magic_cookie[2] = DHCP_MAGIC_3;
+    magic_cookie[3] = DHCP_MAGIC_4;
+
+    unsigned char *dhcp_magic = buff + offset + DHCP_HLEN;
+    
+    if(memcmp(magic_cookie, dhcp_magic, 4) == 0)
+    {
+        fprintf(fp, "\nMagic cookie: DHCP\n");
+        char *dhcp_option = dhcp_magic +4;
+        dhcp_option_parser(buff, dhcp, offset, fp, dhcp_option);
+    }
+    
 }
 
 void dump_mem(const void *mem, size_t len, FILE *fp)
@@ -659,4 +735,10 @@ void dump_mem(const void *mem, size_t len, FILE *fp)
     }
     fprintf(fp, "\n===============================================\n");
     fprintf(fp, "\n\n");
+}
+
+
+void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option)
+{
+
 }
