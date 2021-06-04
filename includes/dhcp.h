@@ -17,7 +17,7 @@
 #define DHCP_Domain_Name_Server 6
 // Logging_Server addresses
 #define DHCP_Log_Server 7
-#define DHCP_Quotes_Server 8
+#define DHCP_Cookie_Server 8
 #define DHCP_LPR_Server 9
 #define DHCP_Impress_Server 10
 #define DHCP_RLP_Server 11
@@ -72,13 +72,13 @@
 // Overload "sname" or "file"
 #define DHCP_Overload 52
 #define DHCP_Message_Type 53
-#define DHCP_DHCP_Server_Identifier 54
+#define DHCP_Server_Identifier 54
 
 //  of 1_ numbers indicating which options the client
 // would like to see in the response.
 #define DHCP_Parameter_Request_List 55
-#define DHCP_DHCP_Error_Message 56
-#define DHCP_DHCP_Maximum_Msg_Size 57
+#define DHCP_Error_Message 56
+#define DHCP_Maximum_Msg_Size 57
 #define DHCP_Renewal_Time 58
 #define DHCP_Rebinding_Time 59
 #define DHCP_Vendor_Class_Identifier 60

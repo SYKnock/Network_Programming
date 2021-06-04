@@ -17,6 +17,7 @@
         "cstddef": "cpp",
         "stdint.h": "c",
         "array": "c",
-        "string": "c"
+        "string": "c",
+        "condition_variable": "cpp"
     }
 }
