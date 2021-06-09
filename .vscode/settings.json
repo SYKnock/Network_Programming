@@ -18,6 +18,9 @@
         "stdint.h": "c",
         "array": "c",
         "string": "c",
-        "condition_variable": "cpp"
+        "condition_variable": "cpp",
+        "bitset": "c",
+        "initializer_list": "c",
+        "utility": "c"
     }
 }

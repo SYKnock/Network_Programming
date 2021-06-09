@@ -206,6 +206,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
 
     if ((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443)) // HTTPS
     {
+        // if there is splitted packet, we should reassemble the packet
         int https_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
         if (https_length != 0)
         {
@@ -221,8 +222,9 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
 
                     if(size + HTTPS_HLEN > https_length)
                     {
-                        stream_size = size;
+                        stream_size = size + HTTPS_HLEN;
                         split_flag = 1;
+                        
                         memcpy(tcp_reassem, tls_section, https_length);
                         end_tcp_stream += https_length;
                     }
@@ -231,50 +233,63 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                         printf("Captured byte: %d\n", c_byte);
 
                     }
-                    else
+                    else if(size - HTTPS_HLEN < https_length)
                     {
                         printf("Captured byte: %d\n", c_byte);
-                        int offset = 0;
-                        char *tracer = tls_section;
+                        int offset = size + HTTPS_HLEN;
+                        unsigned char *tracer = tls_section + size + HTTPS_HLEN;
+                        
+                        
                         while(1)
                         {
-                            if(offset >= https_length)
-                                break;
-                            
-                            uint16_t size;
-                            memcpy(&size, tracer + 3, 2);
-                            size = ntohs(size);
-                            if(size + HTTPS_HLEN <= https_length - offset)
+                            uint16_t size2;
+                            memcpy(&size2, tracer + 3, 2);
+                            size2 = ntohs(size2);
+                            if(size2 + HTTPS_HLEN > https_length - offset)
                             {
-                                offset += (size + HTTPS_HLEN);
-                                tracer += (size + HTTPS_HLEN);
+                                stream_size = size2 + HTTPS_HLEN;
+                                split_flag = 1;
+                                
+                        
+                                memcpy(tcp_reassem, tracer, https_length - offset);
+                                end_tcp_stream += https_length - offset;
+                                break;
                             }
                             else
                             {
-                                stream_size = size;
-                                split_flag = 1;
-                                memcpy(tcp_reassem, tracer, https_length - offset);
-                                end_tcp_stream += (https_length - offset);
-                                offset += (size + HTTPS_HLEN);
+                                offset += size2 + HTTPS_HLEN;
+                                tracer += size2 + HTTPS_HLEN;
+                                if(offset >= https_length)
+                                    break;
                             }
+                            
                         }
                     }
                 }
-                else
-                {  
+                else if(split_flag == 1)
+                { 
+                    if(end_tcp_stream < stream_size)
+                    {
+                        if(https_length > stream_size - end_tcp_stream)
+                        {
+                            memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
+                            end_tcp_stream += stream_size - end_tcp_stream;
+                        }
+                        else
+                        {
+                            memcpy(tcp_reassem + end_tcp_stream, tls_section, https_length);
+                            end_tcp_stream += https_length;
+                        }
+                        
+                    } 
+                    
                     if(end_tcp_stream >= stream_size)
                     {
                         printf("Captured byte: %d\n", c_byte);
-                        dump_data(tcp_reassem, end_tcp_stream, fp);
-                        fprintf(fp, "\n");
+                        
                         split_flag = 0;
                         end_tcp_stream = 0;
                         stream_size = 0;
-                    }
-                    else
-                    {
-                        memcpy(tcp_reassem + end_tcp_stream, tls_section, https_length);
-                        end_tcp_stream += https_length;
                     }
                 }
             }
