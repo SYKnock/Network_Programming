@@ -111,7 +111,6 @@ void ip_protocol(char *buff, ip_head *ip, FILE *fp, ether_head *eth)
 
     if (ip->ip_protocol == IPPROTO_TCP)
         tcp_protocol(buff, tcp, fp, eth, ip, captured_byte);
-    
 
     else if (ip->ip_protocol == IPPROTO_UDP)
         udp_protocol(buff, udp, fp, eth, ip, captured_byte);
@@ -149,6 +148,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
             }
             else
             {
+                // dns identifier 체크 필요
                 fprintf(fp, "#DNS#\n");
                 dns_head *dns = (dns_head *)malloc(sizeof(dns_head));
                 memcpy(dns, buff + ETH_HLEN + ip_head_length + tcp_head_length, DNS_HLEN);
@@ -206,9 +206,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
 
     if ((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443))
     {
-        
     }
-
 }
 
 void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
@@ -229,6 +227,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
             }
             else
             {
+                // dns identifier 체크가 필요하다
                 fprintf(fp, "#DNS#\n");
                 dns_head *dns = (dns_head *)malloc(sizeof(dns_head));
                 memcpy(dns, buff + ETH_HLEN + ip_head_length + UDP_HLEN, DNS_HLEN);
@@ -251,7 +250,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
             int http_length = c_byte - ETH_HLEN - ip_head_length - UDP_HLEN;
             unsigned char *http_buff = (unsigned char *)malloc(sizeof(char) * http_length);
             memcpy(http_buff, buff + ETH_HLEN + ip_head_length + UDP_HLEN, http_length);
-            char *check_HTTP = strstr(http_buff, "HTTP/1.1"); // 우선 http 1.1이 있는지 체크하고
+            char *check_HTTP = strstr(http_buff, "HTTP/1.1"); // http 1.1이 있는지 체크하고
 
             if (check_HTTP != NULL)
             {
@@ -283,18 +282,55 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
 
     if ((ntohs(udp->udp_src) == 67) || (ntohs(udp->udp_dst) == 67) || (ntohs(udp->udp_src) == 68) || (ntohs(udp->udp_dst) == 68)) // 67, 68번 port는 DHCP이다.
     {
-        if(mode == MODE_ALL || mode == MODE_DHCP)
+        if (mode == MODE_ALL || mode == MODE_DHCP)
         {
-            dhcp_head *dhcp = (dhcp_head *)malloc(sizeof(dhcp_head));
             int offset = ETH_HLEN + ip_head_length + UDP_HLEN;
-            memcpy(dhcp, buff + offset, DHCP_HLEN);
-            fprintf(fp, "#DHCP#\n");
-            ether_parser(buff, eth, fp);
-            ipv4_parser(buff, ip, fp, c_byte);
-            udp_parser(buff, udp, fp);
-            dhcp_parser(buff, dhcp, fp, offset);
-            dump_mem(buff, c_byte, fp);
-            printf("Captured byte: %d\n", c_byte);
+            unsigned char magic_cookie[4];
+            magic_cookie[0] = DHCP_MAGIC_1;
+            magic_cookie[1] = DHCP_MAGIC_2;
+            magic_cookie[2] = DHCP_MAGIC_3;
+            magic_cookie[3] = DHCP_MAGIC_4;
+            unsigned char *dhcp_magic = buff + offset + DHCP_HLEN;
+
+            if (memcmp(magic_cookie, dhcp_magic, 4) == 0) // check DHCP magic num
+            {
+                char *dhcp_option = dhcp_magic + 4;
+                char *dhcp_option_point = dhcp_option;
+                int dhcp_53_flag = 0;
+                unsigned char option;
+                unsigned char length;
+                while (1)
+                {
+                    option = (unsigned char)(*dhcp_option_point);
+                    if (option == DHCP_Message_Type)
+                    {
+                        dhcp_53_flag = 1;
+                        break;
+                    }
+                    else if (option == DHCP_End_Of_Options)
+                        break;
+                    else
+                    {
+                        dhcp_option_point++;
+                        length = (unsigned char)(*dhcp_option_point);
+                        dhcp_option_point += length;
+                    }
+                    dhcp_option_point++;
+                }
+                if (dhcp_53_flag) // check whether 53 option field is exist or not
+                {
+                    dhcp_head *dhcp = (dhcp_head *)malloc(sizeof(dhcp_head));
+
+                    memcpy(dhcp, buff + offset, DHCP_HLEN);
+                    fprintf(fp, "#DHCP#\n");
+                    ether_parser(buff, eth, fp);
+                    ipv4_parser(buff, ip, fp, c_byte);
+                    udp_parser(buff, udp, fp);
+                    dhcp_parser(buff, dhcp, fp, offset);
+                    dump_mem(buff, c_byte, fp);
+                    printf("Captured byte: %d\n", c_byte);
+                }
+            }
         }
     }
 }
