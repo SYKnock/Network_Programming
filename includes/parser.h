@@ -31,9 +31,6 @@
 #define HTTP_VIDEO 13
 #define HTTP_APP 14
 
-#define OCSP_RESPONSE 1
-#define OCSP_REQUEST 2
-
 void ether_parser(char *buff, ether_head *eth, FILE *fp);
 void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte);
 void tcp_parser(char *buff, tcp_head *tcp, FILE *fp);
@@ -777,34 +774,96 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
 
     const unsigned char *r_check = strchr(content_type, '-');
     r_check++;
-    int ocsp_type;
-    
-    if(strncmp(r_check, "request", 7) == 0)
-    {
-        ocsp_type = OCSP_REQUEST;
 
+    if (strncmp(r_check, "request", 7) == 0)
+    {
         if (buff != NULL)
         {
-            if((c_flag == 1) || (http_body > 0))
+            if ((c_flag == 1) || (http_body > 0))
             {
+                int t = 0;
+                while (buff[0] != 0x06)
+                {
+                    if (buff[0] == 0x30)
+                        buff += 2;
+                }
+                buff += 2;
+                fprintf(fp, "   tbsRequest\n");
+                fprintf(fp, "       requestList\n");
+                fprintf(fp, "           Request\n");
+                fprintf(fp, "               reqCert\n");
+                fprintf(fp, "                   hashAlgorithm\n");
+                fprintf(fp, "                       Algorithm Id: ");
+
+                char tmp = buff[0] >> 4;
+                char tmp2 = buff[0] - tmp * 16;
+                char tmp3 = tmp + tmp2;
+                fprintf(fp, "%d.%d.", tmp3 / 10, tmp3 % 10);
+                buff++;
+                for (int i = 0; i < 4; i++)
+                {
+                    if (i != 3)
+                        fprintf(fp, "%d.", buff[i]);
+                    else
+                        fprintf(fp, "%d", buff[i]);
+                }
+
+                if ((buff[0] == 0x0e) && (buff[1] == 0x03) && (buff[2] == 0x02) && (buff[3] == 0x1a))
+                    fprintf(fp, " (SHA1)");
                 
+                buff += 4;
+                fprintf(fp, "\n");
+                buff += 2;
+
+                int count = 0;
+                if (buff[0] == 0x02 || buff[0] == 0x04)
+                {
+                    fprintf(fp, "                   issuerNameHash: ");
+                    buff++;
+                    count = (int)buff[0];
+                    buff++;
+                    for (int i = 0; i < count; i++)
+                        fprintf(fp, "%02x", buff[i] & 0xff);
+                    fprintf(fp, "\n");
+                    buff += count;
+                }
+
+                if (buff[0] == 0x02 || buff[0] == 0x04)
+                {
+                    fprintf(fp, "                   issuerKeyHash: ");
+                    buff++;
+                    count = (int)buff[0];
+                    buff++;
+                    for (int i = 0; i < count; i++)
+                        fprintf(fp, "%02x", buff[i] & 0xff);
+                    fprintf(fp, "\n");
+                    buff += count;
+                }
+
+                if (buff[0] == 0x02 || buff[0] == 0x04)
+                {
+                    fprintf(fp, "                   serialNumber: 0x");
+                    buff++;
+                    count = (int)buff[0];
+                    buff++;
+                    for (int i = 0; i < count; i++)
+                        fprintf(fp, "%02x", buff[i] & 0xff);
+                    fprintf(fp, "\n");
+                }
+            }
+        }
+    }
+    else if (strncmp(r_check, "response", 8) == 0)
+    {
+        if (buff != NULL)
+        {
+            if ((c_flag == 1) || (http_body > 0))
+            {
+
 
             }
         }
     }
-    else if(strncmp(r_check, "response", 8) == 0)
-    {
-        ocsp_type = OCSP_RESPONSE;
-        
-        if (buff != NULL)
-        {
-            if((c_flag == 1) || (http_body > 0))
-            {
-                
-
-            }
-        }
-    }    
 }
 
 void dump_data(const void *mem, size_t len, FILE *fp)
