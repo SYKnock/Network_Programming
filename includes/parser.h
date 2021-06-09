@@ -31,6 +31,11 @@
 #define HTTP_VIDEO 13
 #define HTTP_APP 14
 
+char tcp_reassem[100000];
+int end_tcp_stream = 0;
+int split_flag = 0;
+int stream_size = 0;
+
 void ether_parser(char *buff, ether_head *eth, FILE *fp);
 void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte);
 void tcp_parser(char *buff, tcp_head *tcp, FILE *fp);
@@ -38,7 +43,7 @@ void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
 void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
 void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte);
-void https_parser(char *buff, FILE *fp);
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp);
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset);
 void dump_mem(const void *mem, size_t len, FILE *fp);
 void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option);
@@ -135,7 +140,6 @@ void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
     fprintf(fp, "Flags: %c%c%c%c%c%c%c%c%c\n", (tcp->tcp_ns ? 'N' : 'X'), (tcp->tcp_cwr ? 'C' : 'X'), (tcp->tcp_ece ? 'E' : 'X'), (tcp->tcp_urg ? 'U' : 'X'),
             (tcp->tcp_ack ? 'A' : 'X'), (tcp->tcp_psh ? 'P' : 'X'), (tcp->tcp_rst ? 'R' : 'X'), (tcp->tcp_syn ? 'S' : 'X'), (tcp->tcp_fin ? 'F' : 'X'));
     fprintf(fp, "Window size value: %d\n", ntohs(tcp->tcp_win_size));
-    //fprintf(fp, "Calculted window size value: %d\n"); // tcp, ip option 에 대한 구현이 필요
     fprintf(fp, "Checksum: 0x%04x\n", ntohs(tcp->tcp_checksum));
     fprintf(fp, "Urgent Pointer: %d\n", ntohs(tcp->tcp_urg_ptr));
 }
@@ -880,8 +884,14 @@ void dump_data(const void *mem, size_t len, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void https_parser(char *buff, FILE *fp)
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp)
 {
+    int head_count = 0;
+    https_head *https = (https_head *)malloc(sizeof(https_head));
+    
+
+    
+    
 }
 
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)

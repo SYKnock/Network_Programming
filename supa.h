@@ -172,7 +172,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
             unsigned char *http_buff = (unsigned char *)malloc(sizeof(char) * http_length);
             memcpy(http_buff, buff + ETH_HLEN + ip_head_length + tcp_head_length, http_length);
 
-            char *check_HTTP = strstr(http_buff, "HTTP/1.1"); // 우선 http 1.1이 있는지 체크하고
+            char *check_HTTP = strstr(http_buff, "HTTP/1.1"); // check http 1.1
             if (check_HTTP != NULL)
             {
                 unsigned char *check_fisrt_line = strstr(http_buff, "\r\n");
@@ -181,7 +181,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                 first_line[first_line_length] = '\0';
                 strncpy(first_line, http_buff, first_line_length);
 
-                char *double_check = strstr(first_line, "HTTP/1.1"); // 첫 번째 줄에 http 1.1이 있어야 http 패킷으로 인식한다
+                char *double_check = strstr(first_line, "HTTP/1.1"); // check http 1.1 at first line
                 if (double_check != NULL)
                 {
                     int r_flag;
@@ -204,8 +204,81 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
         }
     }
 
-    if ((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443))
+    if ((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443)) // HTTPS
     {
+        int https_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
+        if (https_length != 0)
+        {
+            if (mode == MODE_HTTPS || mode == MODE_ALL)
+            {
+                unsigned char *tls_section = buff + ETH_HLEN + ip_head_length + tcp_head_length;
+
+                if(split_flag == 0)
+                {
+                    uint16_t size;
+                    memcpy(&size, tls_section + 3, 2);
+                    size = ntohs(size);
+
+                    if(size + HTTPS_HLEN > https_length)
+                    {
+                        stream_size = size;
+                        split_flag = 1;
+                        memcpy(tcp_reassem, tls_section, https_length);
+                        end_tcp_stream += https_length;
+                    }
+                    else if(size + HTTPS_HLEN == https_length)
+                    {
+                        printf("Captured byte: %d\n", c_byte);
+
+                    }
+                    else
+                    {
+                        printf("Captured byte: %d\n", c_byte);
+                        int offset = 0;
+                        char *tracer = tls_section;
+                        while(1)
+                        {
+                            if(offset >= https_length)
+                                break;
+                            
+                            uint16_t size;
+                            memcpy(&size, tracer + 3, 2);
+                            size = ntohs(size);
+                            if(size + HTTPS_HLEN <= https_length - offset)
+                            {
+                                offset += (size + HTTPS_HLEN);
+                                tracer += (size + HTTPS_HLEN);
+                            }
+                            else
+                            {
+                                stream_size = size;
+                                split_flag = 1;
+                                memcpy(tcp_reassem, tracer, https_length - offset);
+                                end_tcp_stream += (https_length - offset);
+                                offset += (size + HTTPS_HLEN);
+                            }
+                        }
+                    }
+                }
+                else
+                {  
+                    if(end_tcp_stream >= stream_size)
+                    {
+                        printf("Captured byte: %d\n", c_byte);
+                        dump_data(tcp_reassem, end_tcp_stream, fp);
+                        fprintf(fp, "\n");
+                        split_flag = 0;
+                        end_tcp_stream = 0;
+                        stream_size = 0;
+                    }
+                    else
+                    {
+                        memcpy(tcp_reassem + end_tcp_stream, tls_section, https_length);
+                        end_tcp_stream += https_length;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -215,19 +288,18 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
 
     memcpy(udp, buff + ETH_HLEN + ip_head_length, UDP_HLEN);
 
-    if ((ntohs(udp->udp_src) == 53) || (ntohs(udp->udp_dst) == 53)) // 53번 port는 DNS이다.
+    if ((ntohs(udp->udp_src) == 53) || (ntohs(udp->udp_dst) == 53)) // DNS
     {
         if (mode == MODE_DNS || mode == MODE_ALL)
         {
-            if ((ntohl(ip->ip_src) == 0x7f000001) || (ntohl(ip->ip_dst) == 0x7f000035)) // cached data check는 무시
+            if ((ntohl(ip->ip_src) == 0x7f000001) || (ntohl(ip->ip_dst) == 0x7f000035)) // ignore the cached data check
             {
             }
-            else if ((ntohl(ip->ip_src) == 0x7f000035) || (ntohl(ip->ip_dst) == 0x7f000001)) // cached data check는 무시
+            else if ((ntohl(ip->ip_src) == 0x7f000035) || (ntohl(ip->ip_dst) == 0x7f000001)) // ignore the cached data check
             {
             }
             else
             {
-                // dns identifier 체크가 필요하다
                 fprintf(fp, "#DNS#\n");
                 dns_head *dns = (dns_head *)malloc(sizeof(dns_head));
                 memcpy(dns, buff + ETH_HLEN + ip_head_length + UDP_HLEN, DNS_HLEN);
@@ -243,7 +315,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
             }
         }
     }
-    if ((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80)) // 80번 port는 HTTP이다.
+    if ((ntohs(udp->udp_src) == 80) || (ntohs(udp->udp_dst) == 80)) // HTTP
     {
         if (mode == MODE_ALL || mode == MODE_HTTP)
         {
@@ -280,7 +352,7 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
         }
     }
 
-    if ((ntohs(udp->udp_src) == 67) || (ntohs(udp->udp_dst) == 67) || (ntohs(udp->udp_src) == 68) || (ntohs(udp->udp_dst) == 68)) // 67, 68번 port는 DHCP이다.
+    if ((ntohs(udp->udp_src) == 67) || (ntohs(udp->udp_dst) == 67) || (ntohs(udp->udp_src) == 68) || (ntohs(udp->udp_dst) == 68)) // DHCP
     {
         if (mode == MODE_ALL || mode == MODE_DHCP)
         {
