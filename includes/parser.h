@@ -926,13 +926,31 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
     {
 
     }
+    else if(https_case == SPLIT_4)
+    {
 
+    }
+    else if(https_case == SPLIT_5)
+    {
+        
+    }
     
 }
 
 void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
 {
-    unsigned char handshake_type = *(tls_section + HTTPS_HLEN);
+    unsigned char content = tls_section[0];
+    uint16_t version;
+    memcpy(&version, tls_section + 1, 2);
+    uint16_t length;
+    memcpy(&length, tls_section + 3, 2);
+    version = ntohs(version);
+    length = ntohs(length);
+
+    tls_section += HTTPS_HLEN;
+    unsigned char handshake_type = tls_section[0];
+
+    
 
 
 
@@ -1026,7 +1044,6 @@ void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
         fprintf(fp, "%02x", tls_section[i] & 0xff);
     fprintf(fp, "\n");
 }
-
 
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
 {
