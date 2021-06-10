@@ -54,10 +54,10 @@ unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsign
 unsigned char *dns_query(unsigned char *dns_buf, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
 unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
 
-void tls_record(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
-void tls_alert(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
-void tls_change_cipher_spec(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
-void tls_handshake(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
+void tls_record(int section_length, unsigned char *tls_section, FILE *fp);
+void tls_alert(int section_length, unsigned char *tls_section, FILE *fp);
+void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE *fp);
+void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp);
 
 
 void ether_parser(char *buff, ether_head *eth, FILE *fp)
@@ -896,29 +896,27 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
     fprintf(fp, "< Transport Layer Security(TLS) >\n");
     if(https_case == SPLIT_1)
     {
-        https_head *https = (https_head *)malloc(sizeof(https_head));
-        memcpy(https, tls_section, HTTPS_HLEN);
-        int content = https->https_content_type;
-        printf("%d\n", content);
-        int length = https->https_length;
+        unsigned char content = tls_section[0];
+        uint16_t length;
+        memcpy(&length, tls_section + 3, 2);
+        length = ntohs(length);
 
         switch(content)
         {
         case APPLICATION_DATA:
-            tls_record(https, length, tls_section, fp);
+            tls_record(length, tls_section, fp);
             break;
         case ALERT:
-            tls_alert(https, length, tls_section, fp);
+            tls_alert(length, tls_section, fp);
             break;
         case CHANGE_CIPHER_SPEC:
-            tls_change_cipher_spec(https, length, tls_section, fp);
+            tls_change_cipher_spec(length, tls_section, fp);
             break;
         case HANDSHAKE:
-            tls_handshake(https, length, tls_section, fp);
+            tls_handshake(length, tls_section, fp);
             break;
         }
 
-        free(https);
     }
     else if(https_case == SPLIT_2)
     {
@@ -932,7 +930,7 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
     
 }
 
-void tls_handshake(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
 {
     unsigned char handshake_type = *(tls_section + HTTPS_HLEN);
 
@@ -941,66 +939,86 @@ void tls_handshake(https_head *https, int section_length, unsigned char *tls_sec
 
 }
 
-void tls_change_cipher_spec(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE *fp)
 {
+    unsigned char content = tls_section[0];
+    uint16_t version;
+    memcpy(&version, tls_section + 1, 2);
+    uint16_t length;
+    memcpy(&length, tls_section + 3, 2);
+    version = ntohs(version);
+    length = ntohs(length);
     fprintf(fp, "TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec\n");
-    fprintf(fp, "   Content Type: Change Cipher Spec (%d)\n", https->https_content_type);
+    fprintf(fp, "   Content Type: Change Cipher Spec (%d)\n", tls_section[0]);
     fprintf(fp, "   Version: ");
-    https->https_version = ntohs(https->https_version);
-    if(https->https_version == 0x0303)
+    if(version == 0x0303)
         fprintf(fp, "TLS 1.2 ");
-    else if(https->https_version == 0x0304)
+    else if(version == 0x0304)
         fprintf(fp, "TLS 1.3 ");
-    else if(https->https_version == 0x0302)
+    else if(version == 0x0302)
         fprintf(fp, "TLS 1.1 ");
-    else if(https->https_version == 0x0301)
+    else if(version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
 
-    fprintf(fp, "(0x%04x)", https->https_version);
+    fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
-    fprintf(fp, "Length: %d\n", https->https_length);
+    fprintf(fp, "Length: %d\n", length);
     fprintf(fp, "   Change Cipher Spec Message\n");
 }
 
-void tls_alert(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+void tls_alert(int section_length, unsigned char *tls_section, FILE *fp)
 {
+    unsigned char content = tls_section[0];
+    uint16_t version;
+    memcpy(&version, tls_section + 1, 2);
+    uint16_t length;
+    memcpy(&length, tls_section + 3, 2);
+    version = ntohs(version);
+    length = ntohs(length);
     fprintf(fp, "TLS Record Layer: Encrypted Alert\n");
-    fprintf(fp, "   Content Type: Alert (%d)\n", https->https_content_type);
+    fprintf(fp, "   Content Type: Alert (%d)\n", content);
     fprintf(fp, "   Version: ");
-    https->https_version = ntohs(https->https_version);
-    if(https->https_version == 0x0303)
+    version = ntohs(version);
+    if(version == 0x0303)
         fprintf(fp, "TLS 1.2 ");
-    else if(https->https_version == 0x0304)
+    else if(version == 0x0304)
         fprintf(fp, "TLS 1.3 ");
-    else if(https->https_version == 0x0302)
+    else if(version == 0x0302)
         fprintf(fp, "TLS 1.1 ");
-    else if(https->https_version == 0x0301)
+    else if(version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
     
-    fprintf(fp, "(0x%04x)", https->https_version);
+    fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
-    fprintf(fp, "Length: %d\n", https->https_length);
+    fprintf(fp, "Length: %d\n", length);
     fprintf(fp, "   Alert Message: Encrypted Alert\n");
 }
 
-void tls_record(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
 {  
+    unsigned char content = tls_section[0];
+    uint16_t version;
+    memcpy(&version, tls_section + 1, 2);
+    uint16_t length;
+    memcpy(&length, tls_section + 3, 2);
+    version = ntohs(version);
+    length = ntohs(length);
     fprintf(fp, "TLS Record Layer: Application Data Protocol: http-over-tls\n");
-    fprintf(fp, "   Opaque Type: Application Data (%d)\n", https->https_content_type);
+    fprintf(fp, "   Opaque Type: Application Data (%d)\n", content);
     fprintf(fp, "   Version: ");
-    https->https_version = ntohs(https->https_version);
-    if(https->https_version == 0x0303)
+    version = ntohs(version);
+    if(version == 0x0303)
         fprintf(fp, "TLS 1.2 ");
-    else if(https->https_version == 0x0304)
+    else if(version == 0x0304)
         fprintf(fp, "TLS 1.3 ");
-    else if(https->https_version == 0x0302)
+    else if(version == 0x0302)
         fprintf(fp, "TLS 1.1 ");
-    else if(https->https_version == 0x0301)
+    else if(version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
 
-    fprintf(fp, "(0x%04x)", https->https_version);
+    fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
-    fprintf(fp, "Length: %d\n", https->https_length);
+    fprintf(fp, "Length: %d\n", length);
 
     fprintf(fp, "   Encrypted Application Data: ");
     tls_section += 5;

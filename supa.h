@@ -231,10 +231,17 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                     }
                     else if (size + HTTPS_HLEN == https_length)
                     {
+                        ether_parser(buff, eth, fp);
+                        ipv4_parser(buff, ip, fp, c_byte);
+                        tcp_parser(buff, tcp, fp);
+                        
+                        https_case = SPLIT_1;
+                        https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, https_case);
                         printf("Captured byte: %d\n", c_byte);
                     }
                     else if (size - HTTPS_HLEN < https_length)
                     {
+                        https_case = SPLIT_2;
                         printf("Captured byte: %d\n", c_byte);
                         int offset = size + HTTPS_HLEN;
                         unsigned char *tracer = tls_section + size + HTTPS_HLEN;
@@ -275,10 +282,12 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                         size3 = ntohs(size3);
                         if (size3 + HTTPS_HLEN == https_length)
                         {
+                            https_case = SPLIT_3;
                             printf("Captured byte: %d\n", c_byte);
                         }
                         else if (size3 + HTTPS_HLEN < https_length)
                         {
+                            https_case = SPLIT_4;
                             printf("Captured byte: %d\n", c_byte);
                         }
                     }
@@ -308,9 +317,8 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                         }
                         if (end_tcp_stream >= stream_size)
                         {
+                            https_case = SPLIT_5;
                             printf("Captured byte: %d\n", c_byte);
-                            dump_data(tcp_reassem, stream_size, fp);
-                            fprintf(fp, "\n");
 
                             split_flag = 0;
                             end_tcp_stream = 0;
