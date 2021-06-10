@@ -43,7 +43,7 @@ void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
 void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
 void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte);
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp);
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int https_case);
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset);
 void dump_mem(const void *mem, size_t len, FILE *fp);
 void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option);
@@ -53,6 +53,12 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
 unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsigned char *end, FILE *fp);
 unsigned char *dns_query(unsigned char *dns_buf, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
 unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp);
+
+void tls_record(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
+void tls_alert(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
+void tls_change_cipher_spec(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
+void tls_handshake(https_head *https, int section_length, unsigned char *tls_section, FILE *fp);
+
 
 void ether_parser(char *buff, ether_head *eth, FILE *fp)
 {
@@ -884,15 +890,125 @@ void dump_data(const void *mem, size_t len, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp)
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int https_case)
 {
-    int head_count = 0;
-    https_head *https = (https_head *)malloc(sizeof(https_head));
-    
+    fprintf(fp, "-----------------------------------------------\n");
+    fprintf(fp, "< Transport Layer Security(TLS) >\n");
+    if(https_case == SPLIT_1)
+    {
+        https_head *https = (https_head *)malloc(sizeof(https_head));
+        memcpy(https, tls_section, HTTPS_HLEN);
+        int content = https->https_content_type;
+        printf("%d\n", content);
+        int length = https->https_length;
+
+        switch(content)
+        {
+        case APPLICATION_DATA:
+            tls_record(https, length, tls_section, fp);
+            break;
+        case ALERT:
+            tls_alert(https, length, tls_section, fp);
+            break;
+        case CHANGE_CIPHER_SPEC:
+            tls_change_cipher_spec(https, length, tls_section, fp);
+            break;
+        case HANDSHAKE:
+            tls_handshake(https, length, tls_section, fp);
+            break;
+        }
+
+        free(https);
+    }
+    else if(https_case == SPLIT_2)
+    {
+
+    }
+    else if(https_case == SPLIT_3)
+    {
+
+    }
 
     
-    
 }
+
+void tls_handshake(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+{
+    unsigned char handshake_type = *(tls_section + HTTPS_HLEN);
+
+
+
+
+}
+
+void tls_change_cipher_spec(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+{
+    fprintf(fp, "TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec\n");
+    fprintf(fp, "   Content Type: Change Cipher Spec (%d)\n", https->https_content_type);
+    fprintf(fp, "   Version: ");
+    https->https_version = ntohs(https->https_version);
+    if(https->https_version == 0x0303)
+        fprintf(fp, "TLS 1.2 ");
+    else if(https->https_version == 0x0304)
+        fprintf(fp, "TLS 1.3 ");
+    else if(https->https_version == 0x0302)
+        fprintf(fp, "TLS 1.1 ");
+    else if(https->https_version == 0x0301)
+        fprintf(fp, "TLS 1.0 ");
+
+    fprintf(fp, "(0x%04x)", https->https_version);
+    fprintf(fp, "\n");
+    fprintf(fp, "Length: %d\n", https->https_length);
+    fprintf(fp, "   Change Cipher Spec Message\n");
+}
+
+void tls_alert(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+{
+    fprintf(fp, "TLS Record Layer: Encrypted Alert\n");
+    fprintf(fp, "   Content Type: Alert (%d)\n", https->https_content_type);
+    fprintf(fp, "   Version: ");
+    https->https_version = ntohs(https->https_version);
+    if(https->https_version == 0x0303)
+        fprintf(fp, "TLS 1.2 ");
+    else if(https->https_version == 0x0304)
+        fprintf(fp, "TLS 1.3 ");
+    else if(https->https_version == 0x0302)
+        fprintf(fp, "TLS 1.1 ");
+    else if(https->https_version == 0x0301)
+        fprintf(fp, "TLS 1.0 ");
+    
+    fprintf(fp, "(0x%04x)", https->https_version);
+    fprintf(fp, "\n");
+    fprintf(fp, "Length: %d\n", https->https_length);
+    fprintf(fp, "   Alert Message: Encrypted Alert\n");
+}
+
+void tls_record(https_head *https, int section_length, unsigned char *tls_section, FILE *fp)
+{  
+    fprintf(fp, "TLS Record Layer: Application Data Protocol: http-over-tls\n");
+    fprintf(fp, "   Opaque Type: Application Data (%d)\n", https->https_content_type);
+    fprintf(fp, "   Version: ");
+    https->https_version = ntohs(https->https_version);
+    if(https->https_version == 0x0303)
+        fprintf(fp, "TLS 1.2 ");
+    else if(https->https_version == 0x0304)
+        fprintf(fp, "TLS 1.3 ");
+    else if(https->https_version == 0x0302)
+        fprintf(fp, "TLS 1.1 ");
+    else if(https->https_version == 0x0301)
+        fprintf(fp, "TLS 1.0 ");
+
+    fprintf(fp, "(0x%04x)", https->https_version);
+    fprintf(fp, "\n");
+    fprintf(fp, "Length: %d\n", https->https_length);
+
+    fprintf(fp, "   Encrypted Application Data: ");
+    tls_section += 5;
+    for(int i = 0; i < section_length; i++)
+        fprintf(fp, "%02x", tls_section[i] & 0xff);
+    fprintf(fp, "\n");
+}
+
 
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
 {
