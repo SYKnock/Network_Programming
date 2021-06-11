@@ -43,7 +43,7 @@ void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
 void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
 void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte);
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain);
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain, int s_flag);
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset);
 void dump_mem(const void *mem, size_t len, FILE *fp);
 void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option);
@@ -887,14 +887,14 @@ void dump_data(const void *mem, size_t len, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain)
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain, int s_flag)
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Transport Layer Security(TLS) >\n");
     uint16_t length;
     unsigned char content;
     printf("TLS detected:");
-    if ((split_flag == 1) && (remain != https_length))
+    if ((split_flag == 1) && (s_flag))
     {
         content = tcp_reassem[0];
 
@@ -974,7 +974,6 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
     version = ntohs(version);
     length = ntohs(length);
 
-    
     tls_section += HTTPS_HLEN;
 
     fprintf(fp, "TLS Record Layer: Handshake Protocol\n");
@@ -1001,7 +1000,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
     length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
 
     int offset = 0;
-    if(length2 + 4 == length)
+    if (length2 + 4 <= length - offset)
     {
         while (1)
         {
@@ -1216,7 +1215,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 fprintf(fp, "       Handshake Type: Certificate (11)\n");
                 fprintf(fp, "       Length: %d\n", length2);
             }
-            else if (handshake_type == SERVER_KEY_EXCHANGE)
+            else if (handshake_type == SERVER_KEY_EXCHANGE) 
             {
                 printf(" Server Key Exchange");
                 fprintf(fp, "   Handshake Protocol: Server Key Exchange\n");
@@ -1576,7 +1575,6 @@ void tls_handshake_extension(uint16_t section_length, int total_length, unsigned
                     }
                 }
             }
-            fprintf(fp, "           Padding Data: ");
             break;
         }
         case SSL_HND_HELLO_EXT_SUPPORTED_VERSIONS:
@@ -1628,6 +1626,51 @@ void tls_handshake_extension(uint16_t section_length, int total_length, unsigned
         {
             fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
             fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Key Share extension\n");
+            unsigned char *key_shr_tracer = section;
+            uint16_t key_shr_len;
+            memcpy(&key_shr_len, key_shr_tracer, 2);
+            key_shr_len = ntohs(key_shr_len);
+            fprintf(fp, "               Client Key Share Length: %d\n", key_shr_len);
+            key_shr_tracer += 2;
+            uint16_t group;
+            uint16_t key_ex_len;
+            int key_shr_offset = 0;
+
+            while (1)
+            {
+                fprintf(fp, "               Key Share Entry:\n");
+                memcpy(&group, key_shr_tracer, 2);
+                group = ntohs(group);
+                key_shr_tracer += 2;
+                memcpy(&key_ex_len, key_shr_tracer, 2);
+                key_ex_len = ntohs(key_ex_len);
+                key_shr_tracer += 2;
+
+                if (key_ex_len + 4 <= key_shr_len)
+                {
+                    for (int i = 0; i < 55; i++)
+                    {
+                        if (group == ssl_extension_curves[i].value)
+                        {
+                            fprintf(fp, "                   Group: %s (%d)\n", ssl_extension_curves[i].name, ssl_extension_curves[i].value);
+                            break;
+                        }
+                    }
+                    fprintf(fp, "                   Key Exchange Length: %d\n", key_ex_len);
+                    fprintf(fp, "                   Key Exchage: ");
+                    for (int i = 0; i < key_ex_len; i++)
+                        fprintf(fp, "%02x", key_shr_tracer[i] & 0xff);
+
+                    fprintf(fp, "\n");
+                }
+
+                key_shr_tracer += key_ex_len;
+                key_shr_offset += (key_ex_len + 4);
+                if (key_shr_offset >= key_shr_len)
+                    break;
+            }
+
             break;
         }
 

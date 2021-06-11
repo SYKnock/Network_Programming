@@ -224,6 +224,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                 unsigned char c[2];
                 memcpy(c, tls_section + 1, 2);
                 unsigned char tmp3 = tls_section[0];
+                int special_flag = 0;
 
                 if (((c[0] == 0x03) && (c[1] == 0x03)) || ((c[0] == 0x03) && (c[1] == 0x01)) || ((c[0] == 0x03) && (c[1] == 0x02)) || ((c[0] == 0x03) && (c[1] == 0x04)) || ((c[0] == 0x03) && (c[1] == 0x00)))
                 {
@@ -264,7 +265,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                             tcp_parser(buff, tcp, fp);
 
                             remain = https_length;
-                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
+                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain, special_flag);
                             dump_mem(buff, c_byte, fp);
                             printf(" Captured byte: %d\n", c_byte);
                             
@@ -275,7 +276,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                             ether_parser(buff, eth, fp);
                             ipv4_parser(buff, ip, fp, c_byte);
                             tcp_parser(buff, tcp, fp);
-                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
+                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain, special_flag);
                             printf(" Captured byte: %d\n", c_byte);
                             dump_mem(buff, c_byte, fp);
                             int offset = 0;
@@ -325,7 +326,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                     ether_parser(buff, eth, fp);
                                     ipv4_parser(buff, ip, fp, c_byte);
                                     tcp_parser(buff, tcp, fp);
-                                    https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
+                                    https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain, special_flag);
                                     printf(" Captured byte: %d\n", c_byte);
                                     dump_mem(buff, c_byte, fp);
                                 }
@@ -335,7 +336,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                     ether_parser(buff, eth, fp);
                                     ipv4_parser(buff, ip, fp, c_byte);
                                     tcp_parser(buff, tcp, fp);
-                                    https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
+                                    https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain, special_flag);
                                     printf(" Captured byte: %d\n", c_byte);
                                     dump_mem(buff, c_byte, fp);
                                 }
@@ -375,11 +376,12 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                             }
                             if (end_tcp_stream >= stream_size)
                             {
+                                special_flag = 1; 
                                 ether_parser(buff, eth, fp);
                                 ipv4_parser(buff, ip, fp, c_byte);
                                 tcp_parser(buff, tcp, fp);
                                 
-                                https_parser(ip_head_length, tcp_head_length, https_length, tls_section + tmp_offset, fp, remain);
+                                https_parser(ip_head_length, tcp_head_length, https_length, tls_section + tmp_offset, fp, remain, special_flag);
                                 printf(" Captured byte: %d\n", c_byte);
                                 dump_mem(buff, c_byte, fp);
 

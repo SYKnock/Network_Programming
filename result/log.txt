@@ -1,0 +1,3766 @@
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 557
+Identification: 0x19fb (6651)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x7284
+Source: 192.168.118.128
+Destination: 54.230.62.61
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 54986
+Destination Port: 443
+Sequence Number: 1025174421
+Acknowledgment Number: 1925056506
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x5cfd
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.0  (0x0301)
+   Length: 512
+   Handshake Protocol: Client Hello
+       Handshake Type: Client Hello (1)
+       Length: 508
+       Version: TLS 1.2  (0x0303)
+       Random: 140ea665925eb8d1dcc7d18cacce85b755ab5b3902bcc80de5a6fae154a59f1d
+       Session ID Length: 32
+       Session ID: 6e7c228719772f00dca37400ac7affb60bb6114a4c08d0ddc2686243973cdbf8
+       Cipher Suites Length: 36
+       Cipher Suites (18 suites)
+           Cipher Suite: TLS_AES_128_GCM_SHA256 (0x1301)
+           Cipher Suite: TLS_CHACHA20_POLY1305_SHA256 (0x1303)
+           Cipher Suite: TLS_AES_256_GCM_SHA384 (0x1302)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca9)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca8)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (0xc02c)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (0xc030)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+           Cipher Suite: TLS_RSA_WITH_AES_128_GCM_SHA256 (0x009c)
+           Cipher Suite: TLS_RSA_WITH_AES_256_GCM_SHA384 (0x009d)
+           Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+           Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+           Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
+       Compression Methods Length: 1
+       Compression Methods (1 method)
+           Compression Method: null (0)
+       Extensions Length: 399
+       Extensions: server_name (len=42)
+           Type: server_name (0)
+           Length: 42
+           Server Name Indication extension
+               Server Name list length: 40
+               Server Name Type: host_name (0)
+               Sever Name length: 37
+               Server Name: firefox.settings.services.mozilla.com
+       Extensions: extended_master_secret (len=0)
+           Type: extended_master_secret (23)
+           Length: 0
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: supported_groups (len=14)
+           Type: supported_groups (10)
+           Length: 14
+           Supported Groups List Length: 12
+           Supported Groups (6 groups)
+               Supported Group: x25519 (0x001d)
+               Supported Group: secp256r1 (0x0017)
+               Supported Group: secp384r1 (0x0018)
+               Supported Group: secp521r1 (0x0019)
+               Supported Group: ffdhe2048 (0x0100)
+               Supported Group: ffdhe3072 (0x0101)
+       Extensions: ec_point_formats (len=2)
+           Type: ec_point_formats (11)
+           Length: 2
+           EC point formats Length: 1
+           Elliptic curves point formats (1)
+               EC point format: uncompressed (0)
+       Extensions: session_ticket (len=0)
+           Type: session_ticket (35)
+           Length: 0
+           Data (0 bytes)       Extensions: application_layer_protocol_negotiation (len=14)
+           Type: application_layer_protocol_negotiation (16)
+           Length: 14
+           Data (14 bytes)
+           ALPN Extension Length: 12
+           ALPN Protocol
+               ALPN string length: 2
+               ALPN Next Protocol: h2
+               ALPN string length: 8
+               ALPN Next Protocol: http/1.1
+       Extensions: status_request (len=5)
+           Type: status_request (5)
+           Length: 5
+           Certificate Status Type: OCSP (1)
+            Responder ID list Length: 0
+           Responder Extensions Length: 0
+       Extensions: delegated_credentials (len=10)
+           Type: Unknown (34)
+           Length: 10
+           Data: 00080403050306030203
+       Extensions: key_share (len=107)
+           Type: key_share (51)
+           Length: 107
+           Key Share extension
+               Client Key Share Length: 105
+               Key Share Entry:
+                   Group: x25519 (29)
+                   Key Exchange Length: 32
+                   Key Exchage: 96fa7b8bc66e0cf47782903b57c29b8ac9adb54f46ba77db31a8ece9d4d09846
+               Key Share Entry:
+                   Group: secp256r1 (23)
+                   Key Exchange Length: 65
+                   Key Exchage: 04b2b7d31d1b246e54d33b58c818f1db255103f1c46ae0b2749d4978f86839e02860ca496a25a4cecd2677d6ecfd69538378d0bdfdc6c6cbdb051e5ad9b63fc527
+       Extensions: supported_versions (len=5)
+           Type: supported_versions (43)
+           Length: 5
+           Supported Versions length: 4
+           Supported Version: TLS 1.3 (0x0304)
+           Supported Version: TLS 1.2 (0x0303)
+       Extensions: signature_algorithms (len=24)
+           Type: signature_algorithms (13)
+           Length: 24
+           Signature Hash Algorithm Length: 22
+           Signature Hash Algorithms (11 algorithms)
+               Signature Algorithm: ecdsa_secp256r1_sha256 (1027)
+               Signature Algorithm: ecdsa_secp384r1_sha384 (1283)
+               Signature Algorithm: ecdsa_secp521r1_sha512 (1539)
+               Signature Algorithm: rsa_pss_rsae_sha256 (2052)
+               Signature Algorithm: rsa_pss_rsae_sha384 (2053)
+               Signature Algorithm: rsa_pss_rsae_sha512 (2054)
+               Signature Algorithm: rsa_pkcs1_sha256 (1025)
+               Signature Algorithm: rsa_pkcs1_sha384 (1281)
+               Signature Algorithm: rsa_pkcs1_sha512 (1537)
+               Signature Algorithm: ecdsa_sha1 (515)
+               Signature Algorithm: rsa_pkcs1_sha1 (513)
+       Extensions: psk_key_exchange_modes (len=2)
+           Type: psk_key_exchange_modes (45)
+           Length: 2
+           PSK Key Exchange Modes Length: 1
+           PSK Key Exchange Mode: PSK with (EC)DHE key establishment (psk_dhe_ke) (1)
+       Extensions: record_size_limit (len=2)
+           Type: record_size_limit (28)
+           Length: 2
+           Record Size Limit: 16385
+       Extensions: padding (len=111)
+           Type: padding (21)
+           Length: 111
+           Padding Data: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+< Memory >
+Captured byte : 571
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+02 2d 19 fb 40 00 40 06 72 84 c0 a8 76 80 36 e6 
+3e 3d d6 ca 01 bb 3d 1a eb 95 72 be 07 fa 50 18 
+fa f0 5c fd 00 00 16 03 01 02 00 01 00 01 fc 03 
+03 14 0e a6 65 92 5e b8 d1 dc c7 d1 8c ac ce 85 
+b7 55 ab 5b 39 02 bc c8 0d e5 a6 fa e1 54 a5 9f 
+1d 20 6e 7c 22 87 19 77 2f 00 dc a3 74 00 ac 7a 
+ff b6 0b b6 11 4a 4c 08 d0 dd c2 68 62 43 97 3c 
+db f8 00 24 13 01 13 03 13 02 c0 2b c0 2f cc a9 
+cc a8 c0 2c c0 30 c0 0a c0 09 c0 13 c0 14 00 9c 
+00 9d 00 2f 00 35 00 0a 01 00 01 8f 00 00 00 2a 
+00 28 00 00 25 66 69 72 65 66 6f 78 2e 73 65 74 
+74 69 6e 67 73 2e 73 65 72 76 69 63 65 73 2e 6d 
+6f 7a 69 6c 6c 61 2e 63 6f 6d 00 17 00 00 ff 01 
+00 01 00 00 0a 00 0e 00 0c 00 1d 00 17 00 18 00 
+19 01 00 01 01 00 0b 00 02 01 00 00 23 00 00 00 
+10 00 0e 00 0c 02 68 32 08 68 74 74 70 2f 31 2e 
+31 00 05 00 05 01 00 00 00 00 00 22 00 0a 00 08 
+04 03 05 03 06 03 02 03 00 33 00 6b 00 69 00 1d 
+00 20 96 fa 7b 8b c6 6e 0c f4 77 82 90 3b 57 c2 
+9b 8a c9 ad b5 4f 46 ba 77 db 31 a8 ec e9 d4 d0 
+98 46 00 17 00 41 04 b2 b7 d3 1d 1b 24 6e 54 d3 
+3b 58 c8 18 f1 db 25 51 03 f1 c4 6a e0 b2 74 9d 
+49 78 f8 68 39 e0 28 60 ca 49 6a 25 a4 ce cd 26 
+77 d6 ec fd 69 53 83 78 d0 bd fd c6 c6 cb db 05 
+1e 5a d9 b6 3f c5 27 00 2b 00 05 04 03 04 03 03 
+00 0d 00 18 00 16 04 03 05 03 06 03 08 04 08 05 
+08 06 04 01 05 01 06 01 02 03 02 01 00 2d 00 02 
+01 01 00 1c 00 02 40 01 00 15 00 6f 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1480
+Identification: 0xf16d (61805)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x9776
+Source: 54.230.62.61
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 54986
+Sequence Number: 1925056506
+Acknowledgment Number: 1025174939
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64239
+Checksum: 0x0c81
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 122
+   Handshake Protocol: Server Hello
+       Handshake Type: Server Hello (2)
+       Length: 118
+       Version: TLS 1.2  (0x0303)
+       Random: c4caf714d9b69d99559fdc9a7211c256f90f401595ed5d8a49083f9681700d00
+       Session ID Length: 32
+       Session ID: 6e7c228719772f00dca37400ac7affb60bb6114a4c08d0ddc2686243973cdbf8
+           Cipher Suite: TLS_AES_128_GCM_SHA256 (0x1301)
+           Compression Method: null (0)
+       Extensions Length: 46
+       Extensions: supported_versions (len=2)
+           Type: supported_versions (43)
+           Length: 2
+           Supported Version: TLS 1.3 (0x0304)
+       Extensions: key_share (len=36)
+           Type: key_share (51)
+           Length: 36
+           Key Share extension
+               Client Key Share Length: 29
+               Key Share Entry:
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 27
+   Encrypted Application Data: 92c31d4c3e1e73eaede6c7fe54589017e7357a1143da3653b49c1f
+
+< Memory >
+Captured byte : 1494
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+05 c8 f1 6d 00 00 80 06 97 76 36 e6 3e 3d c0 a8 
+76 80 01 bb d6 ca 72 be 07 fa 3d 1a ed 9b 50 18 
+fa ef 0c 81 00 00 16 03 03 00 7a 02 00 00 76 03 
+03 c4 ca f7 14 d9 b6 9d 99 55 9f dc 9a 72 11 c2 
+56 f9 0f 40 15 95 ed 5d 8a 49 08 3f 96 81 70 0d 
+00 20 6e 7c 22 87 19 77 2f 00 dc a3 74 00 ac 7a 
+ff b6 0b b6 11 4a 4c 08 d0 dd c2 68 62 43 97 3c 
+db f8 13 01 00 00 2e 00 2b 00 02 03 04 00 33 00 
+24 00 1d 00 20 be ba fd 18 e3 c9 90 22 ad 1e 74 
+d0 e5 8f 27 d6 d1 01 1d ef 5b 9a 88 ad 51 3c a1 
+29 71 27 5c 46 14 03 03 00 01 01 17 03 03 00 1b 
+92 c3 1d 4c 3e 1e 73 ea ed e6 c7 fe 54 58 90 17 
+e7 35 7a 11 43 da 36 53 b4 9c 1f 17 03 03 0d 89 
+05 9e f4 db f5 3c 0a 84 f8 8f a4 7c 7f 04 42 af 
+a7 1e 9f 6b 4a 97 d2 95 06 fe 10 6c bf ff a8 91 
+f1 f6 9d c7 c8 d7 a2 31 46 db 0a 54 ad 15 b9 b8 
+c1 22 e8 ef 49 92 a2 8a 7a 5c 46 cd 95 f1 3a 26 
+5b 69 4d ee ac 1d 7c ba 2b 47 91 49 05 2f e6 4c 
+1f 14 66 b9 97 c6 fd 3a 44 ce 57 38 72 a2 17 12 
+d7 e0 c8 48 f5 45 bc 02 bb e4 4f 87 91 19 ba 65 
+a0 bd 54 b5 99 b3 65 a1 0c 0d 81 28 8d a0 46 07 
+41 c6 1c fc fc a2 cf 55 88 e9 84 d6 c6 24 13 a8 
+90 c9 ef 77 c9 17 ad d8 c3 3a 0f 68 cb 8f 8b 11 
+22 84 ba d9 c6 85 53 bb 46 e8 19 53 cf 2c 01 3a 
+cf af cd f9 bb f2 91 21 35 f1 84 5a 8c b7 a0 e4 
+46 3f d9 79 93 12 31 da 2f 4e 64 16 ee cb d6 45 
+13 f0 ae 1c c8 f6 51 4f d5 b5 a1 7a 81 38 21 44 
+97 c2 b8 da 70 fb ba 39 15 58 df 76 a6 6b 39 0d 
+61 7e 86 9c 6b 30 bb e4 21 0d 36 0d ca 82 14 33 
+29 aa 21 26 5b 4c 16 0d c8 a2 98 84 8d 43 3e 28 
+b8 c3 7c 21 a4 48 ed 3c 3e 04 a4 e7 80 99 c6 37 
+25 2c c4 75 25 71 f3 ad 5e 83 81 fe 21 53 2c d0 
+df a9 c7 43 90 79 89 e4 c9 f8 0b 76 45 3d 86 ac 
+c4 8b 67 01 fa c2 9e 9d 72 20 27 ba 85 41 17 31 
+04 a4 91 ec b6 73 37 b0 b4 cf 6e e8 ac cc 05 f0 
+bd 72 59 17 42 b1 6e 70 4d 2f 06 cc 48 69 ea b9 
+8c a2 76 03 b7 e6 3b 43 b7 52 1f bb f5 7c 99 fe 
+78 2f 30 cd a0 59 75 57 77 59 0d 29 dd 18 33 83 
+e4 e0 f6 8f 32 19 2d b2 65 8d ae e0 8f e0 70 48 
+30 6c e0 2b 39 77 48 00 80 74 ec b7 56 56 f0 56 
+a5 5f bd 00 72 ce 67 e9 8b 79 d1 de 23 75 36 ea 
+16 0d 7f 44 da 2a b4 33 32 39 02 10 f2 a8 eb b3 
+46 85 2e 57 b3 c8 68 28 e2 ca 18 4c f9 9d 85 1f 
+1c b4 07 e1 e1 56 ea bd 6e c1 71 97 cf 12 d4 79 
+18 13 12 f9 0f 10 64 bc 4b 22 85 8c 47 00 83 34 
+d1 d2 2c 7a 0e c3 92 cf b6 73 65 ab c5 a8 65 72 
+97 15 26 ff 90 99 1e 89 cd c9 2b d1 6d 0e be f6 
+8c 73 bc a4 17 a0 5b 5a 75 96 53 36 e7 62 c6 03 
+98 63 bb c3 f7 f1 57 5e dd 95 d3 0c 85 49 e2 7b 
+d3 76 c9 eb 39 7e b8 ea 8a 23 99 a7 dd 23 f1 1c 
+e7 78 2f 21 ca 45 47 72 68 d8 f2 ae 7e 5a 36 c6 
+cf 54 c3 fb 64 ed 1b 8b d7 b1 bd e1 5d 38 42 eb 
+24 72 5b a4 a0 62 03 c9 20 9d a5 7c 11 cb e0 d1 
+23 09 67 4b 66 21 10 f4 84 f3 ba 77 98 f0 be 2b 
+99 92 21 20 ab 37 77 ad 4e 88 65 65 f0 d4 26 18 
+df 46 e6 69 95 af 0d 29 a3 d8 be 33 39 8f 20 7f 
+66 c5 ba ca f7 78 7d 1d c9 33 21 33 f1 e9 50 39 
+fb f2 ce 52 c6 eb c4 44 d5 ed 9c 9f bb 2f ef d6 
+63 78 c6 40 b9 aa 71 24 75 c8 d4 61 b4 c1 d6 13 
+e5 53 34 37 fa 9e c6 9f 24 30 57 fb 73 cf e4 03 
+5e e0 71 6b 29 db dc 6e c7 fc b2 56 a3 80 e0 4a 
+22 b6 31 5c 52 3a 62 20 50 aa 0c a8 83 d4 41 73 
+c3 14 ad a0 9a 5d e4 09 f1 bd 37 74 7e 0b de c1 
+84 7a f9 af ea 0b 1a 93 05 8b 81 45 f5 3f 6a 57 
+45 ef b4 dd bf ee b6 e2 21 a6 33 ed fd 6b 28 dd 
+cf 3c e3 b8 5e a2 89 76 91 53 b0 03 04 0e 84 e7 
+06 ed 60 fc f6 b8 b2 ad 94 6b d0 ee 84 70 24 3b 
+2a d6 4e 3b ea 15 46 17 9e 18 28 8e a9 ba 53 97 
+cd 52 fd c9 28 70 46 5a b9 74 ce a5 e4 e8 d1 ea 
+9a 8d f2 d4 02 3b 21 c6 3a 4c 91 10 5d 7f ab 62 
+31 b5 be 38 9a e9 d0 4e 9a 28 e6 9c f1 8b cf d2 
+c9 8f 1e 68 9e 8c 41 16 fc dd 22 b6 95 ef 87 bd 
+bb 25 0b d8 eb 49 c4 f0 ab 7f dc 8e 52 3a 73 14 
+a4 89 05 e9 63 b8 a1 c8 b9 a8 43 21 85 56 25 a9 
+62 9c af c2 8f a4 32 67 aa 76 7d ff 24 03 bd 3e 
+5e 37 f9 91 79 f0 13 59 01 34 91 c8 2b 11 9d b2 
+44 44 09 b9 10 7b a8 db e8 66 52 3b 06 da 0b 66 
+df d8 f1 3f 72 8a 3f 6b 9d e8 b3 ff f2 88 96 75 
+38 b5 22 74 d8 fa 32 09 0d b6 e7 bd 00 c6 e3 c7 
+16 c5 5f b5 a1 78 af b6 05 4e 38 c7 b4 95 ac 26 
+ba 7c 23 da 55 ac 03 f5 7d b0 86 42 63 42 91 f6 
+01 5c 89 d1 b9 51 56 b2 9f 2b 45 dc 86 2c 27 12 
+cd 84 a7 82 4a b9 32 68 f0 ea 2b ac fb 14 f8 43 
+4d 04 7e a4 b4 48 4f 90 08 5b 90 58 73 ba d5 42 
+82 de 56 e8 db 9a 9e 02 39 ac 26 2f be 91 b7 4d 
+c2 b7 59 7e d9 66 50 67 ea 51 e7 a7 4d 6b aa 42 
+73 de 9a 0a b3 92 9f 39 bf 7e 46 1e 75 65 ff a1 
+63 f1 63 2f 60 81 9e 67 c5 4d fa 8d ca f0 1d 09 
+59 85 45 81 a9 3e c0 8d 14 2f 7c f7 87 73 c1 5c 
+d3 da 61 09 a7 36 e2 01 da 58 0b 79 5b 61 07 36 
+b2 c1 16 24 77 b9 bf b7 e7 4e 19 a7 ce 45 65 15 
+36 6f e2 1f 7a f1 9e 4d bb db 7d 6a 02 2d c1 e7 
+fe dd d1 8c f8 3a 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 557
+Identification: 0x9fb1 (40881)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xeccd
+Source: 192.168.118.128
+Destination: 54.230.62.61
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 54988
+Destination Port: 443
+Sequence Number: 1706280874
+Acknowledgment Number: 1170276653
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x1b9d
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.0  (0x0301)
+   Length: 512
+   Handshake Protocol: Client Hello
+       Handshake Type: Client Hello (1)
+       Length: 508
+       Version: TLS 1.2  (0x0303)
+       Random: 603c07c215fc2c3ed8312fb2155a9efb010feca2a3aef49484bcf0a1cde487a0
+       Session ID Length: 32
+       Session ID: baf6fdbfd4d0fc3a124372243993312c2d3c28ca6d1b0fa327e3d3744125ac4c
+       Cipher Suites Length: 36
+       Cipher Suites (18 suites)
+           Cipher Suite: TLS_AES_128_GCM_SHA256 (0x1301)
+           Cipher Suite: TLS_CHACHA20_POLY1305_SHA256 (0x1303)
+           Cipher Suite: TLS_AES_256_GCM_SHA384 (0x1302)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca9)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca8)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (0xc02c)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (0xc030)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+           Cipher Suite: TLS_RSA_WITH_AES_128_GCM_SHA256 (0x009c)
+           Cipher Suite: TLS_RSA_WITH_AES_256_GCM_SHA384 (0x009d)
+           Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+           Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+           Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
+       Compression Methods Length: 1
+       Compression Methods (1 method)
+           Compression Method: null (0)
+       Extensions Length: 399
+       Extensions: server_name (len=42)
+           Type: server_name (0)
+           Length: 42
+           Server Name Indication extension
+               Server Name list length: 40
+               Server Name Type: host_name (0)
+               Sever Name length: 37
+               Server Name: firefox.settings.services.mozilla.com
+       Extensions: extended_master_secret (len=0)
+           Type: extended_master_secret (23)
+           Length: 0
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: supported_groups (len=14)
+           Type: supported_groups (10)
+           Length: 14
+           Supported Groups List Length: 12
+           Supported Groups (6 groups)
+               Supported Group: x25519 (0x001d)
+               Supported Group: secp256r1 (0x0017)
+               Supported Group: secp384r1 (0x0018)
+               Supported Group: secp521r1 (0x0019)
+               Supported Group: ffdhe2048 (0x0100)
+               Supported Group: ffdhe3072 (0x0101)
+       Extensions: ec_point_formats (len=2)
+           Type: ec_point_formats (11)
+           Length: 2
+           EC point formats Length: 1
+           Elliptic curves point formats (1)
+               EC point format: uncompressed (0)
+       Extensions: session_ticket (len=0)
+           Type: session_ticket (35)
+           Length: 0
+           Data (0 bytes)       Extensions: application_layer_protocol_negotiation (len=14)
+           Type: application_layer_protocol_negotiation (16)
+           Length: 14
+           Data (14 bytes)
+           ALPN Extension Length: 12
+           ALPN Protocol
+               ALPN string length: 2
+               ALPN Next Protocol: h2
+               ALPN string length: 8
+               ALPN Next Protocol: http/1.1
+       Extensions: status_request (len=5)
+           Type: status_request (5)
+           Length: 5
+           Certificate Status Type: OCSP (1)
+            Responder ID list Length: 0
+           Responder Extensions Length: 0
+       Extensions: delegated_credentials (len=10)
+           Type: Unknown (34)
+           Length: 10
+           Data: 00080403050306030203
+       Extensions: key_share (len=107)
+           Type: key_share (51)
+           Length: 107
+           Key Share extension
+               Client Key Share Length: 105
+               Key Share Entry:
+                   Group: x25519 (29)
+                   Key Exchange Length: 32
+                   Key Exchage: 77540afabf693fabf28314f424fa05fc21242b6e17081036b5a9670e4ef95331
+               Key Share Entry:
+                   Group: secp256r1 (23)
+                   Key Exchange Length: 65
+                   Key Exchage: 04fd185f38663a39793fe5079668777754955c7854cf57b1cdeeb817563a39992f95cf9892c223f4a3a575c98ce394adc754ea9c3e92e43d748338ecac10f41249
+       Extensions: supported_versions (len=5)
+           Type: supported_versions (43)
+           Length: 5
+           Supported Versions length: 4
+           Supported Version: TLS 1.3 (0x0304)
+           Supported Version: TLS 1.2 (0x0303)
+       Extensions: signature_algorithms (len=24)
+           Type: signature_algorithms (13)
+           Length: 24
+           Signature Hash Algorithm Length: 22
+           Signature Hash Algorithms (11 algorithms)
+               Signature Algorithm: ecdsa_secp256r1_sha256 (1027)
+               Signature Algorithm: ecdsa_secp384r1_sha384 (1283)
+               Signature Algorithm: ecdsa_secp521r1_sha512 (1539)
+               Signature Algorithm: rsa_pss_rsae_sha256 (2052)
+               Signature Algorithm: rsa_pss_rsae_sha384 (2053)
+               Signature Algorithm: rsa_pss_rsae_sha512 (2054)
+               Signature Algorithm: rsa_pkcs1_sha256 (1025)
+               Signature Algorithm: rsa_pkcs1_sha384 (1281)
+               Signature Algorithm: rsa_pkcs1_sha512 (1537)
+               Signature Algorithm: ecdsa_sha1 (515)
+               Signature Algorithm: rsa_pkcs1_sha1 (513)
+       Extensions: psk_key_exchange_modes (len=2)
+           Type: psk_key_exchange_modes (45)
+           Length: 2
+           PSK Key Exchange Modes Length: 1
+           PSK Key Exchange Mode: PSK with (EC)DHE key establishment (psk_dhe_ke) (1)
+       Extensions: record_size_limit (len=2)
+           Type: record_size_limit (28)
+           Length: 2
+           Record Size Limit: 16385
+       Extensions: padding (len=111)
+           Type: padding (21)
+           Length: 111
+           Padding Data: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+< Memory >
+Captured byte : 571
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+02 2d 9f b1 40 00 40 06 ec cd c0 a8 76 80 36 e6 
+3e 3d d6 cc 01 bb 65 b3 c7 aa 45 c1 01 2d 50 18 
+fa f0 1b 9d 00 00 16 03 01 02 00 01 00 01 fc 03 
+03 60 3c 07 c2 15 fc 2c 3e d8 31 2f b2 15 5a 9e 
+fb 01 0f ec a2 a3 ae f4 94 84 bc f0 a1 cd e4 87 
+a0 20 ba f6 fd bf d4 d0 fc 3a 12 43 72 24 39 93 
+31 2c 2d 3c 28 ca 6d 1b 0f a3 27 e3 d3 74 41 25 
+ac 4c 00 24 13 01 13 03 13 02 c0 2b c0 2f cc a9 
+cc a8 c0 2c c0 30 c0 0a c0 09 c0 13 c0 14 00 9c 
+00 9d 00 2f 00 35 00 0a 01 00 01 8f 00 00 00 2a 
+00 28 00 00 25 66 69 72 65 66 6f 78 2e 73 65 74 
+74 69 6e 67 73 2e 73 65 72 76 69 63 65 73 2e 6d 
+6f 7a 69 6c 6c 61 2e 63 6f 6d 00 17 00 00 ff 01 
+00 01 00 00 0a 00 0e 00 0c 00 1d 00 17 00 18 00 
+19 01 00 01 01 00 0b 00 02 01 00 00 23 00 00 00 
+10 00 0e 00 0c 02 68 32 08 68 74 74 70 2f 31 2e 
+31 00 05 00 05 01 00 00 00 00 00 22 00 0a 00 08 
+04 03 05 03 06 03 02 03 00 33 00 6b 00 69 00 1d 
+00 20 77 54 0a fa bf 69 3f ab f2 83 14 f4 24 fa 
+05 fc 21 24 2b 6e 17 08 10 36 b5 a9 67 0e 4e f9 
+53 31 00 17 00 41 04 fd 18 5f 38 66 3a 39 79 3f 
+e5 07 96 68 77 77 54 95 5c 78 54 cf 57 b1 cd ee 
+b8 17 56 3a 39 99 2f 95 cf 98 92 c2 23 f4 a3 a5 
+75 c9 8c e3 94 ad c7 54 ea 9c 3e 92 e4 3d 74 83 
+38 ec ac 10 f4 12 49 00 2b 00 05 04 03 04 03 03 
+00 0d 00 18 00 16 04 03 05 03 06 03 08 04 08 05 
+08 06 04 01 05 01 06 01 02 03 02 01 00 2d 00 02 
+01 01 00 1c 00 02 40 01 00 15 00 6f 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1500
+Identification: 0xf170 (61808)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x975f
+Source: 54.230.62.61
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 54988
+Sequence Number: 1170276653
+Acknowledgment Number: 1706281391
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAXXXX
+Window size value: 64240
+Checksum: 0x1bd7
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 122
+   Handshake Protocol: Server Hello
+       Handshake Type: Server Hello (2)
+       Length: 118
+       Version: TLS 1.2  (0x0303)
+       Random: 0ae946d15b07891f56879264653b94af90ccfb4fdd0226fc3c2305c115def6a7
+       Session ID Length: 32
+       Session ID: baf6fdbfd4d0fc3a124372243993312c2d3c28ca6d1b0fa327e3d3744125ac4c
+           Cipher Suite: TLS_AES_128_GCM_SHA256 (0x1301)
+           Compression Method: null (0)
+       Extensions Length: 46
+       Extensions: supported_versions (len=2)
+           Type: supported_versions (43)
+           Length: 2
+           Supported Version: TLS 1.3 (0x0304)
+       Extensions: key_share (len=36)
+           Type: key_share (51)
+           Length: 36
+           Key Share extension
+               Client Key Share Length: 29
+               Key Share Entry:
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 27
+   Encrypted Application Data: ce3477a174dc319188fce9d71dbc8b75b9be7c956267348b440c7e
+
+< Memory >
+Captured byte : 1514
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+05 dc f1 70 00 00 80 06 97 5f 36 e6 3e 3d c0 a8 
+76 80 01 bb d6 cc 45 c1 01 2d 65 b3 c9 af 50 10 
+fa f0 1b d7 00 00 16 03 03 00 7a 02 00 00 76 03 
+03 0a e9 46 d1 5b 07 89 1f 56 87 92 64 65 3b 94 
+af 90 cc fb 4f dd 02 26 fc 3c 23 05 c1 15 de f6 
+a7 20 ba f6 fd bf d4 d0 fc 3a 12 43 72 24 39 93 
+31 2c 2d 3c 28 ca 6d 1b 0f a3 27 e3 d3 74 41 25 
+ac 4c 13 01 00 00 2e 00 2b 00 02 03 04 00 33 00 
+24 00 1d 00 20 d5 68 64 e9 75 36 6d 06 1c 50 3d 
+44 82 72 b7 79 1a 94 43 86 0d 9c bd 36 26 20 6a 
+c9 39 dd 9a 39 14 03 03 00 01 01 17 03 03 00 1b 
+ce 34 77 a1 74 dc 31 91 88 fc e9 d7 1d bc 8b 75 
+b9 be 7c 95 62 67 34 8b 44 0c 7e 17 03 03 0d 89 
+22 ef 06 e7 89 07 18 29 79 9e 5a d4 9f 56 86 2a 
+63 fe b1 1d 35 5b cc 89 9f 02 d5 33 f3 58 97 a6 
+3c 14 b8 e2 53 b8 d8 be de 17 1f 89 b6 93 43 de 
+f2 60 89 29 16 5f c4 e1 86 b7 a0 39 67 2d d7 00 
+cc 6a 9a bc 67 82 6c 38 a2 23 24 db fc b6 39 1f 
+05 8d 15 05 ea 04 8a 21 a8 69 c0 f3 86 1c 81 5b 
+39 da a2 20 3d 7c f8 79 e1 ee b7 7f d8 40 d4 a0 
+01 29 2f a9 55 67 a9 a8 cc 6b 48 50 24 c6 9d 95 
+38 9b 18 fa a3 08 83 1e 94 0d 42 c4 3b 50 a6 95 
+27 1e a0 5b ce 31 ed 91 3a 90 c4 7b 3c 1a a8 c2 
+0a 56 69 92 4c 53 63 55 ac c5 61 37 1e 27 6c 9a 
+de 0e 45 95 85 e4 97 f2 1c 63 84 53 8b 59 7c 4a 
+f8 44 37 e1 0f 26 b9 5c b9 42 05 eb 47 2f 44 5e 
+bf ac 27 63 52 fb fd 82 fa 6d 25 f0 2a d9 c7 16 
+2e 77 84 ea bb a1 90 56 b4 6e 2c 7a 7c 5e 78 a6 
+84 28 2f 39 31 d1 98 10 da 4e 33 00 ff 5b 56 7f 
+a7 87 a7 b4 a3 ed f8 63 53 a8 eb 4e a0 4a 28 01 
+78 b2 b4 1f cb 1c fb 5e 98 86 d9 2f 93 8c 9e 0c 
+27 f9 bd 5a b6 a9 b8 52 20 82 f7 4f b4 25 9e da 
+d0 b1 c8 b8 70 31 f1 82 00 71 02 d2 af 0a d1 7c 
+c1 e2 4b cf 0f e3 3a a5 cf c3 cb 12 9b 19 02 56 
+ad c6 e6 84 6b fe f1 4b 92 31 d2 3a 96 78 44 2e 
+8b 36 ab 7e 71 9b 98 95 c4 30 01 94 b1 47 c7 af 
+9e 00 92 10 cf 17 ba 43 cd 69 f1 bb a3 40 20 43 
+a8 b3 2d ee 6d f0 42 e4 81 f8 ae 7a 9e 6e 93 3c 
+31 b6 fa e7 ec 90 53 a0 9a 4f 35 bf ab db a9 fd 
+38 81 4c b6 dc 4c df e4 7d 9d 14 e5 ef 9b 9b 6b 
+d0 dc ce bc 84 f8 72 f8 69 3e dc 00 34 9b 3a 3f 
+3a b1 25 8c d7 46 85 23 02 88 09 25 ab 0d 87 90 
+d3 9a 9e 99 c1 d3 53 fd ba de 32 17 7e 81 0e 8c 
+f5 c0 23 c1 d8 49 f5 9a 24 71 b1 4b 1e 51 fd bc 
+89 3d 0b 8a 21 9e 4f c3 37 99 d1 19 2a 23 2d d4 
+ee 30 c3 8a 6c a6 d7 a3 52 67 3b 1b 15 31 0a 4d 
+80 c8 d7 cc 15 6c 14 72 05 87 1d be 63 9c 47 cc 
+e0 f7 be f7 48 00 52 39 5a 8c 69 a7 96 bc 73 2d 
+65 71 5c 7d 17 32 fd dd ab b0 bb 70 14 21 2a 14 
+b6 53 b5 5a b6 62 cd ce 95 fc 9f 49 5b 75 00 04 
+ac d2 8a dd d0 3c 94 a1 d6 83 68 76 9b 94 45 24 
+07 f3 1a 75 90 79 62 e6 11 27 98 21 b2 1d f8 ff 
+67 a7 7b 37 03 33 15 2e ee f8 4e ee 0c 67 9b 5e 
+75 d0 d0 74 d1 04 70 0c ab 13 b6 11 95 4b 4c 10 
+20 74 eb d5 0c 14 e7 ad 91 1c f8 c3 04 7d 19 1d 
+db 3f c5 f4 1a 64 dc 8d 61 bf 0a 75 0c 63 a4 60 
+cb d4 86 f8 05 13 9a 7b df 62 65 96 0f fc 93 2e 
+80 f6 ed d8 e9 c2 2a a7 1c 10 89 3b 48 12 ee db 
+fe 62 03 95 17 45 aa a5 1c a7 3e 65 0f d6 04 b1 
+18 01 da eb 97 e9 ae 02 14 dd 7a c7 e9 75 ef e1 
+bf f4 9c ff 76 38 e5 cf 05 42 5c 88 de 7d 7a 10 
+c2 bf 10 e9 4b c1 9d 88 ca 80 e2 e6 92 25 b2 82 
+9f 95 4f 01 38 4e bc b7 4a 37 55 1a fc bf 2d 16 
+11 de aa 1f 82 4a e0 88 34 3f 9f cf 83 03 a5 02 
+cf 9d d8 ad 54 65 46 8b 21 ac 85 be 74 d8 86 1c 
+59 f4 45 c9 f8 b0 36 e2 f9 44 f8 b4 1b 4c ad 8f 
+d9 82 ea 9b 9f d2 df 9b 4d 69 b2 32 db 12 5f b6 
+d3 63 30 f5 73 c2 38 f6 ec e1 83 ad 18 c7 49 5c 
+4a 9d 13 3e 2c e2 90 8a dc c9 33 32 91 80 41 45 
+ce ff 16 67 f2 20 b1 c1 8d 56 9b 02 7b d5 66 1c 
+d5 c9 27 dd 7a a1 5c 92 f4 2d 05 f6 fb 6c 21 e2 
+71 f2 bd 2d 55 79 76 e6 56 fe 1e d3 b1 58 3f 92 
+15 16 30 37 9d 71 f7 b8 36 92 fc 97 73 e7 62 02 
+91 21 e6 f6 83 ba e6 e3 2e 1e d4 bb 4f 9b 46 72 
+1d fc 3a 71 22 e6 1d d4 c6 9d 80 a7 80 d1 23 24 
+49 85 1d 26 d6 9c 9e e5 56 69 7b 10 e3 43 31 44 
+5a c7 1d 4a 2f 8e c3 66 1c 9d 44 0f de 2a 96 28 
+c8 4a 25 19 1d 7c c8 f0 15 60 26 b2 66 56 2f 90 
+47 79 98 ba df 5f 34 21 57 9a 90 da 8f 2f f4 8c 
+2f 8e 79 4e a1 10 c4 58 89 42 df b7 7f 21 49 00 
+39 1b 71 9e d6 d6 c7 72 78 b8 f5 f3 08 2d de f9 
+33 55 48 49 ef 5a 5c c5 dc ea a7 fb 6d ae 40 d1 
+cc 8a 54 9d d0 6f 19 24 70 46 ac 01 10 37 23 27 
+23 4d 26 5c 94 cb 86 c1 70 bf 40 14 1f 90 3b db 
+bc 65 5e b6 70 eb a0 41 29 f3 65 93 a0 dd 54 a8 
+4c 53 1d 3a ab 56 54 c2 05 c4 39 98 c4 47 59 f7 
+13 ef c4 58 7d 02 82 0e 9b 65 a4 f6 3c 42 17 25 
+23 21 bf a7 fb 89 1e d7 04 93 6d 29 29 47 90 b4 
+d6 ac 07 41 7a 08 83 24 6b 80 84 8b aa 11 e5 13 
+94 a0 e0 60 04 f2 14 48 d0 ad 3d 62 50 7c 92 b4 
+84 4a a2 0e ec 33 a9 60 29 ec 15 98 5d e9 30 b2 
+38 5e e3 6c c0 51 89 6d 2d 29 0b f8 ac 51 67 37 
+7b 5a a6 ed 71 a9 9c 86 cc 6b ba 37 93 d0 7a 18 
+f7 55 42 3b ce 0c cc c5 37 de 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1139
+Identification: 0xf172 (61810)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x98c6
+Source: 54.230.62.61
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 54988
+Sequence Number: 1170279533
+Acknowledgment Number: 1706281391
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xf65e
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 3465
+   Encrypted Application Data: 059ef4dbf53c0a84f88fa47c7f0442afa71e9f6b4a97d29506fe106cbfffa891f1f69dc7c8d7a23146db0a54ad15b9b8c122e8ef4992a28a7a5c46cd95f13a265b694deeac1d7cba2b479149052fe64c1f1466b997c6fd3a44ce573872a21712d7e0c848f545bc02bbe44f879119ba65a0bd54b599b365a10c0d81288da0460741c61cfcfca2cf5588e984d6c62413a890c9ef77c917add8c33a0f68cb8f8b112284bad9c68553bb46e81953cf2c013acfafcdf9bbf2912135f1845a8cb7a0e4463fd979931231da2f4e6416eecbd64513f0ae1cc8f6514fd5b5a17a8138214497c2b8da70fbba391558df76a66b390d617e869c6b30bbe4210d360dca82143329aa21265b4c160dc8a298848d433e28b8c37c21a448ed3c3e04a4e78099c637252cc4752571f3ad5e8381fe21532cd0dfa9c743907989e4c9f80b76453d86acc48b6701fac29e9d722027ba8541173104a491ecb67337b0b4cf6ee8accc05f0bd72591742b16e704d2f06cc4869eab98ca27603b7e63b43b7521fbbf57c99fe782f30cda059755777590d29dd183383e4e0f68f32192db2658daee08fe07048306ce02b397748008074ecb75656f056a55fbd0072ce67e98b79d1de237536ea160d7f44da2ab43332390210f2a8ebb346852e57b3c86828e2ca184cf99d851f1cb407e1e156eabd6ec17197cf12d479181312f90f1064bc4b22858c47008334d1d22c7a0ec392cfb67365abc5a86572971526ff90991e89cdc92bd16d0ebef68c73bca417a05b5a75965336e762c6039863bbc3f7f1575edd95d30c8549e27bd376c9eb397eb8ea8a2399a7dd23f11ce7782f21ca45477268d8f2ae7e5a36c6cf54c3fb64ed1b8bd7b1bde15d3842eb24725ba4a06203c9209da57c11cbe0d12309674b662110f484f3ba7798f0be2b99922120ab3777ad4e886565f0d42618df46e66995af0d29a3d8be33398f207f66c5bacaf7787d1dc9332133f1e95039fbf2ce52c6ebc444d5ed9c9fbb2fefd66378c640b9aa712475c8d461b4c1d613e5533437fa9ec69f243057fb73cfe4035ee0716b29dbdc6ec7fcb256a380e04a22b6315c523a622050aa0ca883d44173c314ada09a5de409f1bd37747e0bdec1847af9afea0b1a93058b8145f53f6a5745efb4ddbfeeb6e221a633edfd6b28ddcf3ce3b85ea289769153b003040e84e706ed60fcf6b8b2ad946bd0ee8470243b2ad64e3bea1546179e18288ea9ba5397cd52fdc92870465ab974cea5e4e8d1ea9a8df2d4023b21c63a4c91105d7fab6231b5be389ae9d04e9a28e69cf18bcfd2c98f1e689e8c4116fcdd22b695ef87bdbb250bd8eb49c4f0ab7fdc8e523a7314a48905e963b8a1c8b9a84321855625a9629cafc28fa43267aa767dff2403bd3e5e37f99179f01359013491c82b119db2444409b9107ba8dbe866523b06da0b66dfd8f13f728a3f6b9de8b3fff288967538b52274d8fa32090db6e7bd00c6e3c716c55fb5a178afb6054e38c7b495ac26ba7c23da55ac03f57db08642634291f6015c89d1b95156b29f2b45dc862c2712cd84a7824ab93268f0ea2bacfb14f8434d047ea4b4484f90085b905873bad54282de56e8db9a9e0239ac262fbe91b74dc2b7597ed9665067ea51e7a74d6baa4273de9a0ab3929f39bf7e461e7565ffa163f1632f60819e67c54dfa8dcaf01d0959854581a93ec08d142f7cf78773c15cd3da6109a736e201da580b795b610736b2c1162477b9bfb7e74e19a7ce456515366fe21f7af19e4dbbdb7d6a022dc1e7feddd18cf83a6ab9d2d72490e6d0d7f3a71020d0f755e4b225eaf2584e8bf265b6767f03185c86a1b4121dfb37b64891193698bee11a8067f7d9728e04b340df21c6ada10c05f4fe20b4a6997ebdda674fe215f811da736dcb6006a9f26cf0e53ead6941a6a58c4f14ab9efff273f1b0d7afff77b27c7c3d9a170b85e10b95ec34127b57bb1fcd02aba70fba6a3630943f6970342159f0a84e09ab173c8de96007f9f2d2affca89789d4d7fd738d4cd517a8d8433ba7271f23764d4162fa143ddfc976cf7a25de3a5605e6f24ef4b1d020a682b3ff02f75947b881309437e087681b99e802c4112120823feeec325bc09e4c3d5af311921ee37de52f7733f11e5c45c4cbc13656106b26e59620d594dbc8d3161e6b8aead7ea7cfa24edd82c7dd73875e57868f98cc6533109468997a38b9630abaa31a46bb6ec89e0ba005acdf92b1093e5713970e5eeffc20fe7e33f04d124b11ecdad59128d12abb29219c0e1d23bacc5c52c5731ee7974576840d4acee85781fd983600b5deb6bb4040e5793fb28011be7bdc8d2c1a29d473192b0d394884795edcd1a011bd12155702f2dbdc5767daf82cda0a3429adbf2070df7d2fa1d6bf4a4780d562763594939ed2c17929d58a29e4d346d010d3285e361d48edbeb750489db4e503e88e2a652de572a87290815d82c47dbf990ef5cd97511eccb1f20e9f9c057062c66222289d80fce2c07f149e70e9bf25372d5c0df9404ee7cba2559ff125aee46480c45fcc7bbe716b9c0be15046eb560145a319b6b5248843e38028832079a73c7d020ec13b0d41e85054262a7c31c09207b0a0ec864eddfad7c7391624c7362c75a9a25dfa343afe0a69a097175a944f384c52d2cc0f0cf35c22919ee521db75956015fc8a86cbe25ed89258091ebd32b67952ed117906d0d995a6284cd033893e6e0c6e321bd47a68536d5a94ab6f791a4a2359532adc3b43c1455627164517d353cd1b9d42650073bc321026f39d016ab73ff435ec6551308d0e9b26d82f0fef19a3d39ca5679dd999e6dfc81b2e699707170a5771b8b503dce78e9250b63bc3a6bf3ed05f44bfb160e0305551c5a29500893b56fa8e24c7f10d443b055e471ffb1aeed3934277ac9505e7d95e8633e057f9a60f6f1d27f4b66aec56c41f8aa7adf82c77f7ace9490cb507ad319249b58ba484e99bd7f312023067cdb1a64118173f7980c7e9141cbfd4ed84e5367006dbdbdbba999b49fba5501d0e80564049ca471792f06b58cd86bdafbf5bb2a7e16ab00af47de99797034fc558567a767befb53582c5f34fde9527d0abbf7250dad654709d608e7dd284ff0e68c059ce8811cd3d7fd821ed9499a101a4d3708b8987735117d790f1a265bd85c8582f127512b9785c0bbf5c19be1a46fe09c7a731c8803d6cf94c437eef230a47394f0c7f8767995709dc0ec5fa3e4d876246bff94102e2bf7f88713335b8425fb94baf45cc5c2a37809995b87245dd40e65ea08214be44e017abc12a8c40f976ae5f19738eb8a7ce612c510bf6a35682cd02c2780b3d4f21ec6002d2615e7a303b0e4189125a1b51b2a30e7d491ca89cc39d3e246bb6ed097d685db21bc15a05f9e0fea414bbbed127c1de64cb246c9ea5c1adc67c344aae9a8cdb442d9d23b7bfdb8d489ae8da7cc269747e28935afcc760fbe3d04b5269ebec869624e10e0284b4ef7e7c926a90b371a204606e645e2b4585c0bd4a9639951a3a8fdbfbb3bd95f4c1911d2d18a2874af97b72fce88636639f2d497d227a843191ad6d9f51f23d737fd28431637b699a3b1ff2a3735afe2cdc10cf83ac870364bcdf494ba97d14ba7e0f4d3231237ba0f3f16d248ea78eb535933c3e104e311aae0cdb88c0c2a4239e08689219a2f0ec152cbca1c68cf217b9d6beb29240b3b641665f511875e0452154cbab003c9ba03400799150ba637f239c8dcc8283ad17644e529da00187c518f862a045c86947e3aa8ac2e0849702d1ea7450806892385b30ddc1d37fb4dc0706bae2a0a8360397005e236662fedec54ba1f85ced93efc06476384eb2b53c4e8720800e3d329f2b3ee1f257ff043e10f8fd96e5bd9b8a6331d877473e50eaf8cadd8a65ce83862e2b18508a25704e301d7abb7633c1e1639252dc4193996011b1c0c8baa4a4b23bef67379fdcbee23bd9ee9bddb27cb5f4840977c2b3fa705720d13aeaf80bceef5350ed90292d0a6584a4250bfe1f5319989ee8ae19b990d80851c4e41525626dd6f93d771f33807a297a3bf218ae443edca221b0b33f530a8eb7c3e470ee2661ab16b20dcac7160df86ea056635a53a47296c32068f877b81d8328c5cb2f0a2066053d8481cea8c8b54b055884d16949e5d6e7f9a97d7dbd351dd72693c6a84e3d522fec8531b0921ff888b59ff1885c3a9fb45e916e5dbd3ba5609fd3238d2ea628479d23582c8d6cbd7dd957f34fe7c9e24b47124ffc66b831e9f8f0daf514b8643668b10e84f2062963a95c3c91b9a39578b2bacf77964e792914b4d7666586814e4b1cd964f962357849aee2386394d3e9ed3fb95eb1f73dbb33e899b71edaf506f7b43bd7b28887cf520be3d80ebe064202efe688a00565a0f32db7b07f8f4d2c14851b22d2157217f683c4ab78b841889bf033c5c27d191ffbfe4792e38c826d3018871f27050a6dbf7f07a4b60495849371ccd6e7bc3109340fa969e94d51e83bb13010394e927cddd93c816d59848a73df7939a016105c4dd776b401eed5e6caf654658f59522f248577ea871f868d2dbd442178389a9dede99348671c0634f50948d31828fe5456166fc6607a9bf18217de2a7d3d995b07807c233afc9d715645621a17ad31ff48b878ea1a75507e913be7d6a258d73fa3768a21ba2df1591b85d814dcf31a99e4205ee2949414229d440110e8db17890a0cd97b89d890d8963f6b2f3995826a15bc498f177cfb72db870376667eb8332f913aa7500872f3d7344b3ef644bf0720c267069f4b4f853ce29ed1a1dcf6d0c69d3195b71e338d7bc98180ba557f56615389de406f0b61fb1af4458d6b7eaac702832301881d01703030119b50dae21885de5c3429c327769a20a
+
+< Memory >
+Captured byte : 1153
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+04 73 f1 72 00 00 80 06 98 c6 36 e6 3e 3d c0 a8 
+76 80 01 bb d6 cc 45 c1 0c 6d 65 b3 c9 af 50 18 
+fa f0 f6 5e 00 00 b3 0d dc 1d 37 fb 4d c0 70 6b 
+ae 2a 0a 83 60 39 70 05 e2 36 66 2f ed ec 54 ba 
+1f 85 ce d9 3e fc 06 47 63 84 eb 2b 53 c4 e8 72 
+08 00 e3 d3 29 f2 b3 ee 1f 25 7f f0 43 e1 0f 8f 
+d9 6e 5b d9 b8 a6 33 1d 87 74 73 e5 0e af 8c ad 
+d8 a6 5c e8 38 62 e2 b1 85 08 a2 57 04 e3 01 d7 
+ab b7 63 3c 1e 16 39 25 2d c4 19 39 96 01 1b 1c 
+0c 8b aa 4a 4b 23 be f6 73 79 fd cb ee 23 bd 9e 
+e9 bd db 27 cb 5f 48 40 97 7c 2b 3f a7 05 72 0d 
+13 ae af 80 bc ee f5 35 0e d9 02 92 d0 a6 58 4a 
+42 50 bf e1 f5 31 99 89 ee 8a e1 9b 99 0d 80 85 
+1c 4e 41 52 56 26 dd 6f 93 d7 71 f3 38 07 a2 97 
+a3 bf 21 8a e4 43 ed ca 22 1b 0b 33 f5 30 a8 eb 
+7c 3e 47 0e e2 66 1a b1 6b 20 dc ac 71 60 df 86 
+ea 05 66 35 a5 3a 47 29 6c 32 06 8f 87 7b 81 d8 
+32 8c 5c b2 f0 a2 06 60 53 d8 48 1c ea 8c 8b 54 
+b0 55 88 4d 16 94 9e 5d 6e 7f 9a 97 d7 db d3 51 
+dd 72 69 3c 6a 84 e3 d5 22 fe c8 53 1b 09 21 ff 
+88 8b 59 ff 18 85 c3 a9 fb 45 e9 16 e5 db d3 ba 
+56 09 fd 32 38 d2 ea 62 84 79 d2 35 82 c8 d6 cb 
+d7 dd 95 7f 34 fe 7c 9e 24 b4 71 24 ff c6 6b 83 
+1e 9f 8f 0d af 51 4b 86 43 66 8b 10 e8 4f 20 62 
+96 3a 95 c3 c9 1b 9a 39 57 8b 2b ac f7 79 64 e7 
+92 91 4b 4d 76 66 58 68 14 e4 b1 cd 96 4f 96 23 
+57 84 9a ee 23 86 39 4d 3e 9e d3 fb 95 eb 1f 73 
+db b3 3e 89 9b 71 ed af 50 6f 7b 43 bd 7b 28 88 
+7c f5 20 be 3d 80 eb e0 64 20 2e fe 68 8a 00 56 
+5a 0f 32 db 7b 07 f8 f4 d2 c1 48 51 b2 2d 21 57 
+21 7f 68 3c 4a b7 8b 84 18 89 bf 03 3c 5c 27 d1 
+91 ff bf e4 79 2e 38 c8 26 d3 01 88 71 f2 70 50 
+a6 db f7 f0 7a 4b 60 49 58 49 37 1c cd 6e 7b c3 
+10 93 40 fa 96 9e 94 d5 1e 83 bb 13 01 03 94 e9 
+27 cd dd 93 c8 16 d5 98 48 a7 3d f7 93 9a 01 61 
+05 c4 dd 77 6b 40 1e ed 5e 6c af 65 46 58 f5 95 
+22 f2 48 57 7e a8 71 f8 68 d2 db d4 42 17 83 89 
+a9 de de 99 34 86 71 c0 63 4f 50 94 8d 31 82 8f 
+e5 45 61 66 fc 66 07 a9 bf 18 21 7d e2 a7 d3 d9 
+95 b0 78 07 c2 33 af c9 d7 15 64 56 21 a1 7a d3 
+1f f4 8b 87 8e a1 a7 55 07 e9 13 be 7d 6a 25 8d 
+73 fa 37 68 a2 1b a2 df 15 91 b8 5d 81 4d cf 31 
+a9 9e 42 05 ee 29 49 41 42 29 d4 40 11 0e 8d b1 
+78 90 a0 cd 97 b8 9d 89 0d 89 63 f6 b2 f3 99 58 
+26 a1 5b c4 98 f1 77 cf b7 2d b8 70 37 66 67 eb 
+83 32 f9 13 aa 75 00 87 2f 3d 73 44 b3 ef 64 4b 
+f0 72 0c 26 70 69 f4 b4 f8 53 ce 29 ed 1a 1d cf 
+6d 0c 69 d3 19 5b 71 e3 38 d7 bc 98 18 0b a5 57 
+f5 66 15 38 9d e4 06 f0 b6 1f b1 af 44 58 d6 b7 
+ea ac 70 28 32 30 18 81 d0 17 03 03 01 19 b5 0d 
+ae 21 88 5d e5 c3 42 9c 32 77 69 a2 0a ea 14 4d 
+55 e6 0a 19 af a6 ba 91 c1 e5 7e 49 cb 75 6a f1 
+e8 ca bf 51 ae 15 ce 45 13 95 fe 99 8f 07 0c d1 
+ea 80 77 e2 42 de 1b 8f 7c be 78 61 d5 da ef 38 
+da f7 8c 7b 6f 7e 2d 7a 53 80 b2 07 9e cf 48 f9 
+ed 5e 0b bf 2a 7d 48 61 3a fc e3 a4 32 e2 e2 8d 
+98 a5 6d da a7 d3 c6 34 41 fb 89 5a 70 10 02 f3 
+08 57 41 6c 0a fa 46 8e 96 be 46 14 1b 48 86 b1 
+4a 13 3d c8 b6 f0 05 a0 b7 d9 9f cd 9a fe e3 37 
+b3 48 4f 48 7e c4 c0 6d 1b 22 2b bc de d5 09 da 
+28 b3 cf 8a 11 dc 0c c7 b7 19 58 e1 83 f4 80 1f 
+35 1a 97 5c e6 c4 86 d2 32 2a ef 3b f3 cd 40 ae 
+a2 1f f0 c0 e6 9e f3 d1 68 ca f9 eb 71 13 b2 59 
+2e 68 ae 1d 7d 7b 18 91 6b c6 f2 72 09 eb 1c b2 
+95 72 7c 61 d0 d4 31 93 4f a3 ea b1 95 30 c7 62 
+05 26 d4 63 c1 61 a1 3f 92 49 e0 94 37 09 d0 ef 
+03 dd 87 df 5d 64 fd c7 c4 58 d0 35 82 c0 46 9a 
+d7 f0 be a7 3d a9 26 17 03 03 00 35 70 35 db 2a 
+dd 98 dd 3e e5 f1 b4 44 2e d0 a9 31 24 13 33 58 
+af b1 3b d5 69 36 96 b8 cd d2 16 b4 93 f7 cb 1e 
+e5 2a 87 ec 1c 7e 5c 1c df e9 0a 3e 73 13 81 a7 
+ce 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 104
+Identification: 0x9fb5 (40885)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xee8e
+Source: 192.168.118.128
+Destination: 54.230.62.61
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 54988
+Destination Port: 443
+Sequence Number: 1706281391
+Acknowledgment Number: 1170280632
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x2edf
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 53
+   Encrypted Application Data: 1c747ad2f3954cb8bc647fc82be0a9312d5c38765729ffb47f370a7b7b8a00f830866caf353170f1a30d22e55f99ee0635ded195af
+
+< Memory >
+Captured byte : 118
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 68 9f b5 40 00 40 06 ee 8e c0 a8 76 80 36 e6 
+3e 3d d6 cc 01 bb 65 b3 c9 af 45 c1 10 b8 50 18 
+f5 3c 2e df 00 00 14 03 03 00 01 01 17 03 03 00 
+35 1c 74 7a d2 f3 95 4c b8 bc 64 7f c8 2b e0 a9 
+31 2d 5c 38 76 57 29 ff b4 7f 37 0a 7b 7b 8a 00 
+f8 30 86 6c af 35 31 70 f1 a3 0d 22 e5 5f 99 ee 
+06 35 de d1 95 af 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 253
+Identification: 0x265f (9823)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xf051
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40352
+Destination Port: 443
+Sequence Number: 2272141406
+Acknowledgment Number: 1762802079
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x069d
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.0  (0x0301)
+   Length: 208
+   Handshake Protocol: Client Hello
+       Handshake Type: Client Hello (1)
+       Length: 204
+       Version: TLS 1.2  (0x0303)
+       Random: 90e5659e31269b64a80729448865c6266da0573e4baa29b2cfd01b90eb15ce1a
+       Session ID Length: 0
+       Cipher Suites Length: 30
+       Cipher Suites (15 suites)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca9)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca8)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (0xc02c)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (0xc030)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+           Cipher Suite: TLS_RSA_WITH_AES_128_GCM_SHA256 (0x009c)
+           Cipher Suite: TLS_RSA_WITH_AES_256_GCM_SHA384 (0x009d)
+           Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+           Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+           Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
+       Compression Methods Length: 1
+       Compression Methods (1 method)
+           Compression Method: null (0)
+       Extensions Length: 133
+       Extensions: server_name (len=35)
+           Type: server_name (0)
+           Length: 35
+           Server Name Indication extension
+               Server Name list length: 33
+               Server Name Type: host_name (0)
+               Sever Name length: 30
+               Server Name: incoming.telemetry.mozilla.org
+       Extensions: extended_master_secret (len=0)
+           Type: extended_master_secret (23)
+           Length: 0
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: supported_groups (len=10)
+           Type: supported_groups (10)
+           Length: 10
+           Supported Groups List Length: 8
+           Supported Groups (4 groups)
+               Supported Group: x25519 (0x001d)
+               Supported Group: secp256r1 (0x0017)
+               Supported Group: secp384r1 (0x0018)
+               Supported Group: secp521r1 (0x0019)
+       Extensions: ec_point_formats (len=2)
+           Type: ec_point_formats (11)
+           Length: 2
+           EC point formats Length: 1
+           Elliptic curves point formats (1)
+               EC point format: uncompressed (0)
+       Extensions: session_ticket (len=0)
+           Type: session_ticket (35)
+           Length: 0
+           Data (0 bytes)       Extensions: application_layer_protocol_negotiation (len=14)
+           Type: application_layer_protocol_negotiation (16)
+           Length: 14
+           Data (14 bytes)
+           ALPN Extension Length: 12
+           ALPN Protocol
+               ALPN string length: 2
+               ALPN Next Protocol: h2
+               ALPN string length: 8
+               ALPN Next Protocol: http/1.1
+       Extensions: status_request (len=5)
+           Type: status_request (5)
+           Length: 5
+           Certificate Status Type: OCSP (1)
+            Responder ID list Length: 0
+           Responder Extensions Length: 0
+       Extensions: signature_algorithms (len=24)
+           Type: signature_algorithms (13)
+           Length: 24
+           Signature Hash Algorithm Length: 22
+           Signature Hash Algorithms (11 algorithms)
+               Signature Algorithm: ecdsa_secp256r1_sha256 (1027)
+               Signature Algorithm: ecdsa_secp384r1_sha384 (1283)
+               Signature Algorithm: ecdsa_secp521r1_sha512 (1539)
+               Signature Algorithm: rsa_pss_rsae_sha256 (2052)
+               Signature Algorithm: rsa_pss_rsae_sha384 (2053)
+               Signature Algorithm: rsa_pss_rsae_sha512 (2054)
+               Signature Algorithm: rsa_pkcs1_sha256 (1025)
+               Signature Algorithm: rsa_pkcs1_sha384 (1281)
+               Signature Algorithm: rsa_pkcs1_sha512 (1537)
+               Signature Algorithm: ecdsa_sha1 (515)
+               Signature Algorithm: rsa_pkcs1_sha1 (513)
+       Extensions: record_size_limit (len=2)
+           Type: record_size_limit (28)
+           Length: 2
+           Record Size Limit: 16384
+
+< Memory >
+Captured byte : 267
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 fd 26 5f 40 00 40 06 f0 51 c0 a8 76 80 2c ec 
+bf 35 9d a0 01 bb 87 6e 20 5e 69 12 39 9f 50 18 
+fa f0 06 9d 00 00 16 03 01 00 d0 01 00 00 cc 03 
+03 90 e5 65 9e 31 26 9b 64 a8 07 29 44 88 65 c6 
+26 6d a0 57 3e 4b aa 29 b2 cf d0 1b 90 eb 15 ce 
+1a 00 00 1e c0 2b c0 2f cc a9 cc a8 c0 2c c0 30 
+c0 0a c0 09 c0 13 c0 14 00 9c 00 9d 00 2f 00 35 
+00 0a 01 00 00 85 00 00 00 23 00 21 00 00 1e 69 
+6e 63 6f 6d 69 6e 67 2e 74 65 6c 65 6d 65 74 72 
+79 2e 6d 6f 7a 69 6c 6c 61 2e 6f 72 67 00 17 00 
+00 ff 01 00 01 00 00 0a 00 0a 00 08 00 1d 00 17 
+00 18 00 19 00 0b 00 02 01 00 00 23 00 00 00 10 
+00 0e 00 0c 02 68 32 08 68 74 74 70 2f 31 2e 31 
+00 05 00 05 01 00 00 00 00 00 0d 00 18 00 16 04 
+03 05 03 06 03 08 04 08 05 08 06 04 01 05 01 06 
+01 02 03 02 01 00 1c 00 02 40 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1500
+Identification: 0xf17d (61821)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x2054
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40352
+Sequence Number: 1762802079
+Acknowledgment Number: 2272141619
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAXXXX
+Window size value: 64240
+Checksum: 0x7373
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 89
+   Handshake Protocol: Server Hello
+       Handshake Type: Server Hello (2)
+       Length: 85
+       Version: TLS 1.2  (0x0303)
+       Random: eac707578b7d5bb4f6e3b0cad9850844545a87aa20599db7802da2139a668268
+       Session ID Length: 32
+       Session ID: c2abfcf2d5ea4b723827bbf30e99fd79950b382233395f365c205e9869d489cd
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Compression Method: null (0)
+       Extensions Length: 13
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: ec_point_formats (len=4)
+           Type: ec_point_formats (11)
+           Length: 4
+           EC point formats Length: 3
+           Elliptic curves point formats (3)
+               EC point format: uncompressed (0)
+               EC point format: ansiX962_compressed_prime (1)
+               EC point format: ansiX962_compressed_char2 (2)
+
+< Memory >
+Captured byte : 1514
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+05 dc f1 7d 00 00 80 06 20 54 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a0 69 12 39 9f 87 6e 21 33 50 10 
+fa f0 73 73 00 00 16 03 03 00 59 02 00 00 55 03 
+03 ea c7 07 57 8b 7d 5b b4 f6 e3 b0 ca d9 85 08 
+44 54 5a 87 aa 20 59 9d b7 80 2d a2 13 9a 66 82 
+68 20 c2 ab fc f2 d5 ea 4b 72 38 27 bb f3 0e 99 
+fd 79 95 0b 38 22 33 39 5f 36 5c 20 5e 98 69 d4 
+89 cd c0 2f 00 00 0d ff 01 00 01 00 00 0b 00 04 
+03 00 01 02 16 03 03 0b 8b 0b 00 0b 87 00 0b 84 
+00 06 e6 30 82 06 e2 30 82 05 ca a0 03 02 01 02 
+02 10 0c e6 b5 fd 8f b1 b0 7c d4 d5 4c ae fe 4d 
+bf 57 30 0d 06 09 2a 86 48 86 f7 0d 01 01 0b 05 
+00 30 4d 31 0b 30 09 06 03 55 04 06 13 02 55 53 
+31 15 30 13 06 03 55 04 0a 13 0c 44 69 67 69 43 
+65 72 74 20 49 6e 63 31 27 30 25 06 03 55 04 03 
+13 1e 44 69 67 69 43 65 72 74 20 53 48 41 32 20 
+53 65 63 75 72 65 20 53 65 72 76 65 72 20 43 41 
+30 1e 17 0d 32 30 30 38 32 34 30 30 30 30 30 30 
+5a 17 0d 32 32 31 30 32 38 31 32 30 30 30 30 5a 
+30 81 93 31 0b 30 09 06 03 55 04 06 13 02 55 53 
+31 13 30 11 06 03 55 04 08 13 0a 43 61 6c 69 66 
+6f 72 6e 69 61 31 16 30 14 06 03 55 04 07 13 0d 
+4d 6f 75 6e 74 61 69 6e 20 56 69 65 77 31 1c 30 
+1a 06 03 55 04 0a 13 13 4d 6f 7a 69 6c 6c 61 20 
+43 6f 72 70 6f 72 61 74 69 6f 6e 31 17 30 15 06 
+03 55 04 0b 13 0e 43 6c 6f 75 64 20 53 65 72 76 
+69 63 65 73 31 20 30 1e 06 03 55 04 03 0c 17 2a 
+2e 74 65 6c 65 6d 65 74 72 79 2e 6d 6f 7a 69 6c 
+6c 61 2e 6f 72 67 30 82 01 22 30 0d 06 09 2a 86 
+48 86 f7 0d 01 01 01 05 00 03 82 01 0f 00 30 82 
+01 0a 02 82 01 01 00 a5 20 49 b0 a9 bf 36 9b f8 
+ca 7c 85 de d7 87 4b 5f be 0b ab 7f b2 6d 97 e9 
+bb c4 33 34 4e af 8c e4 7d 59 0d 8c d9 55 7f e7 
+f8 14 7a 45 5f ca 18 ef 10 20 df 1a 42 df 38 3f 
+d8 d8 83 68 1d cb 49 7e fb a2 59 34 c1 5a da 8f 
+13 cc 8c 58 e8 ab aa 2d 21 03 82 e7 7c 83 22 b4 
+a7 fc 70 23 c3 81 8b 61 04 21 0a 28 ed f7 0c 6d 
+66 29 f7 07 fa 47 c0 32 a4 c8 de f7 2c cd 10 9e 
+55 54 0e 0e ae 75 00 e6 b8 b1 e1 74 78 1e 4c cd 
+5c f9 93 1f af 8d 75 ad 29 f0 67 43 34 0e 2a d3 
+a3 01 0a 76 45 7b 2c 8e 69 b7 86 89 1a bf f2 19 
+fd 7a b7 eb 16 76 ed 31 49 f3 2d f6 54 63 fd 52 
+ef 13 d1 a2 8d ad b8 f3 78 2a 0b ba 75 74 a9 92 
+f8 f8 44 2e 0a f0 84 b8 9a d6 e2 ba 3d 84 97 b2 
+ac e5 72 20 c1 f7 7c b9 c6 a2 15 fe 2b 65 31 92 
+8d 81 27 cc 64 32 45 76 d7 7e d1 72 9c 2a db 97 
+8e 2e d0 51 f4 23 8b 02 03 01 00 01 a3 82 03 75 
+30 82 03 71 30 1f 06 03 55 1d 23 04 18 30 16 80 
+14 0f 80 61 1c 82 31 61 d5 2f 28 e7 8d 46 38 b4 
+2c e1 c6 d9 e2 30 1d 06 03 55 1d 0e 04 16 04 14 
+f4 6a 8e 80 e9 f9 11 65 44 1f b1 89 c1 51 1f b4 
+a1 6a db bf 30 39 06 03 55 1d 11 04 32 30 30 82 
+17 2a 2e 74 65 6c 65 6d 65 74 72 79 2e 6d 6f 7a 
+69 6c 6c 61 2e 6f 72 67 82 15 74 65 6c 65 6d 65 
+74 72 79 2e 6d 6f 7a 69 6c 6c 61 2e 6f 72 67 30 
+0e 06 03 55 1d 0f 01 01 ff 04 04 03 02 05 a0 30 
+1d 06 03 55 1d 25 04 16 30 14 06 08 2b 06 01 05 
+05 07 03 01 06 08 2b 06 01 05 05 07 03 02 30 6b 
+06 03 55 1d 1f 04 64 30 62 30 2f a0 2d a0 2b 86 
+29 68 74 74 70 3a 2f 2f 63 72 6c 33 2e 64 69 67 
+69 63 65 72 74 2e 63 6f 6d 2f 73 73 63 61 2d 73 
+68 61 32 2d 67 36 2e 63 72 6c 30 2f a0 2d a0 2b 
+86 29 68 74 74 70 3a 2f 2f 63 72 6c 34 2e 64 69 
+67 69 63 65 72 74 2e 63 6f 6d 2f 73 73 63 61 2d 
+73 68 61 32 2d 67 36 2e 63 72 6c 30 4c 06 03 55 
+1d 20 04 45 30 43 30 37 06 09 60 86 48 01 86 fd 
+6c 01 01 30 2a 30 28 06 08 2b 06 01 05 05 07 02 
+01 16 1c 68 74 74 70 73 3a 2f 2f 77 77 77 2e 64 
+69 67 69 63 65 72 74 2e 63 6f 6d 2f 43 50 53 30 
+08 06 06 67 81 0c 01 02 02 30 7c 06 08 2b 06 01 
+05 05 07 01 01 04 70 30 6e 30 24 06 08 2b 06 01 
+05 05 07 30 01 86 18 68 74 74 70 3a 2f 2f 6f 63 
+73 70 2e 64 69 67 69 63 65 72 74 2e 63 6f 6d 30 
+46 06 08 2b 06 01 05 05 07 30 02 86 3a 68 74 74 
+70 3a 2f 2f 63 61 63 65 72 74 73 2e 64 69 67 69 
+63 65 72 74 2e 63 6f 6d 2f 44 69 67 69 43 65 72 
+74 53 48 41 32 53 65 63 75 72 65 53 65 72 76 65 
+72 43 41 2e 63 72 74 30 0c 06 03 55 1d 13 01 01 
+ff 04 02 30 00 30 82 01 7c 06 0a 2b 06 01 04 01 
+d6 79 02 04 02 04 82 01 6c 04 82 01 68 01 66 00 
+75 00 29 79 be f0 9e 39 39 21 f0 56 73 9f 63 a5 
+77 e5 be 57 7d 9c 60 0a f8 f9 4d 5d 26 5c 25 5d 
+c7 84 00 00 01 74 1f d8 e5 5a 00 00 04 03 00 46 
+30 44 02 20 12 da 36 9a 55 0a 79 08 e0 48 da 31 
+1d 1d aa 9e 47 a1 f1 fb 4f 4d 72 1e bd 52 d2 56 
+89 63 0c 97 02 20 5c 57 b9 82 42 8a c5 13 1e bf 
+7a 60 81 a6 34 1b 09 4f 4b cc 3f 21 be f2 8f 12 
+93 1b 19 c2 2c ba 00 75 00 22 45 45 07 59 55 24 
+56 96 3f a1 2f f1 f7 6d 86 e0 23 26 63 ad c0 4b 
+7f 5d c6 83 5c 6e e2 0f 02 00 00 01 74 1f d8 e5 
+59 00 00 04 03 00 46 30 44 02 20 65 db a8 64 c1 
+b4 f0 10 c3 ab e8 57 47 e7 f3 26 6f 9f 76 dd e0 
+ed 08 7a 81 67 42 59 56 c2 91 b6 02 20 26 d8 97 
+8c 8a ae 55 2c a7 4a 4b 97 bd 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 521
+Identification: 0xf17f (61823)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x2425
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40352
+Sequence Number: 1762804999
+Acknowledgment Number: 2272141619
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xc1f3
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 2955
+   Handshake Protocol: Certificate
+       Handshake Type: Certificate (11)
+       Length: 2951
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 333
+   Handshake Protocol: Server Key Exchange
+       Handshake Type: Server Key Exchange (11)
+       Length: 329
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 4
+   Handshake Protocol: Server Hello Done
+       Handshake Type: Server Hello Done (14)
+       Length: 0
+
+< Memory >
+Captured byte : 535
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+02 09 f1 7f 00 00 80 06 24 25 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a0 69 12 45 07 87 6e 21 33 50 18 
+fa f0 c1 f3 00 00 c2 ec ff 71 c1 e3 47 ff d4 b9 
+00 b4 37 42 da 20 c9 ea 6e 8a ee 14 06 ae 7d a2 
+59 98 88 a8 1b 6f 2d f4 f2 c9 14 5f 26 cf 2c 8d 
+7e ed 37 c0 a9 d5 39 b9 82 bf 19 0c ea 34 af 00 
+21 68 f8 ad 73 e2 c9 32 da 38 25 0b 55 d3 9a 1d 
+f0 68 86 ed 2e 41 34 ef 7c a5 50 1d bf 3a f9 d3 
+c1 08 0c e6 ed 1e 8a 58 25 e4 b8 77 ad 2d 6e f5 
+52 dd b4 74 8f ab 49 2e 9d 3b 93 34 28 1f 78 ce 
+94 ea c7 bd d3 c9 6d 1c de 5c 32 f3 16 03 03 01 
+4d 0c 00 01 49 03 00 17 41 04 07 5d c1 f3 36 fb 
+98 a2 71 16 e8 12 26 fb 6e 54 de a8 f1 7e 19 25 
+f5 6f 8c 94 8c e6 0c 3d 9e d6 96 75 a0 5a 36 9b 
+4f cf 0d 1e 37 a6 4c eb 4b 36 2d 22 ec 24 2c 16 
+30 ad 52 72 22 db 96 22 3e 6b 06 01 01 00 81 ff 
+ca dc cb c0 8c eb dd 0e 73 3b e1 c6 ae 97 76 d7 
+ec f4 b4 a9 31 ff b5 bb 68 b6 44 d3 88 ac f0 69 
+f1 64 f8 da 73 6c 74 51 b4 7a d8 65 29 e2 20 4a 
+d8 ad c8 4f eb 89 50 37 2d 35 3f 2c b5 20 21 42 
+f8 95 17 4d fc 70 a3 ab a2 29 cc ab bf fd 5e 24 
+0a f6 f7 65 3e 62 0d 94 47 ed 25 78 a6 e0 ed 83 
+b0 76 fe 51 46 02 5e b7 14 08 c7 f4 a4 72 5a 84 
+ee b5 f6 cc 38 f7 56 34 74 4a f0 50 b9 a2 78 50 
+e6 fb 50 bc b4 67 51 d8 65 c9 52 32 ac a5 d7 33 
+d9 bb c9 2f d4 13 68 b9 f5 c3 54 82 f9 a2 47 99 
+cf 7f fd e5 40 56 9f 11 93 83 d9 2e fc b5 51 8e 
+2e c8 27 ba 17 da fe 92 ae 23 f1 ac fe 28 ac bc 
+3d bc fc 87 d8 da 67 18 14 44 86 1b 3a 3c 6e 37 
+4f 72 53 8e 13 ea 05 c4 27 e3 05 37 20 ce 23 d6 
+3e 2c 7d e8 b5 dc 1b a9 1f 66 33 61 3c 97 61 bb 
+b2 50 36 2c 45 95 a7 ac a0 10 51 75 d2 13 16 03 
+03 00 04 0e 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 166
+Identification: 0x2663 (9827)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xf0a4
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40352
+Destination Port: 443
+Sequence Number: 2272141619
+Acknowledgment Number: 1762805480
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x7e2c
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 70
+   Handshake Protocol: Encrypted Handshake Message
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 40
+   Handshake Protocol: Encrypted Handshake Message
+   Handshake Protocol: Encrypted Handshake Message
+   Handshake Protocol: Encrypted Handshake Message
+
+< Memory >
+Captured byte : 180
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 a6 26 63 40 00 40 06 f0 a4 c0 a8 76 80 2c ec 
+bf 35 9d a0 01 bb 87 6e 21 33 69 12 46 e8 50 18 
+f5 3c 7e 2c 00 00 16 03 03 00 46 10 00 00 42 41 
+04 45 ad 87 87 08 55 73 23 9e 75 27 93 7a 19 37 
+c8 1f b0 2a 85 d0 c9 fc cd ba f3 c1 af ff 8b 0b 
+5d 08 3b 7f 2c 84 0f 9b e1 3c 4c 43 0e de 93 04 
+e4 5c cf 51 83 f5 97 f8 ba 34 00 5e 41 dc 44 53 
+7c 14 03 03 00 01 01 16 03 03 00 28 00 00 00 00 
+00 00 00 00 74 e4 c5 f2 2e 75 a5 ee 2b 74 23 56 
+38 0c 2b bd e6 44 85 22 19 86 62 b6 93 4c d8 0a 
+03 63 96 ff 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 557
+Identification: 0x753b (30011)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x0d16
+Source: 192.168.118.128
+Destination: 52.40.75.41
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 57246
+Destination Port: 443
+Sequence Number: 2347030124
+Acknowledgment Number: 1798338828
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xaa47
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.0  (0x0301)
+   Length: 512
+   Handshake Protocol: Client Hello
+       Handshake Type: Client Hello (1)
+       Length: 508
+       Version: TLS 1.2  (0x0303)
+       Random: 39a9430baaa2d67add879c9685dc7746b993b5e873578337c0a081c96c68d686
+       Session ID Length: 32
+       Session ID: 933c7f8a34d6ac26038a26bc411d94da9326dbc3368d104707a728f15dc59b21
+       Cipher Suites Length: 36
+       Cipher Suites (18 suites)
+           Cipher Suite: TLS_AES_128_GCM_SHA256 (0x1301)
+           Cipher Suite: TLS_CHACHA20_POLY1305_SHA256 (0x1303)
+           Cipher Suite: TLS_AES_256_GCM_SHA384 (0x1302)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca9)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca8)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (0xc02c)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (0xc030)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+           Cipher Suite: TLS_RSA_WITH_AES_128_GCM_SHA256 (0x009c)
+           Cipher Suite: TLS_RSA_WITH_AES_256_GCM_SHA384 (0x009d)
+           Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+           Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+           Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
+       Compression Methods Length: 1
+       Compression Methods (1 method)
+           Compression Method: null (0)
+       Extensions Length: 399
+       Extensions: server_name (len=30)
+           Type: server_name (0)
+           Length: 30
+           Server Name Indication extension
+               Server Name list length: 28
+               Server Name Type: host_name (0)
+               Sever Name length: 25
+               Server Name: push.services.mozilla.com
+       Extensions: extended_master_secret (len=0)
+           Type: extended_master_secret (23)
+           Length: 0
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: supported_groups (len=14)
+           Type: supported_groups (10)
+           Length: 14
+           Supported Groups List Length: 12
+           Supported Groups (6 groups)
+               Supported Group: x25519 (0x001d)
+               Supported Group: secp256r1 (0x0017)
+               Supported Group: secp384r1 (0x0018)
+               Supported Group: secp521r1 (0x0019)
+               Supported Group: ffdhe2048 (0x0100)
+               Supported Group: ffdhe3072 (0x0101)
+       Extensions: ec_point_formats (len=2)
+           Type: ec_point_formats (11)
+           Length: 2
+           EC point formats Length: 1
+           Elliptic curves point formats (1)
+               EC point format: uncompressed (0)
+       Extensions: session_ticket (len=0)
+           Type: session_ticket (35)
+           Length: 0
+           Data (0 bytes)       Extensions: application_layer_protocol_negotiation (len=14)
+           Type: application_layer_protocol_negotiation (16)
+           Length: 14
+           Data (14 bytes)
+           ALPN Extension Length: 12
+           ALPN Protocol
+               ALPN string length: 2
+               ALPN Next Protocol: h2
+               ALPN string length: 8
+               ALPN Next Protocol: http/1.1
+       Extensions: status_request (len=5)
+           Type: status_request (5)
+           Length: 5
+           Certificate Status Type: OCSP (1)
+            Responder ID list Length: 0
+           Responder Extensions Length: 0
+       Extensions: delegated_credentials (len=10)
+           Type: Unknown (34)
+           Length: 10
+           Data: 00080403050306030203
+       Extensions: key_share (len=107)
+           Type: key_share (51)
+           Length: 107
+           Key Share extension
+               Client Key Share Length: 105
+               Key Share Entry:
+                   Group: x25519 (29)
+                   Key Exchange Length: 32
+                   Key Exchage: 530452992574d1d6b19f8f52a51686f5224b6fea67932a0a96c1731c3dc41c29
+               Key Share Entry:
+                   Group: secp256r1 (23)
+                   Key Exchange Length: 65
+                   Key Exchage: 04cce229db45304916334d47f92a51d0b797f4ec9ec6765b69c46338bc880a42f51829dfe41d6124717a32d56fc229be14713a2d85b6280cf2f008e36ea356b3e2
+       Extensions: supported_versions (len=5)
+           Type: supported_versions (43)
+           Length: 5
+           Supported Versions length: 4
+           Supported Version: TLS 1.3 (0x0304)
+           Supported Version: TLS 1.2 (0x0303)
+       Extensions: signature_algorithms (len=24)
+           Type: signature_algorithms (13)
+           Length: 24
+           Signature Hash Algorithm Length: 22
+           Signature Hash Algorithms (11 algorithms)
+               Signature Algorithm: ecdsa_secp256r1_sha256 (1027)
+               Signature Algorithm: ecdsa_secp384r1_sha384 (1283)
+               Signature Algorithm: ecdsa_secp521r1_sha512 (1539)
+               Signature Algorithm: rsa_pss_rsae_sha256 (2052)
+               Signature Algorithm: rsa_pss_rsae_sha384 (2053)
+               Signature Algorithm: rsa_pss_rsae_sha512 (2054)
+               Signature Algorithm: rsa_pkcs1_sha256 (1025)
+               Signature Algorithm: rsa_pkcs1_sha384 (1281)
+               Signature Algorithm: rsa_pkcs1_sha512 (1537)
+               Signature Algorithm: ecdsa_sha1 (515)
+               Signature Algorithm: rsa_pkcs1_sha1 (513)
+       Extensions: psk_key_exchange_modes (len=2)
+           Type: psk_key_exchange_modes (45)
+           Length: 2
+           PSK Key Exchange Modes Length: 1
+           PSK Key Exchange Mode: PSK with (EC)DHE key establishment (psk_dhe_ke) (1)
+       Extensions: record_size_limit (len=2)
+           Type: record_size_limit (28)
+           Length: 2
+           Record Size Limit: 16385
+       Extensions: padding (len=123)
+           Type: padding (21)
+           Length: 123
+           Padding Data: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+< Memory >
+Captured byte : 571
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+02 2d 75 3b 40 00 40 06 0d 16 c0 a8 76 80 34 28 
+4b 29 df 9e 01 bb 8b e4 d6 6c 6b 30 79 0c 50 18 
+fa f0 aa 47 00 00 16 03 01 02 00 01 00 01 fc 03 
+03 39 a9 43 0b aa a2 d6 7a dd 87 9c 96 85 dc 77 
+46 b9 93 b5 e8 73 57 83 37 c0 a0 81 c9 6c 68 d6 
+86 20 93 3c 7f 8a 34 d6 ac 26 03 8a 26 bc 41 1d 
+94 da 93 26 db c3 36 8d 10 47 07 a7 28 f1 5d c5 
+9b 21 00 24 13 01 13 03 13 02 c0 2b c0 2f cc a9 
+cc a8 c0 2c c0 30 c0 0a c0 09 c0 13 c0 14 00 9c 
+00 9d 00 2f 00 35 00 0a 01 00 01 8f 00 00 00 1e 
+00 1c 00 00 19 70 75 73 68 2e 73 65 72 76 69 63 
+65 73 2e 6d 6f 7a 69 6c 6c 61 2e 63 6f 6d 00 17 
+00 00 ff 01 00 01 00 00 0a 00 0e 00 0c 00 1d 00 
+17 00 18 00 19 01 00 01 01 00 0b 00 02 01 00 00 
+23 00 00 00 10 00 0e 00 0c 02 68 32 08 68 74 74 
+70 2f 31 2e 31 00 05 00 05 01 00 00 00 00 00 22 
+00 0a 00 08 04 03 05 03 06 03 02 03 00 33 00 6b 
+00 69 00 1d 00 20 53 04 52 99 25 74 d1 d6 b1 9f 
+8f 52 a5 16 86 f5 22 4b 6f ea 67 93 2a 0a 96 c1 
+73 1c 3d c4 1c 29 00 17 00 41 04 cc e2 29 db 45 
+30 49 16 33 4d 47 f9 2a 51 d0 b7 97 f4 ec 9e c6 
+76 5b 69 c4 63 38 bc 88 0a 42 f5 18 29 df e4 1d 
+61 24 71 7a 32 d5 6f c2 29 be 14 71 3a 2d 85 b6 
+28 0c f2 f0 08 e3 6e a3 56 b3 e2 00 2b 00 05 04 
+03 04 03 03 00 0d 00 18 00 16 04 03 05 03 06 03 
+08 04 08 05 08 06 04 01 05 01 06 01 02 03 02 01 
+00 2d 00 02 01 01 00 1c 00 02 40 01 00 15 00 7b 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 831
+Identification: 0x2664 (9828)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xee0a
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40352
+Destination Port: 443
+Sequence Number: 2272141745
+Acknowledgment Number: 1762805480
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0xd58c
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 786
+   Encrypted Application Data: 00000000000000010aac4a0f8980162d29209617957434e011aea9d4b866bd22b70d3704fa672c5aff87bbb65fa0cd93362ed639a8fb6d2fa628e3ff862b9f5b269fdb97852b7f6197da97009555eb481e725889950d65bab1ac1e923ebddd076c2868d90a90d63c00958fc32db333f9c280f249703949ef7bac441fc597fd1d37c4594eb929d7d4f3c9669901530270f451ad46cba5f033d86a013b39088f53135e2e519fd8ead500a7f3936cabef35e38f501be948370918d5b0be27cbb4948b6ab60a0f5074938c006e8385378c0a46062d1c33beff19e0a5bfc504ae6d3dc92fe8531905d8f034a4e62ca4dbe4f2be1fa9c80a80cdc5db27a97dd416516b521732a4e7a1087083a1c8125a8392532de14d38329805a71cc1fd1246246db5942bd2bcdef00fa57b5b2ba3f5cf733cf2b9ba7d7a73d709b3e0dc5a0f3dcd48b6e1457731439b61a515c5052c38963048d8df6303806a42b6b851bbc251b9ec11ed8c86316610c18f76fdd7453b3bb838f481828556a88d1b1b298fcc4845c9179065c15f84700789ed9dbd4bdbe87905cd0482d6749247bdfb01535566588c5313df2dff827d0f12d212f076f8e70dfc8527db0eda3b55619928614bddb491fc03ee05985a72bfd5fe3bfa9dbc939e5bcd3dee96de445bb49c0f00821e2eb14fa84c26bb4585fc78e5110cdbebc8830813e1de3a61c9f9a983856c1c1d28b1822af490526ed9c0e86a7b03b88db3f66eb1725e4f09aaaed70817db75188d4c39aefdb7565ecff5b32beb5edafd4e81a307ce47e18c08c0bd068e3060c02d57623f595cef003a6e4ae6874b2f7cae29b989ce7255af37132328791386d6f9350135201c0384178e7ce9a52361eb0574325b748b244d18454f5a7c982bfa8159605e99e540fdfabf532e0d44f203543b34f17f995a52f332aacfb27c055b9abbc209f454c51320ed48c73c72833455959c9479b55fb55a0aeecc280808b1a64a554d0fe187c9a39099ed6c1cfdefbef464f1288f318c35971d32bc4ca73bf21722dea89979a5ee811fb8522dc27362a75aa0e1e489f546b9dbb6c94e0f90bf13f464366ed3fea1ec5da9cf9104854e341093
+
+< Memory >
+Captured byte : 845
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+03 3f 26 64 40 00 40 06 ee 0a c0 a8 76 80 2c ec 
+bf 35 9d a0 01 bb 87 6e 21 b1 69 12 46 e8 50 18 
+f5 3c d5 8c 00 00 17 03 03 03 12 00 00 00 00 00 
+00 00 01 0a ac 4a 0f 89 80 16 2d 29 20 96 17 95 
+74 34 e0 11 ae a9 d4 b8 66 bd 22 b7 0d 37 04 fa 
+67 2c 5a ff 87 bb b6 5f a0 cd 93 36 2e d6 39 a8 
+fb 6d 2f a6 28 e3 ff 86 2b 9f 5b 26 9f db 97 85 
+2b 7f 61 97 da 97 00 95 55 eb 48 1e 72 58 89 95 
+0d 65 ba b1 ac 1e 92 3e bd dd 07 6c 28 68 d9 0a 
+90 d6 3c 00 95 8f c3 2d b3 33 f9 c2 80 f2 49 70 
+39 49 ef 7b ac 44 1f c5 97 fd 1d 37 c4 59 4e b9 
+29 d7 d4 f3 c9 66 99 01 53 02 70 f4 51 ad 46 cb 
+a5 f0 33 d8 6a 01 3b 39 08 8f 53 13 5e 2e 51 9f 
+d8 ea d5 00 a7 f3 93 6c ab ef 35 e3 8f 50 1b e9 
+48 37 09 18 d5 b0 be 27 cb b4 94 8b 6a b6 0a 0f 
+50 74 93 8c 00 6e 83 85 37 8c 0a 46 06 2d 1c 33 
+be ff 19 e0 a5 bf c5 04 ae 6d 3d c9 2f e8 53 19 
+05 d8 f0 34 a4 e6 2c a4 db e4 f2 be 1f a9 c8 0a 
+80 cd c5 db 27 a9 7d d4 16 51 6b 52 17 32 a4 e7 
+a1 08 70 83 a1 c8 12 5a 83 92 53 2d e1 4d 38 32 
+98 05 a7 1c c1 fd 12 46 24 6d b5 94 2b d2 bc de 
+f0 0f a5 7b 5b 2b a3 f5 cf 73 3c f2 b9 ba 7d 7a 
+73 d7 09 b3 e0 dc 5a 0f 3d cd 48 b6 e1 45 77 31 
+43 9b 61 a5 15 c5 05 2c 38 96 30 48 d8 df 63 03 
+80 6a 42 b6 b8 51 bb c2 51 b9 ec 11 ed 8c 86 31 
+66 10 c1 8f 76 fd d7 45 3b 3b b8 38 f4 81 82 85 
+56 a8 8d 1b 1b 29 8f cc 48 45 c9 17 90 65 c1 5f 
+84 70 07 89 ed 9d bd 4b db e8 79 05 cd 04 82 d6 
+74 92 47 bd fb 01 53 55 66 58 8c 53 13 df 2d ff 
+82 7d 0f 12 d2 12 f0 76 f8 e7 0d fc 85 27 db 0e 
+da 3b 55 61 99 28 61 4b dd b4 91 fc 03 ee 05 98 
+5a 72 bf d5 fe 3b fa 9d bc 93 9e 5b cd 3d ee 96 
+de 44 5b b4 9c 0f 00 82 1e 2e b1 4f a8 4c 26 bb 
+45 85 fc 78 e5 11 0c db eb c8 83 08 13 e1 de 3a 
+61 c9 f9 a9 83 85 6c 1c 1d 28 b1 82 2a f4 90 52 
+6e d9 c0 e8 6a 7b 03 b8 8d b3 f6 6e b1 72 5e 4f 
+09 aa ae d7 08 17 db 75 18 8d 4c 39 ae fd b7 56 
+5e cf f5 b3 2b eb 5e da fd 4e 81 a3 07 ce 47 e1 
+8c 08 c0 bd 06 8e 30 60 c0 2d 57 62 3f 59 5c ef 
+00 3a 6e 4a e6 87 4b 2f 7c ae 29 b9 89 ce 72 55 
+af 37 13 23 28 79 13 86 d6 f9 35 01 35 20 1c 03 
+84 17 8e 7c e9 a5 23 61 eb 05 74 32 5b 74 8b 24 
+4d 18 45 4f 5a 7c 98 2b fa 81 59 60 5e 99 e5 40 
+fd fa bf 53 2e 0d 44 f2 03 54 3b 34 f1 7f 99 5a 
+52 f3 32 aa cf b2 7c 05 5b 9a bb c2 09 f4 54 c5 
+13 20 ed 48 c7 3c 72 83 34 55 95 9c 94 79 b5 5f 
+b5 5a 0a ee cc 28 08 08 b1 a6 4a 55 4d 0f e1 87 
+c9 a3 90 99 ed 6c 1c fd ef be f4 64 f1 28 8f 31 
+8c 35 97 1d 32 bc 4c a7 3b f2 17 22 de a8 99 79 
+a5 ee 81 1f b8 52 2d c2 73 62 a7 5a a0 e1 e4 89 
+f5 46 b9 db b6 c9 4e 0f 90 bf 13 f4 64 36 6e d3 
+fe a1 ec 5d a9 cf 91 04 85 4e 34 10 93 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 91
+Identification: 0xf18b (61835)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x25c7
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40352
+Sequence Number: 1762805480
+Acknowledgment Number: 2272142536
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xcad4
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 40
+   Handshake Protocol: Encrypted Handshake Message
+
+< Memory >
+Captured byte : 105
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 5b f1 8b 00 00 80 06 25 c7 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a0 69 12 46 e8 87 6e 24 c8 50 18 
+fa f0 ca d4 00 00 14 03 03 00 01 01 16 03 03 00 
+28 6a b7 5f 0c b5 1f a0 31 0f eb 8e 2a 34 ca 67 
+03 78 a6 f1 d1 dd 09 4d b4 d9 3b a5 7d f6 51 45 
+09 a7 75 46 41 35 fd 29 7a 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1500
+Identification: 0xf18c (61836)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x8d15
+Source: 52.40.75.41
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 57246
+Sequence Number: 1798338828
+Acknowledgment Number: 2347030641
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAXXXX
+Window size value: 64240
+Checksum: 0x1f5c
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 93
+   Handshake Protocol: Server Hello
+       Handshake Type: Server Hello (2)
+       Length: 89
+       Version: TLS 1.2  (0x0303)
+       Random: 6f12247ab4b9df32bf71da2b47693e5c005262b4991e87258bd7929e3c34d681
+       Session ID Length: 32
+       Session ID: 2476f05a44762f7ebc0e5fb65ad413612938471f74c157e4131087d43660aaf5
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Compression Method: null (0)
+       Extensions Length: 17
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: ec_point_formats (len=4)
+           Type: ec_point_formats (11)
+           Length: 4
+           EC point formats Length: 3
+           Elliptic curves point formats (3)
+               EC point format: uncompressed (0)
+               EC point format: ansiX962_compressed_prime (1)
+               EC point format: ansiX962_compressed_char2 (2)
+       Extensions: extended_master_secret (len=0)
+           Type: extended_master_secret (23)
+           Length: 0
+
+< Memory >
+Captured byte : 1514
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+05 dc f1 8c 00 00 80 06 8d 15 34 28 4b 29 c0 a8 
+76 80 01 bb df 9e 6b 30 79 0c 8b e4 d8 71 50 10 
+fa f0 1f 5c 00 00 16 03 03 00 5d 02 00 00 59 03 
+03 6f 12 24 7a b4 b9 df 32 bf 71 da 2b 47 69 3e 
+5c 00 52 62 b4 99 1e 87 25 8b d7 92 9e 3c 34 d6 
+81 20 24 76 f0 5a 44 76 2f 7e bc 0e 5f b6 5a d4 
+13 61 29 38 47 1f 74 c1 57 e4 13 10 87 d4 36 60 
+aa f5 c0 2f 00 00 11 ff 01 00 01 00 00 0b 00 04 
+03 00 01 02 00 17 00 00 16 03 03 0b 83 0b 00 0b 
+7f 00 0b 7c 00 06 88 30 82 06 84 30 82 05 6c a0 
+03 02 01 02 02 10 0e ca 7b ef 6c fd ea ac 44 33 
+38 f6 5f 27 db f2 30 0d 06 09 2a 86 48 86 f7 0d 
+01 01 0b 05 00 30 4f 31 0b 30 09 06 03 55 04 06 
+13 02 55 53 31 15 30 13 06 03 55 04 0a 13 0c 44 
+69 67 69 43 65 72 74 20 49 6e 63 31 29 30 27 06 
+03 55 04 03 13 20 44 69 67 69 43 65 72 74 20 54 
+4c 53 20 52 53 41 20 53 48 41 32 35 36 20 32 30 
+32 30 20 43 41 31 30 1e 17 0d 32 30 31 32 31 36 
+30 30 30 30 30 30 5a 17 0d 32 32 30 31 31 36 32 
+33 35 39 35 39 5a 30 7c 31 0b 30 09 06 03 55 04 
+06 13 02 55 53 31 13 30 11 06 03 55 04 08 13 0a 
+43 61 6c 69 66 6f 72 6e 69 61 31 16 30 14 06 03 
+55 04 07 13 0d 4d 6f 75 6e 74 61 69 6e 20 56 69 
+65 77 31 1c 30 1a 06 03 55 04 0a 13 13 4d 6f 7a 
+69 6c 6c 61 20 43 6f 72 70 6f 72 61 74 69 6f 6e 
+31 22 30 20 06 03 55 04 03 13 19 70 75 73 68 2e 
+73 65 72 76 69 63 65 73 2e 6d 6f 7a 69 6c 6c 61 
+2e 63 6f 6d 30 82 01 22 30 0d 06 09 2a 86 48 86 
+f7 0d 01 01 01 05 00 03 82 01 0f 00 30 82 01 0a 
+02 82 01 01 00 c7 54 92 8b 66 cf 70 c5 4a cb 6e 
+bd b1 02 66 47 35 98 67 2e 96 0c db 45 cc 2c 1b 
+29 0d 48 9b 85 b2 c5 04 18 f5 27 43 6b 10 e1 13 
+49 16 b9 fa 48 09 ee 5c bf 6f 5a 6f 16 d7 02 3a 
+19 5a 69 a9 85 81 6a 92 1d a1 bb 8b 60 2c 10 bc 
+e0 85 87 ff 19 11 13 80 a4 12 f0 3e 6f bd 00 e6 
+cb 48 e5 e8 2b be c9 10 55 54 f4 68 08 6a c9 96 
+07 d4 b4 99 d8 8e 2c 2d 32 f2 9c 67 b2 f3 e6 1b 
+dd 2c 6d 95 f0 c1 51 e9 92 34 51 92 e4 ae e3 c1 
+12 d3 1b 3e 07 fa 69 96 52 00 56 d6 d5 79 83 b8 
+8b 82 c7 4c da 7e 16 b3 80 0b 91 2e 17 61 eb d8 
+0b 62 4b 25 f6 49 c4 8e be 09 cb 51 3f 98 5b 14 
+69 b2 b0 b9 dc ab 77 ae ea d9 ac 14 5a ba b5 5c 
+a9 1e 8d 22 dd 8b 19 1e 08 f8 89 02 9c f3 fc d4 
+9d 29 c2 ae 46 23 d4 74 73 00 44 b3 45 e5 2c a5 
+9b ce 3e eb 0d 06 29 fb 3d c4 da fd f6 6d dc 3c 
+6c 38 0a e0 99 02 03 01 00 01 a3 82 03 2d 30 82 
+03 29 30 1f 06 03 55 1d 23 04 18 30 16 80 14 b7 
+6b a2 ea a8 aa 84 8c 79 ea b4 da 0f 98 b2 c5 95 
+76 b9 f4 30 1d 06 03 55 1d 0e 04 16 04 14 f2 ba 
+8f 34 f3 4d a5 c7 9e ef 45 92 9a d8 9b 3d 5b 40 
+cb 75 30 47 06 03 55 1d 11 04 40 30 3e 82 19 70 
+75 73 68 2e 73 65 72 76 69 63 65 73 2e 6d 6f 7a 
+69 6c 6c 61 2e 63 6f 6d 82 21 75 70 64 61 74 65 
+73 2e 70 75 73 68 2e 73 65 72 76 69 63 65 73 2e 
+6d 6f 7a 69 6c 6c 61 2e 63 6f 6d 30 0e 06 03 55 
+1d 0f 01 01 ff 04 04 03 02 05 a0 30 1d 06 03 55 
+1d 25 04 16 30 14 06 08 2b 06 01 05 05 07 03 01 
+06 08 2b 06 01 05 05 07 03 02 30 81 8b 06 03 55 
+1d 1f 04 81 83 30 81 80 30 3e a0 3c a0 3a 86 38 
+68 74 74 70 3a 2f 2f 63 72 6c 33 2e 64 69 67 69 
+63 65 72 74 2e 63 6f 6d 2f 44 69 67 69 43 65 72 
+74 54 4c 53 52 53 41 53 48 41 32 35 36 32 30 32 
+30 43 41 31 2e 63 72 6c 30 3e a0 3c a0 3a 86 38 
+68 74 74 70 3a 2f 2f 63 72 6c 34 2e 64 69 67 69 
+63 65 72 74 2e 63 6f 6d 2f 44 69 67 69 43 65 72 
+74 54 4c 53 52 53 41 53 48 41 32 35 36 32 30 32 
+30 43 41 31 2e 63 72 6c 30 4c 06 03 55 1d 20 04 
+45 30 43 30 37 06 09 60 86 48 01 86 fd 6c 01 01 
+30 2a 30 28 06 08 2b 06 01 05 05 07 02 01 16 1c 
+68 74 74 70 73 3a 2f 2f 77 77 77 2e 64 69 67 69 
+63 65 72 74 2e 63 6f 6d 2f 43 50 53 30 08 06 06 
+67 81 0c 01 02 02 30 7d 06 08 2b 06 01 05 05 07 
+01 01 04 71 30 6f 30 24 06 08 2b 06 01 05 05 07 
+30 01 86 18 68 74 74 70 3a 2f 2f 6f 63 73 70 2e 
+64 69 67 69 63 65 72 74 2e 63 6f 6d 30 47 06 08 
+2b 06 01 05 05 07 30 02 86 3b 68 74 74 70 3a 2f 
+2f 63 61 63 65 72 74 73 2e 64 69 67 69 63 65 72 
+74 2e 63 6f 6d 2f 44 69 67 69 43 65 72 74 54 4c 
+53 52 53 41 53 48 41 32 35 36 32 30 32 30 43 41 
+31 2e 63 72 74 30 0c 06 03 55 1d 13 01 01 ff 04 
+02 30 00 30 82 01 04 06 0a 2b 06 01 04 01 d6 79 
+02 04 02 04 81 f5 04 81 f2 00 f0 00 75 00 29 79 
+be f0 9e 39 39 21 f0 56 73 9f 63 a5 77 e5 be 57 
+7d 9c 60 0a f8 f9 4d 5d 26 5c 25 5d c7 84 00 00 
+01 76 6d 3d e0 e4 00 00 04 03 00 46 30 44 02 20 
+65 6f f7 8e f1 89 13 24 6f 47 fc b2 b4 2f 94 50 
+d2 66 dc dc bc 39 5d 6a 6f b9 39 eb b5 e7 80 e3 
+02 20 6d 79 3c 60 1c 68 aa 5a f7 12 6d 2a 89 6a 
+de 11 05 bf 49 b7 1d 9e 96 9c 91 9c e9 63 78 26 
+a7 61 00 77 00 22 45 45 07 59 55 24 56 96 3f a1 
+2f f1 f7 6d 86 e0 23 26 63 ad c0 4b 7f 5d c6 83 
+5c 6e e2 0f 02 00 00 01 76 6d 3d e1 4e 00 00 04 
+03 00 48 30 46 02 21 00 b0 09 17 cc ca 64 64 2e 
+da d8 8a c7 30 2d 83 f5 52 60 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 517
+Identification: 0xf18e (61838)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x90ea
+Source: 52.40.75.41
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 57246
+Sequence Number: 1798341748
+Acknowledgment Number: 2347030641
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x6755
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 2947
+   Handshake Protocol: Certificate
+       Handshake Type: Certificate (11)
+       Length: 2943
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 333
+   Handshake Protocol: Server Key Exchange
+       Handshake Type: Server Key Exchange (11)
+       Length: 329
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 4
+   Handshake Protocol: Server Hello Done
+       Handshake Type: Server Hello Done (14)
+       Length: 0
+
+< Memory >
+Captured byte : 531
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+02 05 f1 8e 00 00 80 06 90 ea 34 28 4b 29 c0 a8 
+76 80 01 bb df 9e 6b 30 84 74 8b e4 d8 71 50 18 
+fa f0 67 55 00 00 e2 8a db 87 d7 4a e8 5e e7 48 
+06 eb ab 12 9a f2 af 84 c3 5b 83 4a 99 81 83 ab 
+00 a1 ca 0a 3c 4c a2 25 89 2a 22 a7 a4 f3 33 4c 
+5b 8c 2e 1a 02 97 0f 9d 8f 6d 2d 95 08 fb 4f da 
+f1 91 38 25 e1 9c 6e 61 18 87 6a ce b1 bb 00 30 
+6a 9b b7 af da f1 c5 97 fe 8a 78 24 aa ea 93 80 
+ba 33 65 7a bc a1 77 e9 7f 69 14 0b 00 3f 77 92 
+b1 4d 5b 73 87 0a 13 d0 9c c8 f2 4b 39 4f 52 84 
+49 a6 4c 90 4e 1f f7 b4 16 03 03 01 4d 0c 00 01 
+49 03 00 17 41 04 74 28 34 c9 6a 77 6c 38 4c ba 
+af 67 a8 01 05 ef 59 43 3c 05 71 74 12 0d f0 94 
+11 34 00 e2 c4 19 8e 8c 7c 48 a2 ea 25 86 d9 1f 
+58 58 fa 2d 0c 29 b0 68 0a 3f 68 75 26 e5 bc 45 
+8a 8d 5b 48 8e c7 08 04 01 00 7a c8 d7 63 94 da 
+bc f6 f3 ed 04 5c 08 10 74 6a 3a 4c 54 00 ff 8f 
+f1 ad 2f 4b a6 13 ee 82 ad a8 f8 cf 4c fb 0e a0 
+13 55 43 89 09 b6 e1 91 31 96 ae 79 d6 45 25 2d 
+bc 9e 87 b2 b3 81 bb 27 bb 1c 5f 86 5d b7 30 c6 
+00 42 ea a4 cb d0 ff 29 73 87 cd 6a 47 b0 66 6d 
+9e b5 e3 f0 bd f2 f2 3f 0d e5 34 c2 32 1e a1 68 
+c6 fc 7f 2e bc 70 d7 8c 13 2b 63 02 76 8a af cf 
+c3 7f e2 aa 26 68 2e 5d 45 01 75 6b a5 2e 55 da 
+b2 f7 8e 1a 12 12 da 0f 83 91 9d 8c b1 97 c5 32 
+53 c6 b1 48 1d aa f6 89 06 39 b3 dd 6e dc ea 81 
+fc ed 25 ac da 3a 52 36 0e e5 03 77 03 5c 41 2e 
+e1 e8 46 8e d2 4a c8 34 8c 1b ee 6f 29 90 65 9d 
+0e 97 90 39 ab 59 42 ab 2e 27 a0 52 94 89 6f 96 
+2e 3f 8e 20 79 80 ac f2 5c 87 e3 02 18 a2 c3 f0 
+1a 1f 7f a3 6f e0 a5 0c 8a 47 5b e5 0f 6d 35 bc 
+1f 47 86 7a ce b3 4f 19 a3 b3 16 03 03 00 04 0e 
+00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 166
+Identification: 0x753f (30015)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x0e99
+Source: 192.168.118.128
+Destination: 52.40.75.41
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 57246
+Destination Port: 443
+Sequence Number: 2347030641
+Acknowledgment Number: 1798342225
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x3b41
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 70
+   Handshake Protocol: Encrypted Handshake Message
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 40
+   Handshake Protocol: Encrypted Handshake Message
+   Handshake Protocol: Encrypted Handshake Message
+   Handshake Protocol: Encrypted Handshake Message
+
+< Memory >
+Captured byte : 180
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 a6 75 3f 40 00 40 06 0e 99 c0 a8 76 80 34 28 
+4b 29 df 9e 01 bb 8b e4 d8 71 6b 30 86 51 50 18 
+f5 3c 3b 41 00 00 16 03 03 00 46 10 00 00 42 41 
+04 aa cf 60 25 9c 0a de 14 29 6c ff 19 75 3c 13 
+a2 a0 ed 3f a9 a2 b0 34 fe 0d b6 1b 82 78 ce 63 
+0f 71 3e c9 e0 d1 1a 0d 95 8a 07 a9 69 47 4e 9c 
+0e ae 74 cc 6d b9 22 32 c8 b6 99 3d 51 76 0d c5 
+8a 14 03 03 00 01 01 16 03 03 00 28 00 00 00 00 
+00 00 00 00 55 43 67 c0 1c b4 75 1e f2 a6 4b b8 
+5d f8 df 1c 04 94 af 89 70 5f e9 76 9d 21 a1 89 
+c2 09 48 c8 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 557
+Identification: 0xc2d3 (49875)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x52ad
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40358
+Destination Port: 443
+Sequence Number: 1403554
+Acknowledgment Number: 454249354
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xf2b2
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.0  (0x0301)
+   Length: 512
+   Handshake Protocol: Client Hello
+       Handshake Type: Client Hello (1)
+       Length: 508
+       Version: TLS 1.2  (0x0303)
+       Random: 820c47852d093aaa2db37ce70e2b5f3e218ec3692568fff4885a84cbcfbf1a70
+       Session ID Length: 32
+       Session ID: dce82fb4e1ea24cefbae2a111f4aa9e7089659c2e74f4e42ca24a87342011b8b
+       Cipher Suites Length: 36
+       Cipher Suites (18 suites)
+           Cipher Suite: TLS_AES_128_GCM_SHA256 (0x1301)
+           Cipher Suite: TLS_CHACHA20_POLY1305_SHA256 (0x1303)
+           Cipher Suite: TLS_AES_256_GCM_SHA384 (0x1302)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca9)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca8)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (0xc02c)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (0xc030)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+           Cipher Suite: TLS_RSA_WITH_AES_128_GCM_SHA256 (0x009c)
+           Cipher Suite: TLS_RSA_WITH_AES_256_GCM_SHA384 (0x009d)
+           Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+           Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+           Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
+       Compression Methods Length: 1
+       Compression Methods (1 method)
+           Compression Method: null (0)
+       Extensions Length: 399
+       Extensions: server_name (len=35)
+           Type: server_name (0)
+           Length: 35
+           Server Name Indication extension
+               Server Name list length: 33
+               Server Name Type: host_name (0)
+               Sever Name length: 30
+               Server Name: incoming.telemetry.mozilla.org
+       Extensions: extended_master_secret (len=0)
+           Type: extended_master_secret (23)
+           Length: 0
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: supported_groups (len=14)
+           Type: supported_groups (10)
+           Length: 14
+           Supported Groups List Length: 12
+           Supported Groups (6 groups)
+               Supported Group: x25519 (0x001d)
+               Supported Group: secp256r1 (0x0017)
+               Supported Group: secp384r1 (0x0018)
+               Supported Group: secp521r1 (0x0019)
+               Supported Group: ffdhe2048 (0x0100)
+               Supported Group: ffdhe3072 (0x0101)
+       Extensions: ec_point_formats (len=2)
+           Type: ec_point_formats (11)
+           Length: 2
+           EC point formats Length: 1
+           Elliptic curves point formats (1)
+               EC point format: uncompressed (0)
+       Extensions: session_ticket (len=0)
+           Type: session_ticket (35)
+           Length: 0
+           Data (0 bytes)       Extensions: application_layer_protocol_negotiation (len=14)
+           Type: application_layer_protocol_negotiation (16)
+           Length: 14
+           Data (14 bytes)
+           ALPN Extension Length: 12
+           ALPN Protocol
+               ALPN string length: 2
+               ALPN Next Protocol: h2
+               ALPN string length: 8
+               ALPN Next Protocol: http/1.1
+       Extensions: status_request (len=5)
+           Type: status_request (5)
+           Length: 5
+           Certificate Status Type: OCSP (1)
+            Responder ID list Length: 0
+           Responder Extensions Length: 0
+       Extensions: delegated_credentials (len=10)
+           Type: Unknown (34)
+           Length: 10
+           Data: 00080403050306030203
+       Extensions: key_share (len=107)
+           Type: key_share (51)
+           Length: 107
+           Key Share extension
+               Client Key Share Length: 105
+               Key Share Entry:
+                   Group: x25519 (29)
+                   Key Exchange Length: 32
+                   Key Exchage: 54543835d97a27adf6192078e9afe83b20cadd3c826f70fb0fc4a42b022e5b41
+               Key Share Entry:
+                   Group: secp256r1 (23)
+                   Key Exchange Length: 65
+                   Key Exchage: 04fc6ccea0492147a2056935d84072d9f3aef088aefbf14dfae38d56694bb6684f0a0a1d0c50c56d4e91ad3133c69587050fbc83d7d6c6cca1dd7d8cd1e6de0222
+       Extensions: supported_versions (len=5)
+           Type: supported_versions (43)
+           Length: 5
+           Supported Versions length: 4
+           Supported Version: TLS 1.3 (0x0304)
+           Supported Version: TLS 1.2 (0x0303)
+       Extensions: signature_algorithms (len=24)
+           Type: signature_algorithms (13)
+           Length: 24
+           Signature Hash Algorithm Length: 22
+           Signature Hash Algorithms (11 algorithms)
+               Signature Algorithm: ecdsa_secp256r1_sha256 (1027)
+               Signature Algorithm: ecdsa_secp384r1_sha384 (1283)
+               Signature Algorithm: ecdsa_secp521r1_sha512 (1539)
+               Signature Algorithm: rsa_pss_rsae_sha256 (2052)
+               Signature Algorithm: rsa_pss_rsae_sha384 (2053)
+               Signature Algorithm: rsa_pss_rsae_sha512 (2054)
+               Signature Algorithm: rsa_pkcs1_sha256 (1025)
+               Signature Algorithm: rsa_pkcs1_sha384 (1281)
+               Signature Algorithm: rsa_pkcs1_sha512 (1537)
+               Signature Algorithm: ecdsa_sha1 (515)
+               Signature Algorithm: rsa_pkcs1_sha1 (513)
+       Extensions: psk_key_exchange_modes (len=2)
+           Type: psk_key_exchange_modes (45)
+           Length: 2
+           PSK Key Exchange Modes Length: 1
+           PSK Key Exchange Mode: PSK with (EC)DHE key establishment (psk_dhe_ke) (1)
+       Extensions: record_size_limit (len=2)
+           Type: record_size_limit (28)
+           Length: 2
+           Record Size Limit: 16385
+       Extensions: padding (len=118)
+           Type: padding (21)
+           Length: 118
+           Padding Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+< Memory >
+Captured byte : 571
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+02 2d c2 d3 40 00 40 06 52 ad c0 a8 76 80 2c ec 
+bf 35 9d a6 01 bb 00 15 6a a2 1b 13 4b 8a 50 18 
+fa f0 f2 b2 00 00 16 03 01 02 00 01 00 01 fc 03 
+03 82 0c 47 85 2d 09 3a aa 2d b3 7c e7 0e 2b 5f 
+3e 21 8e c3 69 25 68 ff f4 88 5a 84 cb cf bf 1a 
+70 20 dc e8 2f b4 e1 ea 24 ce fb ae 2a 11 1f 4a 
+a9 e7 08 96 59 c2 e7 4f 4e 42 ca 24 a8 73 42 01 
+1b 8b 00 24 13 01 13 03 13 02 c0 2b c0 2f cc a9 
+cc a8 c0 2c c0 30 c0 0a c0 09 c0 13 c0 14 00 9c 
+00 9d 00 2f 00 35 00 0a 01 00 01 8f 00 00 00 23 
+00 21 00 00 1e 69 6e 63 6f 6d 69 6e 67 2e 74 65 
+6c 65 6d 65 74 72 79 2e 6d 6f 7a 69 6c 6c 61 2e 
+6f 72 67 00 17 00 00 ff 01 00 01 00 00 0a 00 0e 
+00 0c 00 1d 00 17 00 18 00 19 01 00 01 01 00 0b 
+00 02 01 00 00 23 00 00 00 10 00 0e 00 0c 02 68 
+32 08 68 74 74 70 2f 31 2e 31 00 05 00 05 01 00 
+00 00 00 00 22 00 0a 00 08 04 03 05 03 06 03 02 
+03 00 33 00 6b 00 69 00 1d 00 20 54 54 38 35 d9 
+7a 27 ad f6 19 20 78 e9 af e8 3b 20 ca dd 3c 82 
+6f 70 fb 0f c4 a4 2b 02 2e 5b 41 00 17 00 41 04 
+fc 6c ce a0 49 21 47 a2 05 69 35 d8 40 72 d9 f3 
+ae f0 88 ae fb f1 4d fa e3 8d 56 69 4b b6 68 4f 
+0a 0a 1d 0c 50 c5 6d 4e 91 ad 31 33 c6 95 87 05 
+0f bc 83 d7 d6 c6 cc a1 dd 7d 8c d1 e6 de 02 22 
+00 2b 00 05 04 03 04 03 03 00 0d 00 18 00 16 04 
+03 05 03 06 03 08 04 08 05 08 06 04 01 05 01 06 
+01 02 03 02 01 00 2d 00 02 01 01 00 1c 00 02 40 
+01 00 15 00 76 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 612
+Identification: 0x7540 (30016)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x0cda
+Source: 192.168.118.128
+Destination: 52.40.75.41
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 57246
+Destination Port: 443
+Sequence Number: 2347030767
+Acknowledgment Number: 1798342225
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0xef1c
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 567
+   Encrypted Application Data: 00000000000000013227d88747ae7ea11c7062cf6635fe8366ac667b3a3d3f528cb89ab2dd7e164c0a0044f96a4834f74b957f7de598091449a9496da916a75fb9a3938decd595c97e467df073345915ee18d908b24135e820e9f15890cb9080ff5608bc774e9c2852603105cedc7eb8de211e34f9a71eb912e79d5cafff0ac92c4ebb2062723196a654b0911dc70b79f01eb57a64e2c997e0b4dd3f2da56883a20ff11ff49b6af6685aff51b87375779c699c5b443e64b27968d80b08ac941d5d1794b265325a5c972bea4fd62c9c9a6b90b74f0d5e5bc35f3264b783d92ba222fa95e8f21da8bd86ccdd50ea2e117073b38bc206eda2126e1822a9fc020319beabbe58d3ddeabfb63345363e4958cfae15405522d96b3382461b5646904df17193030f1ffa47f9ea6528df17e0ed658f1b91cf4c943abf505ab192ba7d96c8d951a710e292ed7ebc71d1966b964951ddf550505e83188716bd5944fc3f360f1260a9620c1425f599969d5d5d8f254a11f68331f098834d7c5b0406bef1dbb80c0f5508df3376facdd9886033de07435e3d00f18b154c6ba125666fd998c93320dbb7e94cab3a5a5b29594acd4f9afc1710a0f8bd813d168af45a288ed9be46933d4ce61dd84bc5b363499810538af82a8243abe72d80090dd77556349cf55880ba9778a47610b19e337fe13404fb5f7c2a61c34b2d7a6395fe28617d4d3becabb1847f525eb26cd723b65faaf6f04cf4734cc1fd3424f2a8ced87ba0af4879e5fcd7e95d22d34f077cfd19a7a1c996ed56edad5f5f6d
+
+< Memory >
+Captured byte : 626
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+02 64 75 40 40 00 40 06 0c da c0 a8 76 80 34 28 
+4b 29 df 9e 01 bb 8b e4 d8 ef 6b 30 86 51 50 18 
+f5 3c ef 1c 00 00 17 03 03 02 37 00 00 00 00 00 
+00 00 01 32 27 d8 87 47 ae 7e a1 1c 70 62 cf 66 
+35 fe 83 66 ac 66 7b 3a 3d 3f 52 8c b8 9a b2 dd 
+7e 16 4c 0a 00 44 f9 6a 48 34 f7 4b 95 7f 7d e5 
+98 09 14 49 a9 49 6d a9 16 a7 5f b9 a3 93 8d ec 
+d5 95 c9 7e 46 7d f0 73 34 59 15 ee 18 d9 08 b2 
+41 35 e8 20 e9 f1 58 90 cb 90 80 ff 56 08 bc 77 
+4e 9c 28 52 60 31 05 ce dc 7e b8 de 21 1e 34 f9 
+a7 1e b9 12 e7 9d 5c af ff 0a c9 2c 4e bb 20 62 
+72 31 96 a6 54 b0 91 1d c7 0b 79 f0 1e b5 7a 64 
+e2 c9 97 e0 b4 dd 3f 2d a5 68 83 a2 0f f1 1f f4 
+9b 6a f6 68 5a ff 51 b8 73 75 77 9c 69 9c 5b 44 
+3e 64 b2 79 68 d8 0b 08 ac 94 1d 5d 17 94 b2 65 
+32 5a 5c 97 2b ea 4f d6 2c 9c 9a 6b 90 b7 4f 0d 
+5e 5b c3 5f 32 64 b7 83 d9 2b a2 22 fa 95 e8 f2 
+1d a8 bd 86 cc dd 50 ea 2e 11 70 73 b3 8b c2 06 
+ed a2 12 6e 18 22 a9 fc 02 03 19 be ab be 58 d3 
+dd ea bf b6 33 45 36 3e 49 58 cf ae 15 40 55 22 
+d9 6b 33 82 46 1b 56 46 90 4d f1 71 93 03 0f 1f 
+fa 47 f9 ea 65 28 df 17 e0 ed 65 8f 1b 91 cf 4c 
+94 3a bf 50 5a b1 92 ba 7d 96 c8 d9 51 a7 10 e2 
+92 ed 7e bc 71 d1 96 6b 96 49 51 dd f5 50 50 5e 
+83 18 87 16 bd 59 44 fc 3f 36 0f 12 60 a9 62 0c 
+14 25 f5 99 96 9d 5d 5d 8f 25 4a 11 f6 83 31 f0 
+98 83 4d 7c 5b 04 06 be f1 db b8 0c 0f 55 08 df 
+33 76 fa cd d9 88 60 33 de 07 43 5e 3d 00 f1 8b 
+15 4c 6b a1 25 66 6f d9 98 c9 33 20 db b7 e9 4c 
+ab 3a 5a 5b 29 59 4a cd 4f 9a fc 17 10 a0 f8 bd 
+81 3d 16 8a f4 5a 28 8e d9 be 46 93 3d 4c e6 1d 
+d8 4b c5 b3 63 49 98 10 53 8a f8 2a 82 43 ab e7 
+2d 80 09 0d d7 75 56 34 9c f5 58 80 ba 97 78 a4 
+76 10 b1 9e 33 7f e1 34 04 fb 5f 7c 2a 61 c3 4b 
+2d 7a 63 95 fe 28 61 7d 4d 3b ec ab b1 84 7f 52 
+5e b2 6c d7 23 b6 5f aa f6 f0 4c f4 73 4c c1 fd 
+34 24 f2 a8 ce d8 7b a0 af 48 79 e5 fc d7 e9 5d 
+22 d3 4f 07 7c fd 19 a7 a1 c9 96 ed 56 ed ad 5f 
+5f 6d 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 310
+Identification: 0xf195 (61845)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x24e2
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40352
+Sequence Number: 1762805531
+Acknowledgment Number: 2272142536
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x9a26
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 265
+   Encrypted Application Data: 6ab75f0cb51fa032e29bc579e23e15472480cc680f87d286d1d994b42f937f2e25ba43e9514039feef38943f3433a527a0e337d0ed32386458d49bd8c372d79da0f571c281d93c20732f24a0c8ccb7bbff0f2b01fd93529042db04949aca010b89e56cb3a1dc3751d9c2fa3d150af62d20cb7a829d98f0a7afe54a2dbd491252a4f7633420016a2a6f89c4582d2f7daf01ef10f2865879594e2e6c493c6f267eb7df7f4ed287e7f326cb0a3ddbe453962470fa968f454cbdd20dc0f0dece89ce60690f06c9c6c0c4b2876d541173887fd427272f72e9356a7cdf4bd085cfcfbd5b5d5b84b14e0a0b2e11d8a376d69d600ff55aeb020a67cf86540990a9b5a41b8dc0e9cdb319d88a87
+
+< Memory >
+Captured byte : 324
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+01 36 f1 95 00 00 80 06 24 e2 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a0 69 12 47 1b 87 6e 24 c8 50 18 
+fa f0 9a 26 00 00 17 03 03 01 09 6a b7 5f 0c b5 
+1f a0 32 e2 9b c5 79 e2 3e 15 47 24 80 cc 68 0f 
+87 d2 86 d1 d9 94 b4 2f 93 7f 2e 25 ba 43 e9 51 
+40 39 fe ef 38 94 3f 34 33 a5 27 a0 e3 37 d0 ed 
+32 38 64 58 d4 9b d8 c3 72 d7 9d a0 f5 71 c2 81 
+d9 3c 20 73 2f 24 a0 c8 cc b7 bb ff 0f 2b 01 fd 
+93 52 90 42 db 04 94 9a ca 01 0b 89 e5 6c b3 a1 
+dc 37 51 d9 c2 fa 3d 15 0a f6 2d 20 cb 7a 82 9d 
+98 f0 a7 af e5 4a 2d bd 49 12 52 a4 f7 63 34 20 
+01 6a 2a 6f 89 c4 58 2d 2f 7d af 01 ef 10 f2 86 
+58 79 59 4e 2e 6c 49 3c 6f 26 7e b7 df 7f 4e d2 
+87 e7 f3 26 cb 0a 3d db e4 53 96 24 70 fa 96 8f 
+45 4c bd d2 0d c0 f0 de ce 89 ce 60 69 0f 06 c9 
+c6 c0 c4 b2 87 6d 54 11 73 88 7f d4 27 27 2f 72 
+e9 35 6a 7c df 4b d0 85 cf cf bd 5b 5d 5b 84 b1 
+4e 0a 0b 2e 11 d8 a3 76 d6 9d 60 0f f5 5a eb 02 
+0a 67 cf 86 54 09 90 a9 b5 a4 1b 8d c0 e9 cd b3 
+19 d8 8a 87 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 91
+Identification: 0xf196 (61846)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x928c
+Source: 52.40.75.41
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 57246
+Sequence Number: 1798342225
+Acknowledgment Number: 2347031339
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xfd76
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 40
+   Handshake Protocol: Encrypted Handshake Message
+
+< Memory >
+Captured byte : 105
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 5b f1 96 00 00 80 06 92 8c 34 28 4b 29 c0 a8 
+76 80 01 bb df 9e 6b 30 86 51 8b e4 db 2b 50 18 
+fa f0 fd 76 00 00 14 03 03 00 01 01 16 03 03 00 
+28 7c b7 43 d6 7e 17 fc 30 c0 82 2a 5c 38 77 74 
+84 da be 86 6a dc b2 cb fc 97 a6 79 a3 a3 1b bf 
+bf b9 cd f5 e0 6a 6d 59 a2 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1500
+Identification: 0xf197 (61847)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x203a
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40358
+Sequence Number: 454249354
+Acknowledgment Number: 1404071
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAXXXX
+Window size value: 64240
+Checksum: 0x22e7
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 89
+   Handshake Protocol: Server Hello
+       Handshake Type: Server Hello (2)
+       Length: 85
+       Version: TLS 1.2  (0x0303)
+       Random: c7ba31b42900e835de16a8376f0b433f1fa66de85df85304f5653e250e3a78a0
+       Session ID Length: 32
+       Session ID: e15536fbfaeae2b7c89463326dc6624c8cf3ceee9b24f034acf34aa864674294
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Compression Method: null (0)
+       Extensions Length: 13
+       Extensions: renegotiation_info (len=1)
+           Type: renegotiation_info (65281)
+           Length: 1
+           Renegotiation Info extension
+                Renegotiation info extension length: 0
+       Extensions: ec_point_formats (len=4)
+           Type: ec_point_formats (11)
+           Length: 4
+           EC point formats Length: 3
+           Elliptic curves point formats (3)
+               EC point format: uncompressed (0)
+               EC point format: ansiX962_compressed_prime (1)
+               EC point format: ansiX962_compressed_char2 (2)
+
+< Memory >
+Captured byte : 1514
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+05 dc f1 97 00 00 80 06 20 3a 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a6 1b 13 4b 8a 00 15 6c a7 50 10 
+fa f0 22 e7 00 00 16 03 03 00 59 02 00 00 55 03 
+03 c7 ba 31 b4 29 00 e8 35 de 16 a8 37 6f 0b 43 
+3f 1f a6 6d e8 5d f8 53 04 f5 65 3e 25 0e 3a 78 
+a0 20 e1 55 36 fb fa ea e2 b7 c8 94 63 32 6d c6 
+62 4c 8c f3 ce ee 9b 24 f0 34 ac f3 4a a8 64 67 
+42 94 c0 2f 00 00 0d ff 01 00 01 00 00 0b 00 04 
+03 00 01 02 16 03 03 0b 8b 0b 00 0b 87 00 0b 84 
+00 06 e6 30 82 06 e2 30 82 05 ca a0 03 02 01 02 
+02 10 0c e6 b5 fd 8f b1 b0 7c d4 d5 4c ae fe 4d 
+bf 57 30 0d 06 09 2a 86 48 86 f7 0d 01 01 0b 05 
+00 30 4d 31 0b 30 09 06 03 55 04 06 13 02 55 53 
+31 15 30 13 06 03 55 04 0a 13 0c 44 69 67 69 43 
+65 72 74 20 49 6e 63 31 27 30 25 06 03 55 04 03 
+13 1e 44 69 67 69 43 65 72 74 20 53 48 41 32 20 
+53 65 63 75 72 65 20 53 65 72 76 65 72 20 43 41 
+30 1e 17 0d 32 30 30 38 32 34 30 30 30 30 30 30 
+5a 17 0d 32 32 31 30 32 38 31 32 30 30 30 30 5a 
+30 81 93 31 0b 30 09 06 03 55 04 06 13 02 55 53 
+31 13 30 11 06 03 55 04 08 13 0a 43 61 6c 69 66 
+6f 72 6e 69 61 31 16 30 14 06 03 55 04 07 13 0d 
+4d 6f 75 6e 74 61 69 6e 20 56 69 65 77 31 1c 30 
+1a 06 03 55 04 0a 13 13 4d 6f 7a 69 6c 6c 61 20 
+43 6f 72 70 6f 72 61 74 69 6f 6e 31 17 30 15 06 
+03 55 04 0b 13 0e 43 6c 6f 75 64 20 53 65 72 76 
+69 63 65 73 31 20 30 1e 06 03 55 04 03 0c 17 2a 
+2e 74 65 6c 65 6d 65 74 72 79 2e 6d 6f 7a 69 6c 
+6c 61 2e 6f 72 67 30 82 01 22 30 0d 06 09 2a 86 
+48 86 f7 0d 01 01 01 05 00 03 82 01 0f 00 30 82 
+01 0a 02 82 01 01 00 a5 20 49 b0 a9 bf 36 9b f8 
+ca 7c 85 de d7 87 4b 5f be 0b ab 7f b2 6d 97 e9 
+bb c4 33 34 4e af 8c e4 7d 59 0d 8c d9 55 7f e7 
+f8 14 7a 45 5f ca 18 ef 10 20 df 1a 42 df 38 3f 
+d8 d8 83 68 1d cb 49 7e fb a2 59 34 c1 5a da 8f 
+13 cc 8c 58 e8 ab aa 2d 21 03 82 e7 7c 83 22 b4 
+a7 fc 70 23 c3 81 8b 61 04 21 0a 28 ed f7 0c 6d 
+66 29 f7 07 fa 47 c0 32 a4 c8 de f7 2c cd 10 9e 
+55 54 0e 0e ae 75 00 e6 b8 b1 e1 74 78 1e 4c cd 
+5c f9 93 1f af 8d 75 ad 29 f0 67 43 34 0e 2a d3 
+a3 01 0a 76 45 7b 2c 8e 69 b7 86 89 1a bf f2 19 
+fd 7a b7 eb 16 76 ed 31 49 f3 2d f6 54 63 fd 52 
+ef 13 d1 a2 8d ad b8 f3 78 2a 0b ba 75 74 a9 92 
+f8 f8 44 2e 0a f0 84 b8 9a d6 e2 ba 3d 84 97 b2 
+ac e5 72 20 c1 f7 7c b9 c6 a2 15 fe 2b 65 31 92 
+8d 81 27 cc 64 32 45 76 d7 7e d1 72 9c 2a db 97 
+8e 2e d0 51 f4 23 8b 02 03 01 00 01 a3 82 03 75 
+30 82 03 71 30 1f 06 03 55 1d 23 04 18 30 16 80 
+14 0f 80 61 1c 82 31 61 d5 2f 28 e7 8d 46 38 b4 
+2c e1 c6 d9 e2 30 1d 06 03 55 1d 0e 04 16 04 14 
+f4 6a 8e 80 e9 f9 11 65 44 1f b1 89 c1 51 1f b4 
+a1 6a db bf 30 39 06 03 55 1d 11 04 32 30 30 82 
+17 2a 2e 74 65 6c 65 6d 65 74 72 79 2e 6d 6f 7a 
+69 6c 6c 61 2e 6f 72 67 82 15 74 65 6c 65 6d 65 
+74 72 79 2e 6d 6f 7a 69 6c 6c 61 2e 6f 72 67 30 
+0e 06 03 55 1d 0f 01 01 ff 04 04 03 02 05 a0 30 
+1d 06 03 55 1d 25 04 16 30 14 06 08 2b 06 01 05 
+05 07 03 01 06 08 2b 06 01 05 05 07 03 02 30 6b 
+06 03 55 1d 1f 04 64 30 62 30 2f a0 2d a0 2b 86 
+29 68 74 74 70 3a 2f 2f 63 72 6c 33 2e 64 69 67 
+69 63 65 72 74 2e 63 6f 6d 2f 73 73 63 61 2d 73 
+68 61 32 2d 67 36 2e 63 72 6c 30 2f a0 2d a0 2b 
+86 29 68 74 74 70 3a 2f 2f 63 72 6c 34 2e 64 69 
+67 69 63 65 72 74 2e 63 6f 6d 2f 73 73 63 61 2d 
+73 68 61 32 2d 67 36 2e 63 72 6c 30 4c 06 03 55 
+1d 20 04 45 30 43 30 37 06 09 60 86 48 01 86 fd 
+6c 01 01 30 2a 30 28 06 08 2b 06 01 05 05 07 02 
+01 16 1c 68 74 74 70 73 3a 2f 2f 77 77 77 2e 64 
+69 67 69 63 65 72 74 2e 63 6f 6d 2f 43 50 53 30 
+08 06 06 67 81 0c 01 02 02 30 7c 06 08 2b 06 01 
+05 05 07 01 01 04 70 30 6e 30 24 06 08 2b 06 01 
+05 05 07 30 01 86 18 68 74 74 70 3a 2f 2f 6f 63 
+73 70 2e 64 69 67 69 63 65 72 74 2e 63 6f 6d 30 
+46 06 08 2b 06 01 05 05 07 30 02 86 3a 68 74 74 
+70 3a 2f 2f 63 61 63 65 72 74 73 2e 64 69 67 69 
+63 65 72 74 2e 63 6f 6d 2f 44 69 67 69 43 65 72 
+74 53 48 41 32 53 65 63 75 72 65 53 65 72 76 65 
+72 43 41 2e 63 72 74 30 0c 06 03 55 1d 13 01 01 
+ff 04 02 30 00 30 82 01 7c 06 0a 2b 06 01 04 01 
+d6 79 02 04 02 04 82 01 6c 04 82 01 68 01 66 00 
+75 00 29 79 be f0 9e 39 39 21 f0 56 73 9f 63 a5 
+77 e5 be 57 7d 9c 60 0a f8 f9 4d 5d 26 5c 25 5d 
+c7 84 00 00 01 74 1f d8 e5 5a 00 00 04 03 00 46 
+30 44 02 20 12 da 36 9a 55 0a 79 08 e0 48 da 31 
+1d 1d aa 9e 47 a1 f1 fb 4f 4d 72 1e bd 52 d2 56 
+89 63 0c 97 02 20 5c 57 b9 82 42 8a c5 13 1e bf 
+7a 60 81 a6 34 1b 09 4f 4b cc 3f 21 be f2 8f 12 
+93 1b 19 c2 2c ba 00 75 00 22 45 45 07 59 55 24 
+56 96 3f a1 2f f1 f7 6d 86 e0 23 26 63 ad c0 4b 
+7f 5d c6 83 5c 6e e2 0f 02 00 00 01 74 1f d8 e5 
+59 00 00 04 03 00 46 30 44 02 20 65 db a8 64 c1 
+b4 f0 10 c3 ab e8 57 47 e7 f3 26 6f 9f 76 dd e0 
+ed 08 7a 81 67 42 59 56 c2 91 b6 02 20 26 d8 97 
+8c 8a ae 55 2c a7 4a 4b 97 bd 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 521
+Identification: 0xf199 (61849)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x240b
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40358
+Sequence Number: 454252274
+Acknowledgment Number: 1404071
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xbaf6
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 2955
+   Handshake Protocol: Certificate
+       Handshake Type: Certificate (11)
+       Length: 2951
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 333
+   Handshake Protocol: Server Key Exchange
+       Handshake Type: Server Key Exchange (11)
+       Length: 329
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 4
+   Handshake Protocol: Server Hello Done
+       Handshake Type: Server Hello Done (14)
+       Length: 0
+
+< Memory >
+Captured byte : 535
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+02 09 f1 99 00 00 80 06 24 0b 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a6 1b 13 56 f2 00 15 6c a7 50 18 
+fa f0 ba f6 00 00 c2 ec ff 71 c1 e3 47 ff d4 b9 
+00 b4 37 42 da 20 c9 ea 6e 8a ee 14 06 ae 7d a2 
+59 98 88 a8 1b 6f 2d f4 f2 c9 14 5f 26 cf 2c 8d 
+7e ed 37 c0 a9 d5 39 b9 82 bf 19 0c ea 34 af 00 
+21 68 f8 ad 73 e2 c9 32 da 38 25 0b 55 d3 9a 1d 
+f0 68 86 ed 2e 41 34 ef 7c a5 50 1d bf 3a f9 d3 
+c1 08 0c e6 ed 1e 8a 58 25 e4 b8 77 ad 2d 6e f5 
+52 dd b4 74 8f ab 49 2e 9d 3b 93 34 28 1f 78 ce 
+94 ea c7 bd d3 c9 6d 1c de 5c 32 f3 16 03 03 01 
+4d 0c 00 01 49 03 00 17 41 04 27 3d e7 8e 1f 39 
+2d 6a 23 90 80 a8 36 6f d2 d7 af 3f a6 43 fe 9e 
+ea 53 3e 15 0c 31 ed 23 c5 25 a3 a6 af 9f b5 92 
+99 3a ff f4 51 84 ab 82 1a 5a 7b 4a 90 18 5b 48 
+ac cc 1f 02 2e d7 c6 4b af 9e 06 01 01 00 7a 04 
+6a 08 ea a2 98 5f 23 c6 41 b9 8a a0 38 0e 98 a3 
+1a b9 8f 72 26 06 48 8f 10 d0 5f 0c 5e 25 52 1b 
+89 25 de 1e 14 a0 4a ba a4 1a b3 35 8e 44 d7 af 
+4e 05 31 3d 14 f2 59 a9 8f d8 2f 65 e3 f0 d6 64 
+5b c1 f0 c4 14 ce bf ee a4 af dd a8 5d 6c 3f b3 
+1f 1c 2f 5f ec 09 24 a6 17 d5 bc 26 bc 3e a5 9e 
+1f ab c6 4a bd 10 aa 72 0a 44 20 72 62 2d 06 b2 
+62 f3 6e d3 d4 aa 8d 0b e3 bc af 59 b2 14 6a 6b 
+b3 97 29 1f c2 eb 7c d5 08 95 0e 95 59 e0 a7 56 
+af 66 4f 87 e2 78 e2 08 15 b9 e8 27 8e 4f bb 5c 
+af 6b 5e b5 74 82 68 c1 2e 13 98 7c df 0a da f7 
+fe c1 a4 b5 0f 53 2d dc da a1 3b bf 5c ca cf b3 
+a0 d0 ca 4d c4 ef 63 ff 87 c5 ef f6 fc 87 3c 2d 
+d6 f9 d6 b4 4a 8e 26 72 87 db 02 84 64 3c 89 1a 
+39 5c 78 18 f9 ef d2 ed 1d c2 ab ca f5 80 b9 77 
+f8 a1 f0 46 2d c5 8f 76 2a 9e 3c f2 de a1 16 03 
+03 00 04 0e 00 00 00 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 166
+Identification: 0xc2d7 (49879)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x5430
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40358
+Destination Port: 443
+Sequence Number: 1404071
+Acknowledgment Number: 454252755
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x1ce3
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 70
+   Handshake Protocol: Encrypted Handshake Message
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 40
+   Handshake Protocol: Encrypted Handshake Message
+   Handshake Protocol: Encrypted Handshake Message
+   Handshake Protocol: Encrypted Handshake Message
+
+< Memory >
+Captured byte : 180
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 a6 c2 d7 40 00 40 06 54 30 c0 a8 76 80 2c ec 
+bf 35 9d a6 01 bb 00 15 6c a7 1b 13 58 d3 50 18 
+f5 3c 1c e3 00 00 16 03 03 00 46 10 00 00 42 41 
+04 95 74 73 a2 3b fe cd b4 59 dc 49 db 9c d4 9c 
+ee d2 dc c7 b3 f7 e8 16 35 e6 30 80 24 5f 0f 0b 
+fa c1 54 fe 88 45 b6 58 00 25 fd 6f d0 35 f5 cc 
+85 09 b4 b8 f9 05 74 ff 8e 43 21 49 33 6f 49 74 
+c9 14 03 03 00 01 01 16 03 03 00 28 00 00 00 00 
+00 00 00 00 28 6f 9a 2a a0 81 7b 19 c5 eb 98 18 
+d3 6e 49 9a 1e bf 83 5d 11 7b 34 8f fe d6 c1 dd 
+4e d7 b4 a4 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 916
+Identification: 0xc2d8 (49880)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x5141
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40358
+Destination Port: 443
+Sequence Number: 1404197
+Acknowledgment Number: 454252755
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0xfe23
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 871
+   Encrypted Application Data: 0000000000000001fcf24a16063e429276299484a7bd6ff293978213b49c53de0ab7fcc5fb81d530010ff7037493c732c7618aa1c4776bbb097dc05f30547ef011a8b53824aa85ea5224d4b355ea7bbf0468f9250d10c03a51810bb4d557223014e84f20e368719b4ebf11983f4dc6b96838f6ef5bb9be581c5e159e4ac02a247d2608a1c2882e6d671490be0a8c7e8a98aab051e14304a25e84edcb8682f49fea103dc6fb132cb84844a5c847a14efb520a0cf9a4c147262970b816ff2fbeacad538220170759797ffe90d0ac8839bfd390a5b518ad47fc2f3c46157c420f491412c7d5391e2d46f8e711579916d405f13c82e66d37faaf1d4d4c83698578a08ae896aa7c46909abbd77874dbb05fd4dba68ecf6b046574892373d54567ccd07240071c351fc74a947ebdac16c84de29b4c579d5dcc2dd7403c7c4722d440caa89b9bc9122bfbf11c0d5f8f244e51f1c27eff9f180df0522f38f3f62c1edac64b90f2274147fc24d819efe6ce5f378165b68cd08888bd61e5148b53c761ede767bc0f7cbb2b020197f8b5560435813fad86c2885e872d91f15b80f843e880eac27193dd688b37d43f648c4a955b2b605a4cd8b002fe24ef297e16d9cb07544af7719e1e3ba77c2156dbf682e514ce54eb26851467c5b80669402e38f43f7e585b9a47dfe7f9ff99f6f3e4081b8784bf4643bfda2fb6d5ae2ab670774248ee37a17d737200ff4402f05bd9b1a0c00ed758a523a942314e1bddc66778e0825963ce37bb41c03ebd8dfeb6207b902e7cbcd6e7079ff19dcca6c73c97cad65e53e681b7a2eaf3df67aa731c0b8df7de8c8da7fa141080c42cccdea66b32e6fc32c549fab0dc9cd668b1e4566582864750f33113918ee419a1cf3a048575919680ea4e6c6ad534f63e34d77b03296c63a1d758fdacf6e2a100883530066dd74b4c2e85d3ca13c40a26525b4cb3d2eff9303e1c29820509ab125e6cfdd827e3221b5897c33eaf409f5ef86e4ffdb6e0e214d1931eaeda226ee1d65c1437aa03a8e40526b310b96b81b7398f078e680d37d62135148bd6725c4d4af9d934ac00bae4f3a3571ee1a13f13799a60ce1c4e1265d84138aeb529f8c78b37009aac17f89bf0c1d989bd173419578fe3b04150e408d72ea9642e23f92f037dac17a6d0489d0e5c3ca4f6b5a285609323a70c3177f53bcad72c836d9f8404825458d18fbecb8190419e48aeae94
+
+< Memory >
+Captured byte : 930
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+03 94 c2 d8 40 00 40 06 51 41 c0 a8 76 80 2c ec 
+bf 35 9d a6 01 bb 00 15 6d 25 1b 13 58 d3 50 18 
+f5 3c fe 23 00 00 17 03 03 03 67 00 00 00 00 00 
+00 00 01 fc f2 4a 16 06 3e 42 92 76 29 94 84 a7 
+bd 6f f2 93 97 82 13 b4 9c 53 de 0a b7 fc c5 fb 
+81 d5 30 01 0f f7 03 74 93 c7 32 c7 61 8a a1 c4 
+77 6b bb 09 7d c0 5f 30 54 7e f0 11 a8 b5 38 24 
+aa 85 ea 52 24 d4 b3 55 ea 7b bf 04 68 f9 25 0d 
+10 c0 3a 51 81 0b b4 d5 57 22 30 14 e8 4f 20 e3 
+68 71 9b 4e bf 11 98 3f 4d c6 b9 68 38 f6 ef 5b 
+b9 be 58 1c 5e 15 9e 4a c0 2a 24 7d 26 08 a1 c2 
+88 2e 6d 67 14 90 be 0a 8c 7e 8a 98 aa b0 51 e1 
+43 04 a2 5e 84 ed cb 86 82 f4 9f ea 10 3d c6 fb 
+13 2c b8 48 44 a5 c8 47 a1 4e fb 52 0a 0c f9 a4 
+c1 47 26 29 70 b8 16 ff 2f be ac ad 53 82 20 17 
+07 59 79 7f fe 90 d0 ac 88 39 bf d3 90 a5 b5 18 
+ad 47 fc 2f 3c 46 15 7c 42 0f 49 14 12 c7 d5 39 
+1e 2d 46 f8 e7 11 57 99 16 d4 05 f1 3c 82 e6 6d 
+37 fa af 1d 4d 4c 83 69 85 78 a0 8a e8 96 aa 7c 
+46 90 9a bb d7 78 74 db b0 5f d4 db a6 8e cf 6b 
+04 65 74 89 23 73 d5 45 67 cc d0 72 40 07 1c 35 
+1f c7 4a 94 7e bd ac 16 c8 4d e2 9b 4c 57 9d 5d 
+cc 2d d7 40 3c 7c 47 22 d4 40 ca a8 9b 9b c9 12 
+2b fb f1 1c 0d 5f 8f 24 4e 51 f1 c2 7e ff 9f 18 
+0d f0 52 2f 38 f3 f6 2c 1e da c6 4b 90 f2 27 41 
+47 fc 24 d8 19 ef e6 ce 5f 37 81 65 b6 8c d0 88 
+88 bd 61 e5 14 8b 53 c7 61 ed e7 67 bc 0f 7c bb 
+2b 02 01 97 f8 b5 56 04 35 81 3f ad 86 c2 88 5e 
+87 2d 91 f1 5b 80 f8 43 e8 80 ea c2 71 93 dd 68 
+8b 37 d4 3f 64 8c 4a 95 5b 2b 60 5a 4c d8 b0 02 
+fe 24 ef 29 7e 16 d9 cb 07 54 4a f7 71 9e 1e 3b 
+a7 7c 21 56 db f6 82 e5 14 ce 54 eb 26 85 14 67 
+c5 b8 06 69 40 2e 38 f4 3f 7e 58 5b 9a 47 df e7 
+f9 ff 99 f6 f3 e4 08 1b 87 84 bf 46 43 bf da 2f 
+b6 d5 ae 2a b6 70 77 42 48 ee 37 a1 7d 73 72 00 
+ff 44 02 f0 5b d9 b1 a0 c0 0e d7 58 a5 23 a9 42 
+31 4e 1b dd c6 67 78 e0 82 59 63 ce 37 bb 41 c0 
+3e bd 8d fe b6 20 7b 90 2e 7c bc d6 e7 07 9f f1 
+9d cc a6 c7 3c 97 ca d6 5e 53 e6 81 b7 a2 ea f3 
+df 67 aa 73 1c 0b 8d f7 de 8c 8d a7 fa 14 10 80 
+c4 2c cc de a6 6b 32 e6 fc 32 c5 49 fa b0 dc 9c 
+d6 68 b1 e4 56 65 82 86 47 50 f3 31 13 91 8e e4 
+19 a1 cf 3a 04 85 75 91 96 80 ea 4e 6c 6a d5 34 
+f6 3e 34 d7 7b 03 29 6c 63 a1 d7 58 fd ac f6 e2 
+a1 00 88 35 30 06 6d d7 4b 4c 2e 85 d3 ca 13 c4 
+0a 26 52 5b 4c b3 d2 ef f9 30 3e 1c 29 82 05 09 
+ab 12 5e 6c fd d8 27 e3 22 1b 58 97 c3 3e af 40 
+9f 5e f8 6e 4f fd b6 e0 e2 14 d1 93 1e ae da 22 
+6e e1 d6 5c 14 37 aa 03 a8 e4 05 26 b3 10 b9 6b 
+81 b7 39 8f 07 8e 68 0d 37 d6 21 35 14 8b d6 72 
+5c 4d 4a f9 d9 34 ac 00 ba e4 f3 a3 57 1e e1 a1 
+3f 13 79 9a 60 ce 1c 4e 12 65 d8 41 38 ae b5 29 
+f8 c7 8b 37 00 9a ac 17 f8 9b f0 c1 d9 89 bd 17 
+34 19 57 8f e3 b0 41 50 e4 08 d7 2e a9 64 2e 23 
+f9 2f 03 7d ac 17 a6 d0 48 9d 0e 5c 3c a4 f6 b5 
+a2 85 60 93 23 a7 0c 31 77 f5 3b ca d7 2c 83 6d 
+9f 84 04 82 54 58 d1 8f be cb 81 90 41 9e 48 ae 
+ae 94 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 198
+Identification: 0xf1a6 (61862)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x9211
+Source: 52.40.75.41
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 57246
+Sequence Number: 1798342276
+Acknowledgment Number: 2347031339
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x3e16
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 153
+   Encrypted Application Data: 7cb743d67e17fc31e3cb4e0c4bde69f30da988f578b1dffd281108f3dd10629ccfc9979965e143f10ffa3a49b965fc5c315f9cd3f150935f856175667a6cd62003e488e78af09b99d0962095dea4820c547da3a729ce0d0aea92eefdee36b9e272bab02afc01b1ee8073023fac7e3380dab56910362dd674ed78e61274910cf648bafb07d9bc9b57dc6f32babedc8c3122c9f420f76163a445
+
+< Memory >
+Captured byte : 212
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 c6 f1 a6 00 00 80 06 92 11 34 28 4b 29 c0 a8 
+76 80 01 bb df 9e 6b 30 86 84 8b e4 db 2b 50 18 
+fa f0 3e 16 00 00 17 03 03 00 99 7c b7 43 d6 7e 
+17 fc 31 e3 cb 4e 0c 4b de 69 f3 0d a9 88 f5 78 
+b1 df fd 28 11 08 f3 dd 10 62 9c cf c9 97 99 65 
+e1 43 f1 0f fa 3a 49 b9 65 fc 5c 31 5f 9c d3 f1 
+50 93 5f 85 61 75 66 7a 6c d6 20 03 e4 88 e7 8a 
+f0 9b 99 d0 96 20 95 de a4 82 0c 54 7d a3 a7 29 
+ce 0d 0a ea 92 ee fd ee 36 b9 e2 72 ba b0 2a fc 
+01 b1 ee 80 73 02 3f ac 7e 33 80 da b5 69 10 36 
+2d d6 74 ed 78 e6 12 74 91 0c f6 48 ba fb 07 d9 
+bc 9b 57 dc 6f 32 ba be dc 8c 31 22 c9 f4 20 f7 
+61 63 a4 45 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 186
+Identification: 0x7543 (30019)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x0e81
+Source: 192.168.118.128
+Destination: 52.40.75.41
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 57246
+Destination Port: 443
+Sequence Number: 2347031339
+Acknowledgment Number: 1798342434
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x9f77
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 141
+   Encrypted Application Data: 00000000000000026c6d05559a2106059358aa50597b09d32ae7d817fe65f64e7c219c8e62dff42705dd0c2d12fa0e6ea832fbe54f1b4b98875589c0c1622db352fb5cfb47b4998373e45aa170f3ad42011671ff061fc895d129f20b071ae1d796994c9b4ade91c45136f36d5eb83b3bc2e43db8e2d17acb17d75cd9f81e36346b69f8f6c2b2a5117e9b677f01
+
+< Memory >
+Captured byte : 200
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 ba 75 43 40 00 40 06 0e 81 c0 a8 76 80 34 28 
+4b 29 df 9e 01 bb 8b e4 db 2b 6b 30 87 22 50 18 
+f5 3c 9f 77 00 00 17 03 03 00 8d 00 00 00 00 00 
+00 00 02 6c 6d 05 55 9a 21 06 05 93 58 aa 50 59 
+7b 09 d3 2a e7 d8 17 fe 65 f6 4e 7c 21 9c 8e 62 
+df f4 27 05 dd 0c 2d 12 fa 0e 6e a8 32 fb e5 4f 
+1b 4b 98 87 55 89 c0 c1 62 2d b3 52 fb 5c fb 47 
+b4 99 83 73 e4 5a a1 70 f3 ad 42 01 16 71 ff 06 
+1f c8 95 d1 29 f2 0b 07 1a e1 d7 96 99 4c 9b 4a 
+de 91 c4 51 36 f3 6d 5e b8 3b 3b c2 e4 3d b8 e2 
+d1 7a cb 17 d7 5c d9 f8 1e 36 34 6b 69 f8 f6 c2 
+b2 a5 11 7e 9b 67 7f 01 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 91
+Identification: 0xf1a8 (61864)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x25aa
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40358
+Sequence Number: 454252755
+Acknowledgment Number: 1405073
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xae01
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+   Content Type: Change Cipher Spec (20)
+   Version: TLS 1.2 (0x0303)
+   Length: 1
+   Change Cipher Spec Message
+TLS Record Layer: Handshake Protocol
+   Content Type: Handshake (22)
+   Version: TLS 1.2  (0x0303)
+   Length: 40
+   Handshake Protocol: Encrypted Handshake Message
+
+< Memory >
+Captured byte : 105
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 5b f1 a8 00 00 80 06 25 aa 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a6 1b 13 58 d3 00 15 70 91 50 18 
+fa f0 ae 01 00 00 14 03 03 00 01 01 16 03 03 00 
+28 39 9a 99 37 c1 52 bd 08 83 c0 52 83 ce 1e 5d 
+b7 06 17 3e c8 dc 30 29 40 e6 fe 81 94 44 e3 da 
+2e b9 52 4c 3a 58 a5 e3 96 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 184
+Identification: 0xf1ab (61867)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x921a
+Source: 52.40.75.41
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 57246
+Sequence Number: 1798342434
+Acknowledgment Number: 2347031485
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xafb1
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 139
+   Encrypted Application Data: 7cb743d67e17fc3224674f9d5fb43d2b49fa4b65285a290cdac4e97e5509edd903e2d86a3d4629cac2a2d94f4d5cf6e04ef51a6d21b34f7e6ebfc09747631f235d31923cb3f43f7af23e6e09ee1a666bf94217ed528d71e12b0283d2824fd41bf5c8cbdd4a2f16bd5849ca3cfbb670e0c89326f6a3a9bac7a487d70106c0ab330de7adab96a4c9e3bff684
+
+< Memory >
+Captured byte : 198
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 b8 f1 ab 00 00 80 06 92 1a 34 28 4b 29 c0 a8 
+76 80 01 bb df 9e 6b 30 87 22 8b e4 db bd 50 18 
+fa f0 af b1 00 00 17 03 03 00 8b 7c b7 43 d6 7e 
+17 fc 32 24 67 4f 9d 5f b4 3d 2b 49 fa 4b 65 28 
+5a 29 0c da c4 e9 7e 55 09 ed d9 03 e2 d8 6a 3d 
+46 29 ca c2 a2 d9 4f 4d 5c f6 e0 4e f5 1a 6d 21 
+b3 4f 7e 6e bf c0 97 47 63 1f 23 5d 31 92 3c b3 
+f4 3f 7a f2 3e 6e 09 ee 1a 66 6b f9 42 17 ed 52 
+8d 71 e1 2b 02 83 d2 82 4f d4 1b f5 c8 cb dd 4a 
+2f 16 bd 58 49 ca 3c fb b6 70 e0 c8 93 26 f6 a3 
+a9 ba c7 a4 87 d7 01 06 c0 ab 33 0d e7 ad ab 96 
+a4 c9 e3 bf f6 84 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 310
+Identification: 0xf1af (61871)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x24c8
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40358
+Sequence Number: 454252806
+Acknowledgment Number: 1405073
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0xda64
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 265
+   Encrypted Application Data: 399a9937c152bd097cef840ba93272fe188f278688debb1c5d1a52a007df75fb07e87447b149d88044e9ccc1dc977581bb01b1a19655a55ae8e5f7cc1b2b207f0d094f2d3c090587d2c19809e1dbb086e77913195a1294927eafc55b6258d77d469803d84c92a7462ba8d3496d76e988e75cdc25d0455df26a27b003777b93f5ed79bf90b6d05f1c0570c59c5f1a6a6ccd664a80c86185a07746632a37d2a1ba9cca80d4058faf3686eee0343f33c83544e974dc965911378c3fad881ea5136bcdd6047902a1c137f83258c3d94cab28be3c4e7e6778e2e8a99a798e353851c171c512d5a33cee1ed3e3f1b46ea4c2d4b24426dbd6da0bf289f6d8b922464f339635c526996ed6afa8
+
+< Memory >
+Captured byte : 324
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+01 36 f1 af 00 00 80 06 24 c8 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a6 1b 13 59 06 00 15 70 91 50 18 
+fa f0 da 64 00 00 17 03 03 01 09 39 9a 99 37 c1 
+52 bd 09 7c ef 84 0b a9 32 72 fe 18 8f 27 86 88 
+de bb 1c 5d 1a 52 a0 07 df 75 fb 07 e8 74 47 b1 
+49 d8 80 44 e9 cc c1 dc 97 75 81 bb 01 b1 a1 96 
+55 a5 5a e8 e5 f7 cc 1b 2b 20 7f 0d 09 4f 2d 3c 
+09 05 87 d2 c1 98 09 e1 db b0 86 e7 79 13 19 5a 
+12 94 92 7e af c5 5b 62 58 d7 7d 46 98 03 d8 4c 
+92 a7 46 2b a8 d3 49 6d 76 e9 88 e7 5c dc 25 d0 
+45 5d f2 6a 27 b0 03 77 7b 93 f5 ed 79 bf 90 b6 
+d0 5f 1c 05 70 c5 9c 5f 1a 6a 6c cd 66 4a 80 c8 
+61 85 a0 77 46 63 2a 37 d2 a1 ba 9c ca 80 d4 05 
+8f af 36 86 ee e0 34 3f 33 c8 35 44 e9 74 dc 96 
+59 11 37 8c 3f ad 88 1e a5 13 6b cd d6 04 79 02 
+a1 c1 37 f8 32 58 c3 d9 4c ab 28 be 3c 4e 7e 67 
+78 e2 e8 a9 9a 79 8e 35 38 51 c1 71 c5 12 d5 a3 
+3c ee 1e d3 e3 f1 b4 6e a4 c2 d4 b2 44 26 db d6 
+da 0b f2 89 f6 d8 b9 22 46 4f 33 96 35 c5 26 99 
+6e d6 af a8 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 75
+Identification: 0x7545 (30021)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x0eee
+Source: 192.168.118.128
+Destination: 52.40.75.41
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 57246
+Destination Port: 443
+Sequence Number: 2347031485
+Acknowledgment Number: 1798342578
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x1bef
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 30
+   Encrypted Application Data: 00000000000000033b31a18a763d856343953669ae4100032d110a78e947
+
+< Memory >
+Captured byte : 89
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 4b 75 45 40 00 40 06 0e ee c0 a8 76 80 34 28 
+4b 29 df 9e 01 bb 8b e4 db bd 6b 30 87 b2 50 18 
+f5 3c 1b ef 00 00 17 03 03 00 1e 00 00 00 00 00 
+00 00 03 3b 31 a1 8a 76 3d 85 63 43 95 36 69 ae 
+41 00 03 2d 11 0a 78 e9 47 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 1032
+Identification: 0x2667 (9831)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xed3e
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40352
+Destination Port: 443
+Sequence Number: 2272142536
+Acknowledgment Number: 1762805801
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x786e
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 987
+   Encrypted Application Data: 0000000000000002f9679c9a452318957025442bfe9e47b84b4f1d5ad87bafedc2eb8e4f18f64831832d9d6105e8a8b36bc4b549e8bfe89c305e48da44f396f22728bb747d9e60f3e162c0a1dff4e7167372a7f4f92d6bfc83d820949ffdaa0f7cee81fa72e6b1019df6b99efa2d6326ca91080b87f2e1674595e0932dd8e34c7164cac7dac4a59088e31445067f856e6f131dceea595b735d534d3f389e5a6fcf20788ba9660679eb26b7155cc26cfef5a96f024c90a61c1ef2dc4645adfdd4803b9ad9444f28ae3e3bff50ac4cc46931cbdbe3c67e003c64f117f962b00f06ea584dfdfab02f4e44e599d8c67db40e2889b80e9663003cbcbb05e34b0ffdb90cbe23914c6ab91d61fb9ba6689e5d062811b6a35a002fd06e3ed89873e3342845ae2987e36e579f9d57ceee912ba020b28a307511c0c256378068983846f1bb66a2a491b547885e549323699dec50dea2e845ccccae89c63cd209b6f4d265089bfb625e20e767312d3989ec724499d07e3d75b77ee7f564946a262a158b4cc4498aa6583d7ff1bd9ef3f1e1ef4759686063c88de6f6ec3157f881e7e01d066db5175dd25d32839519d96ed1da28203557d8e2c4894f8543bbcb2b3777ae791e27bb6a64114d79ba01bfb07f78a7aeae1c51faf9262ec1964652116680b5b0b4bda848c116144b7eafd0075a3ac8c5c62e43dee9a7f3e034a0a4f6f20a63283f3002bde8251e5b33373a98110d6d0ef5b73f30938b57af34d754c126d1eb435f900da785309cb5d5d3824174ee70ce8e9a666f1a213f1f11f6e40b675713ecb8502fa95c47768c26008b09c63d568723f09ae0fff03fcf16cdcf165b1536e3a1c81e015c1779dfe0d273036f58a6af2584e2939bfb07572385f73a22d103981261526cd05da733c4489163a8747dee37cf82403339eb9b7d669f8599898ffa3041b23b59193efc5eb7299403265b2c5e6e2624d7808df8fe84a9d67e3aa8c163f9bf814a74272d747913933b626b242114a391712838dc88e98ee1ce62cc002a8d75f781bdd3279bf24e9ff6efd75555e96812ac6e8e5d16ccdcf5a721ba5906812d49c620b6a3536eef45ad6298ace7a201e59e882eb8b1b4cf0f19558879546c2f8acb88b43cfb5c63fe42a80846230ad9150f16dc3bf252983c0a2ef98f9af7613b0d5682251a4435315c860bdb66f7e63adccf61ba1030d6e9da47f2f9b3019008223d95e3f178b2adf9a350e8a014abfdb856160209ae795ed8b706a59395d9f54fe86ed49a7db800d24285b8f619540ac887a743d4bc0fd453d6fe3cd90f48402800fd854a9e4621902c10585ff83d910e74ae4432ac33557548affbd6225fa18704c46b4e0678a6cbdd113d792cf803191d3204f0a6cded
+
+< Memory >
+Captured byte : 1046
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+04 08 26 67 40 00 40 06 ed 3e c0 a8 76 80 2c ec 
+bf 35 9d a0 01 bb 87 6e 24 c8 69 12 48 29 50 18 
+f5 3c 78 6e 00 00 17 03 03 03 db 00 00 00 00 00 
+00 00 02 f9 67 9c 9a 45 23 18 95 70 25 44 2b fe 
+9e 47 b8 4b 4f 1d 5a d8 7b af ed c2 eb 8e 4f 18 
+f6 48 31 83 2d 9d 61 05 e8 a8 b3 6b c4 b5 49 e8 
+bf e8 9c 30 5e 48 da 44 f3 96 f2 27 28 bb 74 7d 
+9e 60 f3 e1 62 c0 a1 df f4 e7 16 73 72 a7 f4 f9 
+2d 6b fc 83 d8 20 94 9f fd aa 0f 7c ee 81 fa 72 
+e6 b1 01 9d f6 b9 9e fa 2d 63 26 ca 91 08 0b 87 
+f2 e1 67 45 95 e0 93 2d d8 e3 4c 71 64 ca c7 da 
+c4 a5 90 88 e3 14 45 06 7f 85 6e 6f 13 1d ce ea 
+59 5b 73 5d 53 4d 3f 38 9e 5a 6f cf 20 78 8b a9 
+66 06 79 eb 26 b7 15 5c c2 6c fe f5 a9 6f 02 4c 
+90 a6 1c 1e f2 dc 46 45 ad fd d4 80 3b 9a d9 44 
+4f 28 ae 3e 3b ff 50 ac 4c c4 69 31 cb db e3 c6 
+7e 00 3c 64 f1 17 f9 62 b0 0f 06 ea 58 4d fd fa 
+b0 2f 4e 44 e5 99 d8 c6 7d b4 0e 28 89 b8 0e 96 
+63 00 3c bc bb 05 e3 4b 0f fd b9 0c be 23 91 4c 
+6a b9 1d 61 fb 9b a6 68 9e 5d 06 28 11 b6 a3 5a 
+00 2f d0 6e 3e d8 98 73 e3 34 28 45 ae 29 87 e3 
+6e 57 9f 9d 57 ce ee 91 2b a0 20 b2 8a 30 75 11 
+c0 c2 56 37 80 68 98 38 46 f1 bb 66 a2 a4 91 b5 
+47 88 5e 54 93 23 69 9d ec 50 de a2 e8 45 cc cc 
+ae 89 c6 3c d2 09 b6 f4 d2 65 08 9b fb 62 5e 20 
+e7 67 31 2d 39 89 ec 72 44 99 d0 7e 3d 75 b7 7e 
+e7 f5 64 94 6a 26 2a 15 8b 4c c4 49 8a a6 58 3d 
+7f f1 bd 9e f3 f1 e1 ef 47 59 68 60 63 c8 8d e6 
+f6 ec 31 57 f8 81 e7 e0 1d 06 6d b5 17 5d d2 5d 
+32 83 95 19 d9 6e d1 da 28 20 35 57 d8 e2 c4 89 
+4f 85 43 bb cb 2b 37 77 ae 79 1e 27 bb 6a 64 11 
+4d 79 ba 01 bf b0 7f 78 a7 ae ae 1c 51 fa f9 26 
+2e c1 96 46 52 11 66 80 b5 b0 b4 bd a8 48 c1 16 
+14 4b 7e af d0 07 5a 3a c8 c5 c6 2e 43 de e9 a7 
+f3 e0 34 a0 a4 f6 f2 0a 63 28 3f 30 02 bd e8 25 
+1e 5b 33 37 3a 98 11 0d 6d 0e f5 b7 3f 30 93 8b 
+57 af 34 d7 54 c1 26 d1 eb 43 5f 90 0d a7 85 30 
+9c b5 d5 d3 82 41 74 ee 70 ce 8e 9a 66 6f 1a 21 
+3f 1f 11 f6 e4 0b 67 57 13 ec b8 50 2f a9 5c 47 
+76 8c 26 00 8b 09 c6 3d 56 87 23 f0 9a e0 ff f0 
+3f cf 16 cd cf 16 5b 15 36 e3 a1 c8 1e 01 5c 17 
+79 df e0 d2 73 03 6f 58 a6 af 25 84 e2 93 9b fb 
+07 57 23 85 f7 3a 22 d1 03 98 12 61 52 6c d0 5d 
+a7 33 c4 48 91 63 a8 74 7d ee 37 cf 82 40 33 39 
+eb 9b 7d 66 9f 85 99 89 8f fa 30 41 b2 3b 59 19 
+3e fc 5e b7 29 94 03 26 5b 2c 5e 6e 26 24 d7 80 
+8d f8 fe 84 a9 d6 7e 3a a8 c1 63 f9 bf 81 4a 74 
+27 2d 74 79 13 93 3b 62 6b 24 21 14 a3 91 71 28 
+38 dc 88 e9 8e e1 ce 62 cc 00 2a 8d 75 f7 81 bd 
+d3 27 9b f2 4e 9f f6 ef d7 55 55 e9 68 12 ac 6e 
+8e 5d 16 cc dc f5 a7 21 ba 59 06 81 2d 49 c6 20 
+b6 a3 53 6e ef 45 ad 62 98 ac e7 a2 01 e5 9e 88 
+2e b8 b1 b4 cf 0f 19 55 88 79 54 6c 2f 8a cb 88 
+b4 3c fb 5c 63 fe 42 a8 08 46 23 0a d9 15 0f 16 
+dc 3b f2 52 98 3c 0a 2e f9 8f 9a f7 61 3b 0d 56 
+82 25 1a 44 35 31 5c 86 0b db 66 f7 e6 3a dc cf 
+61 ba 10 30 d6 e9 da 47 f2 f9 b3 01 90 08 22 3d 
+95 e3 f1 78 b2 ad f9 a3 50 e8 a0 14 ab fd b8 56 
+16 02 09 ae 79 5e d8 b7 06 a5 93 95 d9 f5 4f e8 
+6e d4 9a 7d b8 00 d2 42 85 b8 f6 19 54 0a c8 87 
+a7 43 d4 bc 0f d4 53 d6 fe 3c d9 0f 48 40 28 00 
+fd 85 4a 9e 46 21 90 2c 10 58 5f f8 3d 91 0e 74 
+ae 44 32 ac 33 55 75 48 af fb d6 22 5f a1 87 04 
+c4 6b 4e 06 78 a6 cb dd 11 3d 79 2c f8 03 19 1d 
+32 04 f0 a6 cd ed 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 71
+Identification: 0xc2db (49883)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x548b
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40358
+Destination Port: 443
+Sequence Number: 1405073
+Acknowledgment Number: 454253076
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x5ba4
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Encrypted Alert
+   Content Type: Alert (21)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Alert Message: Encrypted Alert
+
+< Memory >
+Captured byte : 85
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 47 c2 db 40 00 40 06 54 8b c0 a8 76 80 2c ec 
+bf 35 9d a6 01 bb 00 15 70 91 1b 13 5a 14 50 18 
+f5 3c 5b a4 00 00 15 03 03 00 1a 00 00 00 00 00 
+00 00 02 d7 4e a9 88 a5 df 9e 32 c0 5e 8f 24 00 
+4b ad cb 8c fe 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 71
+Identification: 0x2668 (9832)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xf0fe
+Source: 192.168.118.128
+Destination: 44.236.191.53
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 40352
+Destination Port: 443
+Sequence Number: 2272143528
+Acknowledgment Number: 1762805801
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x7dc5
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Encrypted Alert
+   Content Type: Alert (21)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Alert Message: Encrypted Alert
+
+< Memory >
+Captured byte : 85
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 47 26 68 40 00 40 06 f0 fe c0 a8 76 80 2c ec 
+bf 35 9d a0 01 bb 87 6e 28 a8 69 12 48 29 50 18 
+f5 3c 7d c5 00 00 15 03 03 00 1a 00 00 00 00 00 
+00 00 03 66 5c 2b e6 16 b7 01 68 d3 d1 6d f2 a5 
+2a df dc 3e b6 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 64
+Identification: 0x9fb6 (40886)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xeeb5
+Source: 192.168.118.128
+Destination: 54.230.62.61
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 54988
+Destination Port: 443
+Sequence Number: 1706281455
+Acknowledgment Number: 1170280632
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x399d
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 19
+   Encrypted Application Data: 8db722e09aa6f6edddb13893c4f8e38bbb522b
+
+< Memory >
+Captured byte : 78
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 40 9f b6 40 00 40 06 ee b5 c0 a8 76 80 36 e6 
+3e 3d d6 cc 01 bb 65 b3 c9 ef 45 c1 10 b8 50 18 
+f5 3c 39 9d 00 00 17 03 03 00 13 8d b7 22 e0 9a 
+a6 f6 ed dd b1 38 93 c4 f8 e3 8b bb 52 2b 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 71
+Identification: 0x7546 (30022)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0x0ef1
+Source: 192.168.118.128
+Destination: 52.40.75.41
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 57246
+Destination Port: 443
+Sequence Number: 2347031520
+Acknowledgment Number: 1798342578
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 62780
+Checksum: 0x7a7a
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Encrypted Alert
+   Content Type: Alert (21)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Alert Message: Encrypted Alert
+
+< Memory >
+Captured byte : 85
+00 50 56 fd 59 1d 00 0c 29 1b 08 d3 08 00 45 00 
+00 47 75 46 40 00 40 06 0e f1 c0 a8 76 80 34 28 
+4b 29 df 9e 01 bb 8b e4 db e0 6b 30 87 b2 50 18 
+f5 3c 7a 7a 00 00 15 03 03 00 1a 00 00 00 00 00 
+00 00 04 ad 53 4d b1 14 14 db a7 98 a9 54 3e 4d 
+9b 72 1c df b6 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 102
+Identification: 0xf1c2 (61890)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x9255
+Source: 52.40.75.41
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 57246
+Sequence Number: 1798342578
+Acknowledgment Number: 2347031552
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXF
+Window size value: 64239
+Checksum: 0x0389
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Encrypted Application Data: 7cb743d67e17fc339d6d3defa56e58d4bbef715c98aa6a96e4fb
+TLS Record Layer: Encrypted Alert
+   Content Type: Alert (21)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Alert Message: Encrypted Alert
+
+< Memory >
+Captured byte : 116
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 66 f1 c2 00 00 80 06 92 55 34 28 4b 29 c0 a8 
+76 80 01 bb df 9e 6b 30 87 b2 8b e4 dc 00 50 19 
+fa ef 03 89 00 00 17 03 03 00 1a 7c b7 43 d6 7e 
+17 fc 33 9d 6d 3d ef a5 6e 58 d4 bb ef 71 5c 98 
+aa 6a 96 e4 fb 15 03 03 00 1a 7c b7 43 d6 7e 17 
+fc 34 d4 44 12 77 c6 66 26 3f ec ce 03 48 b0 b0 
+8c 86 49 8f 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 71
+Identification: 0xf1c3 (61891)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x25a3
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40358
+Sequence Number: 454253076
+Acknowledgment Number: 1405105
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXF
+Window size value: 64239
+Checksum: 0xc72c
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Encrypted Alert
+   Content Type: Alert (21)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Alert Message: Encrypted Alert
+
+< Memory >
+Captured byte : 85
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+00 47 f1 c3 00 00 80 06 25 a3 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a6 1b 13 5a 14 00 15 70 b1 50 19 
+fa ef c7 2c 00 00 15 03 03 00 1a 39 9a 99 37 c1 
+52 bd 0a ec b1 5a 8b 9e 09 1a dc d6 b6 80 2e c7 
+f8 d3 27 af ba 
+===============================================
+
+
+===============================================
+< Ethernet >
+Destination: 00:0c:29:1b:08:d3(Broadcast)
+Source: 00:50:56:fd:59:1d
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 336
+Identification: 0xf1c4 (61892)
+Flags: 0x0000, Fragment Offset: 0
+Time to Live: 128
+Protocol: TCP (6)
+Header Checksum: 0x2499
+Source: 44.236.191.53
+Destination: 192.168.118.128
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 443
+Destination Port: 40352
+Sequence Number: 1762805801
+Acknowledgment Number: 2272143560
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXF
+Window size value: 64239
+Checksum: 0x41cc
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Application Data Protocol: http-over-tls
+   Opaque Type: Application Data (23)
+   Version: TLS 1.2 (0x0303)
+   Length: 260
+   Encrypted Application Data: 6ab75f0cb51fa03364c796b8f8d11c4daee78e47332a5fae1948d559b4c6f3eaf5973c2e5a7eec4af920b85505181e33b9e23916320b21e8b7a4b28fbef1072fa2cbdcdb632e8608b86fad4416e7f4656f796eb1e3a2ddd48554bf112c59ff3ee5f63f41d4be8baee078d3b570e0090a81bdd11a6621f0c6ac9dee8fd157089dab4d4dc954dd4d41870763f9e9de05342559db359ec873b98b4fa81983817716271a52c435842166f4465f1b2b6fb7aea488593a3784781665ae4b95c8d4d3606513d844c106b9e629f01e4687dc58da95fb998ae448bf633e10d405390732873d8aa49187049ebfd8f64aa0a3d553c9375e12c17435bfe63e84899ab6b1ce61b363f7cf
+TLS Record Layer: Encrypted Alert
+   Content Type: Alert (21)
+   Version: TLS 1.2 (0x0303)
+   Length: 26
+   Alert Message: Encrypted Alert
+
+< Memory >
+Captured byte : 350
+00 0c 29 1b 08 d3 00 50 56 fd 59 1d 08 00 45 00 
+01 50 f1 c4 00 00 80 06 24 99 2c ec bf 35 c0 a8 
+76 80 01 bb 9d a0 69 12 48 29 87 6e 28 c8 50 19 
+fa ef 41 cc 00 00 17 03 03 01 04 6a b7 5f 0c b5 
+1f a0 33 64 c7 96 b8 f8 d1 1c 4d ae e7 8e 47 33 
+2a 5f ae 19 48 d5 59 b4 c6 f3 ea f5 97 3c 2e 5a 
+7e ec 4a f9 20 b8 55 05 18 1e 33 b9 e2 39 16 32 
+0b 21 e8 b7 a4 b2 8f be f1 07 2f a2 cb dc db 63 
+2e 86 08 b8 6f ad 44 16 e7 f4 65 6f 79 6e b1 e3 
+a2 dd d4 85 54 bf 11 2c 59 ff 3e e5 f6 3f 41 d4 
+be 8b ae e0 78 d3 b5 70 e0 09 0a 81 bd d1 1a 66 
+21 f0 c6 ac 9d ee 8f d1 57 08 9d ab 4d 4d c9 54 
+dd 4d 41 87 07 63 f9 e9 de 05 34 25 59 db 35 9e 
+c8 73 b9 8b 4f a8 19 83 81 77 16 27 1a 52 c4 35 
+84 21 66 f4 46 5f 1b 2b 6f b7 ae a4 88 59 3a 37 
+84 78 16 65 ae 4b 95 c8 d4 d3 60 65 13 d8 44 c1 
+06 b9 e6 29 f0 1e 46 87 dc 58 da 95 fb 99 8a e4 
+48 bf 63 3e 10 d4 05 39 07 32 87 3d 8a a4 91 87 
+04 9e bf d8 f6 4a a0 a3 d5 53 c9 37 5e 12 c1 74 
+35 bf e6 3e 84 89 9a b6 b1 ce 61 b3 63 f7 cf 15 
+03 03 00 1a 6a b7 5f 0c b5 1f a0 34 0e 4d 09 22 
+61 00 d1 b9 43 3a aa aa e6 b8 e7 af 02 6e 
+===============================================
+
+
