@@ -215,7 +215,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
         {
 
             int https_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
-            int https_case = 0;
+            int remain = 0;
             int go_flag = 0;
 
             if (https_length > 0)
@@ -263,14 +263,21 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                             ipv4_parser(buff, ip, fp, c_byte);
                             tcp_parser(buff, tcp, fp);
 
-                            https_case = SPLIT_1;
-                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, https_case);
+                            remain = https_length;
+                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
+                            dump_mem(buff, c_byte, fp);
                             printf(" Captured byte: %d\n", c_byte);
+                            
                         }
                         else if (size - HTTPS_HLEN < https_length)
                         {
-                            https_case = SPLIT_2;
+                            remain = https_length;
+                            ether_parser(buff, eth, fp);
+                            ipv4_parser(buff, ip, fp, c_byte);
+                            tcp_parser(buff, tcp, fp);
+                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
                             printf(" Captured byte: %d\n", c_byte);
+                            dump_mem(buff, c_byte, fp);
                             int offset = 0;
                             unsigned char *tracer = tls_section;
 
@@ -314,13 +321,23 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                 size3 = ntohs(size3);
                                 if (size3 + HTTPS_HLEN == https_length)
                                 {
-                                    https_case = SPLIT_3;
+                                    remain = https_length;
+                                    ether_parser(buff, eth, fp);
+                                    ipv4_parser(buff, ip, fp, c_byte);
+                                    tcp_parser(buff, tcp, fp);
+                                    https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
                                     printf(" Captured byte: %d\n", c_byte);
+                                    dump_mem(buff, c_byte, fp);
                                 }
                                 else if (size3 + HTTPS_HLEN < https_length)
                                 {
-                                    https_case = SPLIT_4;
+                                    remain = https_length;
+                                    ether_parser(buff, eth, fp);
+                                    ipv4_parser(buff, ip, fp, c_byte);
+                                    tcp_parser(buff, tcp, fp);
+                                    https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, remain);
                                     printf(" Captured byte: %d\n", c_byte);
+                                    dump_mem(buff, c_byte, fp);
                                 }
                             }
                             else
@@ -340,6 +357,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                     memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
                                     tmp_offset = stream_size - end_tcp_stream;
                                     end_tcp_stream = stream_size;
+                                    remain = https_length  - (stream_size - end_tcp_stream);
                                     flag1 = 1;
                                 }
                                 else if (https_length < stream_size - end_tcp_stream)
@@ -350,13 +368,20 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                 else if (https_length == stream_size - end_tcp_stream)
                                 {
                                     memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
+                                    tmp_offset = stream_size - end_tcp_stream;
+                                    remain = 0;
                                     end_tcp_stream = stream_size;
                                 }
                             }
                             if (end_tcp_stream >= stream_size)
                             {
-                                https_case = SPLIT_5;
+                                ether_parser(buff, eth, fp);
+                                ipv4_parser(buff, ip, fp, c_byte);
+                                tcp_parser(buff, tcp, fp);
+                                
+                                https_parser(ip_head_length, tcp_head_length, https_length, tls_section + tmp_offset, fp, remain);
                                 printf(" Captured byte: %d\n", c_byte);
+                                dump_mem(buff, c_byte, fp);
 
                                 split_flag = 0;
                                 end_tcp_stream = 0;
@@ -387,7 +412,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                             else
                                             {
                                                 tmp_offset += size4 + HTTPS_HLEN;
-                                                tracer2 += tmp_offset;
+                                                tracer2 += (size4 + HTTPS_HLEN);
                                                 if (tmp_offset >= https_length)
                                                     break;
                                             }

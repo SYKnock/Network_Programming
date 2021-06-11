@@ -43,7 +43,7 @@ void udp_parser(char *buff, udp_head *udp, FILE *fp);
 void arp_parser(char *buff, arp_head *arp, FILE *fp);
 void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset);
 void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte);
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int https_case);
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain);
 void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset);
 void dump_mem(const void *mem, size_t len, FILE *fp);
 void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option);
@@ -58,7 +58,7 @@ void tls_record(int section_length, unsigned char *tls_section, FILE *fp);
 void tls_alert(int section_length, unsigned char *tls_section, FILE *fp);
 void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE *fp);
 void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp);
-
+void tls_handshake_extension(uint16_t section_length, int total_length, unsigned char *section, FILE *fp);
 
 void ether_parser(char *buff, ether_head *eth, FILE *fp)
 {
@@ -152,7 +152,6 @@ void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
 
 void udp_parser(char *buff, udp_head *udp, FILE *fp)
 {
-    //printf("UDP detect\n");
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< User Datagram Protocol(UDP) >\n");
     fprintf(fp, "Source Port: %d\n", ntohs(udp->udp_src));
@@ -820,7 +819,7 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
 
                 if ((buff[0] == 0x0e) && (buff[1] == 0x03) && (buff[2] == 0x02) && (buff[3] == 0x1a))
                     fprintf(fp, " (SHA1)");
-                
+
                 buff += 4;
                 fprintf(fp, "\n");
                 buff += 2;
@@ -869,8 +868,6 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
         {
             if ((c_flag == 1) || (http_body > 0))
             {
-
-
             }
         }
     }
@@ -890,56 +887,81 @@ void dump_data(const void *mem, size_t len, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int https_case)
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain)
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Transport Layer Security(TLS) >\n");
-
+    uint16_t length;
+    unsigned char content;
     printf("TLS detected:");
-    if(https_case == SPLIT_1)
+    if ((split_flag == 1) && (remain != https_length))
     {
-        unsigned char content = tls_section[0];
-        uint16_t length;
-        memcpy(&length, tls_section + 3, 2);
+        content = tcp_reassem[0];
+
+        memcpy(&length, tcp_reassem + 3, 2);
         length = ntohs(length);
 
-        switch(content)
+        switch (content)
         {
         case APPLICATION_DATA:
             printf(" Application data");
-            tls_record(length, tls_section, fp);
+            tls_record(length, tcp_reassem, fp);
             break;
         case ALERT:
             printf(" Alert");
-            tls_alert(length, tls_section, fp);
+            tls_alert(length, tcp_reassem, fp);
             break;
         case CHANGE_CIPHER_SPEC:
             printf(" Change Cipher Spec");
-            tls_change_cipher_spec(length, tls_section, fp);
+            tls_change_cipher_spec(length, tcp_reassem, fp);
             break;
         case HANDSHAKE:
-            tls_handshake(length, tls_section, fp);
+            tls_handshake(length, tcp_reassem, fp);
             break;
         }
+    }
+    int offset = https_length - remain;
 
-    }
-    else if(https_case == SPLIT_2)
+    if (remain != 0)
     {
+        while (1)
+        {
+            content = tls_section[0];
 
-    }
-    else if(https_case == SPLIT_3)
-    {
+            memcpy(&length, tls_section + 3, 2);
+            length = ntohs(length);
 
-    }
-    else if(https_case == SPLIT_4)
-    {
+            if (length + HTTPS_HLEN > https_length - offset)
+                break;
+            else
+            {
+                switch (content)
+                {
+                case APPLICATION_DATA:
+                    printf(" Application data");
+                    tls_record(length, tls_section, fp);
+                    break;
+                case ALERT:
+                    printf(" Alert");
+                    tls_alert(length, tls_section, fp);
+                    break;
+                case CHANGE_CIPHER_SPEC:
+                    printf(" Change Cipher Spec");
+                    tls_change_cipher_spec(length, tls_section, fp);
+                    break;
+                case HANDSHAKE:
+                    tls_handshake(length, tls_section, fp);
+                    break;
+                }
+            }
 
+            offset += (length + HTTPS_HLEN);
+            tls_section += (length + HTTPS_HLEN);
+
+            if (offset >= https_length)
+                break;
+        }
     }
-    else if(https_case == SPLIT_5)
-    {
-        
-    }
-    
 }
 
 void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
@@ -952,150 +974,679 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
     version = ntohs(version);
     length = ntohs(length);
 
-    tls_section += HTTPS_HLEN;
-    unsigned char handshake_type = tls_section[0];
     
+    tls_section += HTTPS_HLEN;
 
-    if(handshake_type == CLIENT_HELLO)
+    fprintf(fp, "TLS Record Layer: Handshake Protocol\n");
+    fprintf(fp, "   Content Type: Handshake (22)\n");
+    fprintf(fp, "   Version: ");
+    if (version == 0x0303)
+        fprintf(fp, "TLS 1.2 ");
+    else if (version == 0x0304)
+        fprintf(fp, "TLS 1.3 ");
+    else if (version == 0x0302)
+        fprintf(fp, "TLS 1.1 ");
+    else if (version == 0x0301)
+        fprintf(fp, "TLS 1.0 ");
+    else if (version == 0x0300)
+        fprintf(fp, "SSLv3 ");
+
+    fprintf(fp, " (0x%04x)\n", version);
+    fprintf(fp, "   Length: %d\n", length);
+    unsigned char length_tmp[3];
+    int length2;
+    unsigned char handshake_type;
+
+    memcpy(length_tmp, tls_section + 1, 3);
+    length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
+
+    int offset = 0;
+    if(length2 + 4 == length)
     {
-        printf(" Client Hello");
-        fprintf(fp, "TLS Record Layer: Handshake Protocol: Client Hello\n");
-        fprintf(fp, "   Content Type: Handshake (22)\n");
-        fprintf(fp, "   Version: ");
-        if(version == 0x0303)
-        fprintf(fp, "TLS 1.2 ");
-        else if(version == 0x0304)
-        fprintf(fp, "TLS 1.3 ");
-        else if(version == 0x0302)
-        fprintf(fp, "TLS 1.1 ");
-        else if(version == 0x0301)
-        fprintf(fp, "TLS 1.0 ");
-        else if(version == 0x0300)
-        fprintf(fp, "SSLv3 ");
-        fprintf(fp, " (0x%04x)\n", version);
-        fprintf(fp, "   Length: %d\n", length);
-        fprintf(fp, "   Handshake Protocol: Client Hello\n");
-
-        fprintf(fp, "       Handshake Type: Client Hello (1)\n");
-        
-        unsigned char length_tmp[3];
-        memcpy(length_tmp, tls_section + 1, 3);
-        int length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
-        fprintf(fp, "       Length: %d\n", length2);
-        uint16_t version2;
-        memcpy(&version2, tls_section + 4, 2);
-        fprintf(fp, "       Version: ");
-        version2 = ntohs(version2);
-        if(version2 == 0x0303)
-        fprintf(fp, "TLS 1.2 ");
-        else if(version2 == 0x0304)
-        fprintf(fp, "TLS 1.3 ");
-        else if(version2 == 0x0302)
-        fprintf(fp, "TLS 1.1 ");
-        else if(version2 == 0x0301)
-        fprintf(fp, "TLS 1.0 ");
-        else if(version2 == 0x0300)
-        fprintf(fp, "SSLv3 ");
-        fprintf(fp, " (0x%04x)\n", version2);
-
-        tls_section += 6;
-        fprintf(fp, "       Random: ");
-        for(int i = 0; i < 32; i++)
-            fprintf(fp, "%02x", tls_section[i] & 0xff);
-        fprintf(fp, "\n");
-
-        tls_section += 32;
-        unsigned char sID_length = tls_section[0];
-        fprintf(fp, "       Session ID Length: %d\n", sID_length);
-        tls_section++;
-
-        if(sID_length != 0)
+        while (1)
         {
-            fprintf(fp, "       Session ID: ");
-            for(int i = 0; i < sID_length; i++)
-                fprintf(fp, "%02x", tls_section[i] & 0xff);
-            fprintf(fp, "\n");
-        }
-        
-        tls_section += sID_length;
+            handshake_type = tls_section[0];
+            memcpy(length_tmp, tls_section + 1, 3);
+            length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
 
-        uint16_t cipher_suites_length;
-        memcpy(&cipher_suites_length, tls_section, 2);
-        cipher_suites_length = ntohs(cipher_suites_length);
-        fprintf(fp, "       Cipher Suites Length: %d\n", cipher_suites_length);
-        fprintf(fp, "       Cipher Suites (%d suites)\n", cipher_suites_length / 2);
-
-        tls_section += 2;
-        uint16_t check_cipher;
-        for(int i = 0; i < cipher_suites_length / 2; i++)
-        {
-            memcpy(&check_cipher, tls_section, 2);
-            check_cipher = ntohs(check_cipher);
-            for(int i = 0; i < 416; i++)
+            if (handshake_type == CLIENT_HELLO)
             {
-                if(ssl_31_ciphersuite[i].value == check_cipher)
+                printf(" Client Hello");
+                fprintf(fp, "   Handshake Protocol: Client Hello\n");
+                fprintf(fp, "       Handshake Type: Client Hello (1)\n");
+
+                fprintf(fp, "       Length: %d\n", length2);
+                uint16_t version2;
+                memcpy(&version2, tls_section + 4, 2);
+                fprintf(fp, "       Version: ");
+                version2 = ntohs(version2);
+                if (version2 == 0x0303)
+                    fprintf(fp, "TLS 1.2 ");
+                else if (version2 == 0x0304)
+                    fprintf(fp, "TLS 1.3 ");
+                else if (version2 == 0x0302)
+                    fprintf(fp, "TLS 1.1 ");
+                else if (version2 == 0x0301)
+                    fprintf(fp, "TLS 1.0 ");
+                else if (version2 == 0x0300)
+                    fprintf(fp, "SSLv3 ");
+                fprintf(fp, " (0x%04x)\n", version2);
+
+                tls_section += 6;
+                fprintf(fp, "       Random: ");
+                for (int i = 0; i < 32; i++)
+                    fprintf(fp, "%02x", tls_section[i] & 0xff);
+                fprintf(fp, "\n");
+
+                tls_section += 32;
+                unsigned char sID_length = tls_section[0];
+                fprintf(fp, "       Session ID Length: %d\n", sID_length);
+                tls_section++;
+
+                if (sID_length != 0)
                 {
-                    fprintf(fp, "           Cipher Suite: %s (0x%04x)\n", ssl_31_ciphersuite[i].name, check_cipher);
+                    fprintf(fp, "       Session ID: ");
+                    for (int i = 0; i < sID_length; i++)
+                        fprintf(fp, "%02x", tls_section[i] & 0xff);
+                    fprintf(fp, "\n");
+                }
+
+                tls_section += sID_length;
+
+                uint16_t cipher_suites_length;
+                memcpy(&cipher_suites_length, tls_section, 2);
+                cipher_suites_length = ntohs(cipher_suites_length);
+                fprintf(fp, "       Cipher Suites Length: %d\n", cipher_suites_length);
+                fprintf(fp, "       Cipher Suites (%d suites)\n", cipher_suites_length / 2);
+
+                tls_section += 2;
+                uint16_t check_cipher;
+                for (int i = 0; i < cipher_suites_length / 2; i++)
+                {
+                    memcpy(&check_cipher, tls_section, 2);
+                    check_cipher = ntohs(check_cipher);
+                    for (int j = 0; j < 416; j++)
+                    {
+                        if (ssl_31_ciphersuite[j].value == check_cipher)
+                        {
+                            fprintf(fp, "           Cipher Suite: %s (0x%04x)\n", ssl_31_ciphersuite[j].name, check_cipher);
+                            break;
+                        }
+                    }
+                    tls_section += 2;
+                }
+
+                unsigned char compression_m_length = tls_section[0];
+                fprintf(fp, "       Compression Methods Length: %d\n", compression_m_length);
+                tls_section++;
+                if (compression_m_length != 0)
+                {
+                    fprintf(fp, "       Compression Methods (%d method)\n", compression_m_length);
+                    unsigned char comp_check;
+                    for (int i = 0; i < compression_m_length; i++)
+                    {
+                        comp_check = tls_section[0];
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (comp_check == ssl_31_compression_method[j].value)
+                            {
+                                fprintf(fp, "           Compression Method: %s (%d)\n", ssl_31_compression_method[i].name, comp_check);
+                                break;
+                            }
+                        }
+                        tls_section++;
+                    }
+                }
+
+                uint16_t extensions_length;
+                memcpy(&extensions_length, tls_section, 2);
+                extensions_length = ntohs(extensions_length);
+                fprintf(fp, "       Extensions Length: %d\n", extensions_length);
+                tls_section += 2;
+                if (extensions_length != 0)
+                {
+                    tls_handshake_extension(extensions_length, section_length, tls_section, fp);
+                }
+            }
+            else if (handshake_type == SERVER_HELLO)
+            {
+                printf(" Sever Hello");
+                fprintf(fp, "   Handshake Protocol: Server Hello\n");
+                fprintf(fp, "       Handshake Type: Server Hello (2)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+                uint16_t version2;
+                memcpy(&version2, tls_section + 4, 2);
+                fprintf(fp, "       Version: ");
+                version2 = ntohs(version2);
+                if (version2 == 0x0303)
+                    fprintf(fp, "TLS 1.2 ");
+                else if (version2 == 0x0304)
+                    fprintf(fp, "TLS 1.3 ");
+                else if (version2 == 0x0302)
+                    fprintf(fp, "TLS 1.1 ");
+                else if (version2 == 0x0301)
+                    fprintf(fp, "TLS 1.0 ");
+                else if (version2 == 0x0300)
+                    fprintf(fp, "SSLv3 ");
+                fprintf(fp, " (0x%04x)\n", version2);
+
+                tls_section += 6;
+                fprintf(fp, "       Random: ");
+                for (int i = 0; i < 32; i++)
+                    fprintf(fp, "%02x", tls_section[i] & 0xff);
+                fprintf(fp, "\n");
+
+                tls_section += 32;
+                unsigned char sID_length = tls_section[0];
+                fprintf(fp, "       Session ID Length: %d\n", sID_length);
+                tls_section++;
+
+                if (sID_length != 0)
+                {
+                    fprintf(fp, "       Session ID: ");
+                    for (int i = 0; i < sID_length; i++)
+                        fprintf(fp, "%02x", tls_section[i] & 0xff);
+                    fprintf(fp, "\n");
+                }
+
+                tls_section += sID_length;
+                uint16_t check_cipher;
+
+                memcpy(&check_cipher, tls_section, 2);
+                check_cipher = ntohs(check_cipher);
+                for (int j = 0; j < 416; j++)
+                {
+                    if (ssl_31_ciphersuite[j].value == check_cipher)
+                    {
+                        fprintf(fp, "           Cipher Suite: %s (0x%04x)\n", ssl_31_ciphersuite[j].name, check_cipher);
+                        break;
+                    }
+                }
+                tls_section += 2;
+
+                unsigned char comp_check;
+
+                comp_check = tls_section[0];
+                for (int j = 0; j < 4; j++)
+                {
+                    if (comp_check == ssl_31_compression_method[j].value)
+                    {
+                        fprintf(fp, "           Compression Method: %s (%d)\n", ssl_31_compression_method[j].name, comp_check);
+                        break;
+                    }
+                }
+                tls_section++;
+
+                uint16_t extensions_length;
+                memcpy(&extensions_length, tls_section, 2);
+                extensions_length = ntohs(extensions_length);
+                fprintf(fp, "       Extensions Length: %d\n", extensions_length);
+                tls_section += 2;
+                if (extensions_length != 0)
+                {
+                    tls_handshake_extension(extensions_length, section_length, tls_section, fp);
+                }
+            }
+            else if (handshake_type == NEW_SESSION_TICKET) // not completed
+            {
+                printf(" New Session Ticket");
+
+                fprintf(fp, "   Handshake Protocol: New Session Ticket\n");
+                fprintf(fp, "       Handshake Type: New Session Ticket (4)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == END_OF_EARLY_DATA) // not completed
+            {
+                printf(" End of Ealry Data");
+                fprintf(fp, "   Handshake Protocol: End of Early Data\n");
+                fprintf(fp, "       Handshake Type: End of Early Data (5)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == ENCRYPTED_EXTENSIONS) // not completed
+            {
+                printf(" Encrypted Extensions");
+                fprintf(fp, "   Handshake Protocol: Encrypted Extensions\n");
+                fprintf(fp, "       Handshake Type: Encrypted Extensions (8)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == CERTIFICATE) // not completed
+            {
+                printf(" Certificate");
+                fprintf(fp, "   Handshake Protocol: Certificate\n");
+                fprintf(fp, "       Handshake Type: Certificate (11)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == SERVER_KEY_EXCHANGE)
+            {
+                printf(" Server Key Exchange");
+                fprintf(fp, "   Handshake Protocol: Server Key Exchange\n");
+                fprintf(fp, "       Handshake Type: Server Key Exchange (11)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == CERTIFICATE_REQUEST) // not comptleted
+            {
+                printf(" Certificate Request");
+                fprintf(fp, "   Handshake Protocol: Certificate Request\n");
+                fprintf(fp, "       Handshake Type: Certificate Request (13)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == SERVER_HELLO_DONE)
+            {
+                printf(" Server Hello Done");
+                fprintf(fp, "   Handshake Protocol: Server Hello Done\n");
+                fprintf(fp, "       Handshake Type: Server Hello Done (14)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == CERTIFICATE_VERIFY) // not comptleted
+            {
+                printf(" Certificate Verify");
+                fprintf(fp, "   Handshake Protocol: Certificate Verify\n");
+                fprintf(fp, "       Handshake Type: Certificate Verify (15)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else if (handshake_type == FINISHED)
+            {
+                printf(" Finished");
+                fprintf(fp, "   Handshake Protocol: Finished\n");
+                fprintf(fp, "       Handshake Type: Finished (20)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+            }
+            else
+            {
+                printf(" Encrypted");
+                fprintf(fp, "   Handshake Protocol: Encrypted Handshake Message\n");
+            }
+
+            tls_section += (length2 + 4);
+            offset += (length2 + 4);
+
+            if (offset >= length)
+                break;
+        }
+    }
+    else
+    {
+        printf(" Encrypted");
+        fprintf(fp, "   Handshake Protocol: Encrypted Handshake Message\n");
+    }
+}
+
+void tls_handshake_extension(uint16_t section_length, int total_length, unsigned char *section, FILE *fp)
+{
+    uint16_t offset = 0;
+    uint16_t type;
+    uint16_t length;
+
+    while (1)
+    {
+        memcpy(&type, section, 2);
+        section += 2;
+        memcpy(&length, section, 2);
+        section += 2;
+        type = ntohs(type);
+        length = ntohs(length);
+
+        int save = -1;
+
+        for (int i = 0; i < 68; i++)
+        {
+            if (type == tls_hello_extension_types[i].value)
+            {
+                fprintf(fp, "       Extensions: %s (len=%d)\n", tls_hello_extension_types[i].name, length);
+                save = i;
+                break;
+            }
+        }
+        if (save == -1)
+            fprintf(fp, "           Unknown type %d (len=%d)\n", type, length);
+
+        switch (type)
+        {
+        case SSL_HND_HELLO_EXT_SERVER_NAME:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Server Name Indication extension\n");
+            uint16_t list_length;
+            memcpy(&list_length, section, 2);
+            list_length = ntohs(list_length);
+            fprintf(fp, "               Server Name list length: %d\n", list_length);
+            unsigned char host_name = section[2];
+            for (int i = 0; i < 2; i++)
+            {
+                if (tls_hello_ext_server_name_type_vs[i].value == host_name)
+                {
+                    fprintf(fp, "               Server Name Type: %s (%d)\n", tls_hello_ext_server_name_type_vs[i].name, host_name);
                     break;
                 }
             }
-            tls_section += 2;
-        }
+            uint16_t name_length;
+            memcpy(&name_length, section + 3, 2);
+            name_length = ntohs(name_length);
+            fprintf(fp, "               Sever Name length: %d\n", name_length);
+            fprintf(fp, "               Server Name: ");
+            for (int i = 0; i < name_length; i++)
+                fprintf(fp, "%c", section[i + 5]);
 
-        unsigned char compression_m_length = tls_section[0];
-        fprintf(fp, "       Compression Methods Length: %d\n", compression_m_length);
-        tls_section++;
-        if(compression_m_length != 0)
+            fprintf(fp, "\n");
+            break;
+        }
+        case SSL_HND_HELLO_EXT_MAX_FRAGMENT_LENGTH:
         {
-            fpritnf(fp, "       Compression Methods (%d method)\n", compression_m_length);
-            for(int i = 0; i < compression_m_length; i++)
-            {
-                
-            }
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Maximum Fragment Length Negotiation\n");
+            int maxfrag = section[0];
+            if (maxfrag == 1)
+                fprintf(fp, "               Maximum Fragment Length: 2^9\n");
+            if (maxfrag == 2)
+                fprintf(fp, "               Maximum Fragment Length: 2^10\n");
+            if (maxfrag == 3)
+                fprintf(fp, "               Maximum Fragment Length: 2^11\n");
+            if (maxfrag == 4)
+                fprintf(fp, "               Maximum Fragment Length: 2^12\n");
+            break;
         }
-        
+        case SSL_HND_HELLO_EXT_EXTENDED_MASTER_SECRET:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            break;
+        }
+        case SSL_HND_HELLO_EXT_RENEGOTIATION_INFO:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Renegotiation Info extension\n");
+            unsigned char renego_length = section[0];
+            fprintf(fp, "                Renegotiation info extension length: %d\n", renego_length);
+            if (renego_length != 0)
+            {
+                fprintf(fp, "               Info: ");
+                for (int i = 0; i < renego_length; i++)
+                {
+                    fprintf(fp, "%c", section[i + 1]);
+                }
+                fprintf(fp, "\n");
+            }
+            break;
+        }
+        case SSL_HND_HELLO_EXT_SUPPORTED_GROUPS:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            uint16_t sup_grp_list_length;
+            memcpy(&sup_grp_list_length, section, 2);
+            sup_grp_list_length = ntohs(sup_grp_list_length);
+            fprintf(fp, "           Supported Groups List Length: %d\n", sup_grp_list_length);
+            fprintf(fp, "           Supported Groups (%d groups)\n", sup_grp_list_length / 2);
+            uint16_t sup_grp;
+            for (int i = 0; i < sup_grp_list_length / 2; i++)
+            {
 
-    }
-    else if(handshake_type == SERVER_HELLO)
-    {
-        printf(" Server Hello");
+                memcpy(&sup_grp, section + i * 2 + 2, 2);
+                sup_grp = ntohs(sup_grp);
 
-    }
-    else if(handshake_type == NEW_SESSION_TICKET)
-    {
+                for (int j = 0; j < 55; j++)
+                {
+                    if (sup_grp == ssl_extension_curves[j].value)
+                    {
+                        fprintf(fp, "               Supported Group: %s (0x%04x)\n", ssl_extension_curves[j].name, ssl_extension_curves[j].value);
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+        case SSL_HND_HELLO_EXT_EC_POINT_FORMATS:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            unsigned char ec_length = section[0];
+            fprintf(fp, "           EC point formats Length: %d\n", ec_length);
+            fprintf(fp, "           Elliptic curves point formats (%d)\n", ec_length);
 
-    }
-    else if(handshake_type == END_OF_EARLY_DATA)
-    {
+            unsigned char ec_format;
+            for (int i = 0; i < ec_length; i++)
+            {
+                ec_format = section[i + 1];
+                for (int j = 0; j < 4; j++)
+                {
+                    if (ec_format == ssl_extension_ec_point_formats[j].value)
+                    {
+                        fprintf(fp, "               EC point format: %s (%d)\n", ssl_extension_ec_point_formats[j].name, ssl_extension_ec_point_formats[j].value);
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+        case SSL_HND_HELLO_EXT_SESSION_TICKET_TLS:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Data (%d bytes)", length);
+            if (length != 0)
+            {
+                for (int i = 0; i < length; i++)
+                    fprintf(fp, "               Data: %02x", section[i] & 0xff);
+                fprintf(fp, "\n");
+            }
+            break;
+        }
+        case SSL_HND_HELLO_EXT_ALPN:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Data (%d bytes)\n", length);
+            uint16_t alpn_length;
+            memcpy(&alpn_length, section, 2);
+            alpn_length = ntohs(alpn_length);
+            unsigned char *tracer_alpn = section + 2;
+            fprintf(fp, "           ALPN Extension Length: %d\n", alpn_length);
+            if (alpn_length != 0)
+            {
+                int alpn_offset = 0;
+                uint8_t alpn_string_len;
+                fprintf(fp, "           ALPN Protocol\n");
+                while (1)
+                {
+                    alpn_string_len = tracer_alpn[0];
+                    alpn_offset++;
+                    tracer_alpn++;
+                    fprintf(fp, "               ALPN string length: %d\n", alpn_string_len);
+                    fprintf(fp, "               ALPN Next Protocol: ");
+                    for (int i = 0; i < alpn_string_len; i++)
+                        fprintf(fp, "%c", tracer_alpn[i]);
+                    fprintf(fp, "\n");
 
-    }
-    else if(handshake_type == ENCRYPTED_EXTENSIONS)
-    {
+                    alpn_offset += alpn_string_len;
+                    tracer_alpn += alpn_string_len;
+                    if (alpn_offset == alpn_length)
+                        break;
+                }
+            }
+            break;
+        }
+        case SSL_HND_HELLO_EXT_STATUS_REQUEST:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            unsigned char cer_status_type = section[0];
+            unsigned char *status_tracer = section;
+            status_tracer++;
 
-    }
-    else if(handshake_type == CERTIFICATE)
-    {
+            if (cer_status_type == SSL_HND_CERT_STATUS_TYPE_OCSP)
+                fprintf(fp, "           Certificate Status Type: OCSP (%d)\n", cer_status_type);
+            else
+                fprintf(fp, "           Certificate Status Type: ? (%d)\n", cer_status_type);
 
-    }
-    else if(handshake_type == CERTIFICATE_REQUEST)
-    {
+            uint16_t responder_list_length;
+            memcpy(&responder_list_length, status_tracer, 2);
+            status_tracer += 2;
+            responder_list_length = ntohs(responder_list_length);
+            fprintf(fp, "            Responder ID list Length: %d\n", responder_list_length);
+            if (responder_list_length != 0)
+            {
+                fprintf(fp, "               Responder Id: ");
+                for (int i = 0; i < responder_list_length; i++)
+                    fprintf(fp, "%c", status_tracer[i]);
+                fprintf(fp, "\n");
+            }
+            status_tracer += responder_list_length;
 
-    }
-    else if(handshake_type == CERTIFICATE_VERIFY)
-    {
+            uint16_t responder_exten_len;
+            memcpy(&responder_exten_len, status_tracer, 2);
+            status_tracer += 2;
+            responder_exten_len = ntohs(responder_exten_len);
+            fprintf(fp, "           Responder Extensions Length: %d\n", responder_exten_len);
 
-    }
-    else if(handshake_type == FINISHED)
-    {
+            break;
+        }
+        case SSL_HND_HELLO_EXT_SIGNATURE_ALGORITHMS:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
 
-    }
-    else if(handshake_type == FINISHED)
-    {
+            unsigned char *algor_tracer = section;
+            uint16_t hash_algor_length;
+            memcpy(&hash_algor_length, algor_tracer, 2);
+            hash_algor_length = ntohs(hash_algor_length);
+            algor_tracer += 2;
 
-    }
-    else if(handshake_type == MESSAGE_HASH)
-    {
+            fprintf(fp, "           Signature Hash Algorithm Length: %d\n", hash_algor_length);
+            fprintf(fp, "           Signature Hash Algorithms (%d algorithms)\n", hash_algor_length / 2);
 
+            uint16_t hash_algor;
+
+            for (int i = 0; i < hash_algor_length / 2; i++)
+            {
+                memcpy(&hash_algor, algor_tracer, 2);
+                hash_algor = ntohs(hash_algor);
+                for (int j = 0; j < 18; j++)
+                {
+                    if (hash_algor == tls13_signature_algorithm[j].value)
+                    {
+                        fprintf(fp, "               Signature Algorithm: %s (%d)\n", tls13_signature_algorithm[j].name, tls13_signature_algorithm[j].value);
+                        break;
+                    }
+                }
+                algor_tracer += 2;
+            }
+            break;
+        }
+        case SSL_HND_HELLO_EXT_RECORD_SIZE_LIMIT:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            uint16_t record_size_limit;
+            memcpy(&record_size_limit, section, 2);
+            record_size_limit = ntohs(record_size_limit);
+            fprintf(fp, "           Record Size Limit: %d\n", record_size_limit);
+
+            break;
+        }
+        case SSL_HND_HELLO_EXT_PADDING:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Padding Data: ");
+            for (int i = 0; i < length; i++)
+                fprintf(fp, "%02x", section[i] & 0xff);
+
+            fprintf(fp, "\n");
+            break;
+        }
+        case SSL_HND_HELLO_EXT_PSK_KEY_EXCHANGE_MODES:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            uint8_t psk_length = section[0];
+            fprintf(fp, "           PSK Key Exchange Modes Length: %d\n", psk_length);
+            uint8_t psk_key;
+            for (int i = 0; i < psk_length; i++)
+            {
+                psk_key = section[i + 1];
+                for (int j = 0; j < 2; j++)
+                {
+                    if (psk_key == tls_hello_ext_psk_ke_mode[j].value)
+                    {
+                        fprintf(fp, "           PSK Key Exchange Mode: %s (%d)\n", tls_hello_ext_psk_ke_mode[j].name, tls_hello_ext_psk_ke_mode[j].value);
+                        break;
+                    }
+                }
+            }
+            fprintf(fp, "           Padding Data: ");
+            break;
+        }
+        case SSL_HND_HELLO_EXT_SUPPORTED_VERSIONS:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            unsigned char *spt_ver_tracer = section;
+
+            uint16_t spt_ver;
+
+            if (length > 2)
+            {
+                uint8_t spt_ver_len = section[0];
+                fprintf(fp, "           Supported Versions length: %d\n", spt_ver_len);
+                spt_ver_tracer++;
+                for (int i = 0; i < spt_ver_len / 2; i++)
+                {
+                    memcpy(&spt_ver, spt_ver_tracer, 2);
+                    spt_ver = ntohs(spt_ver);
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (spt_ver == tls_hello_ext_supported_version[j].value)
+                        {
+                            fprintf(fp, "           Supported Version: %s (0x%04x)\n", tls_hello_ext_supported_version[j].name, spt_ver);
+                            break;
+                        }
+                    }
+                    spt_ver_tracer += 2;
+                }
+            }
+            else
+            {
+                memcpy(&spt_ver, spt_ver_tracer, 2);
+                spt_ver = ntohs(spt_ver);
+                for (int j = 0; j < 5; j++)
+                {
+                    if (spt_ver == tls_hello_ext_supported_version[j].value)
+                    {
+                        fprintf(fp, "           Supported Version: %s (0x%04x)\n", tls_hello_ext_supported_version[j].name, spt_ver);
+                        break;
+                    }
+                }
+            }
+
+            break;
+        }
+        case SSL_HND_HELLO_EXT_KEY_SHARE:
+        {
+            fprintf(fp, "           Type: %s (%d)\n", tls_hello_extension_types[save].name, type);
+            fprintf(fp, "           Length: %d\n", length);
+            break;
+        }
+
+        default:
+        {
+            fprintf(fp, "           Type: Unknown (%d)\n", type);
+            fprintf(fp, "           Length: %d\n", length);
+            fprintf(fp, "           Data: ");
+            for (int i = 0; i < length; i++)
+                fprintf(fp, "%02x", section[i] & 0xff);
+
+            fprintf(fp, "\n");
+        }
+        }
+
+        section += length;
+        offset += (length + 4);
+        if (offset == section_length)
+            break;
     }
 }
 
@@ -1111,20 +1662,20 @@ void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE
     fprintf(fp, "TLS Record Layer: Change Cipher Spec Protocol: Change Cipher Spec\n");
     fprintf(fp, "   Content Type: Change Cipher Spec (%d)\n", tls_section[0]);
     fprintf(fp, "   Version: ");
-    if(version == 0x0303)
+    if (version == 0x0303)
         fprintf(fp, "TLS 1.2 ");
-    else if(version == 0x0304)
+    else if (version == 0x0304)
         fprintf(fp, "TLS 1.3 ");
-    else if(version == 0x0302)
+    else if (version == 0x0302)
         fprintf(fp, "TLS 1.1 ");
-    else if(version == 0x0301)
+    else if (version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
-    else if(version == 0x0300)
+    else if (version == 0x0300)
         fprintf(fp, "SSLv3 ");
 
     fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
-    fprintf(fp, "Length: %d\n", length);
+    fprintf(fp, "   Length: %d\n", length);
     fprintf(fp, "   Change Cipher Spec Message\n");
 }
 
@@ -1141,25 +1692,25 @@ void tls_alert(int section_length, unsigned char *tls_section, FILE *fp)
     fprintf(fp, "   Content Type: Alert (%d)\n", content);
     fprintf(fp, "   Version: ");
     version = ntohs(version);
-    if(version == 0x0303)
+    if (version == 0x0303)
         fprintf(fp, "TLS 1.2 ");
-    else if(version == 0x0304)
+    else if (version == 0x0304)
         fprintf(fp, "TLS 1.3 ");
-    else if(version == 0x0302)
+    else if (version == 0x0302)
         fprintf(fp, "TLS 1.1 ");
-    else if(version == 0x0301)
+    else if (version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
-    else if(version == 0x0300)
+    else if (version == 0x0300)
         fprintf(fp, "SSLv3 ");
-    
+
     fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
-    fprintf(fp, "Length: %d\n", length);
+    fprintf(fp, "   Length: %d\n", length);
     fprintf(fp, "   Alert Message: Encrypted Alert\n");
 }
 
 void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
-{  
+{
     unsigned char content = tls_section[0];
     uint16_t version;
     memcpy(&version, tls_section + 1, 2);
@@ -1171,24 +1722,24 @@ void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
     fprintf(fp, "   Opaque Type: Application Data (%d)\n", content);
     fprintf(fp, "   Version: ");
     version = ntohs(version);
-    if(version == 0x0303)
+    if (version == 0x0303)
         fprintf(fp, "TLS 1.2 ");
-    else if(version == 0x0304)
+    else if (version == 0x0304)
         fprintf(fp, "TLS 1.3 ");
-    else if(version == 0x0302)
+    else if (version == 0x0302)
         fprintf(fp, "TLS 1.1 ");
-    else if(version == 0x0301)
+    else if (version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
-    else if(version == 0x0300)
+    else if (version == 0x0300)
         fprintf(fp, "SSLv3 ");
 
     fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
-    fprintf(fp, "Length: %d\n", length);
+    fprintf(fp, "   Length: %d\n", length);
 
     fprintf(fp, "   Encrypted Application Data: ");
     tls_section += 5;
-    for(int i = 0; i < section_length; i++)
+    for (int i = 0; i < section_length; i++)
         fprintf(fp, "%02x", tls_section[i] & 0xff);
     fprintf(fp, "\n");
 }
