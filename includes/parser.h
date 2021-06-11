@@ -894,6 +894,8 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Transport Layer Security(TLS) >\n");
+
+    printf("TLS detected:");
     if(https_case == SPLIT_1)
     {
         unsigned char content = tls_section[0];
@@ -904,12 +906,15 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
         switch(content)
         {
         case APPLICATION_DATA:
+            printf(" Application data");
             tls_record(length, tls_section, fp);
             break;
         case ALERT:
+            printf(" Alert");
             tls_alert(length, tls_section, fp);
             break;
         case CHANGE_CIPHER_SPEC:
+            printf(" Change Cipher Spec");
             tls_change_cipher_spec(length, tls_section, fp);
             break;
         case HANDSHAKE:
@@ -949,12 +954,149 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
 
     tls_section += HTTPS_HLEN;
     unsigned char handshake_type = tls_section[0];
-
     
 
+    if(handshake_type == CLIENT_HELLO)
+    {
+        printf(" Client Hello");
+        fprintf(fp, "TLS Record Layer: Handshake Protocol: Client Hello\n");
+        fprintf(fp, "   Content Type: Handshake (22)\n");
+        fprintf(fp, "   Version: ");
+        if(version == 0x0303)
+        fprintf(fp, "TLS 1.2 ");
+        else if(version == 0x0304)
+        fprintf(fp, "TLS 1.3 ");
+        else if(version == 0x0302)
+        fprintf(fp, "TLS 1.1 ");
+        else if(version == 0x0301)
+        fprintf(fp, "TLS 1.0 ");
+        else if(version == 0x0300)
+        fprintf(fp, "SSLv3 ");
+        fprintf(fp, " (0x%04x)\n", version);
+        fprintf(fp, "   Length: %d\n", length);
+        fprintf(fp, "   Handshake Protocol: Client Hello\n");
 
+        fprintf(fp, "       Handshake Type: Client Hello (1)\n");
+        
+        unsigned char length_tmp[3];
+        memcpy(length_tmp, tls_section + 1, 3);
+        int length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
+        fprintf(fp, "       Length: %d\n", length2);
+        uint16_t version2;
+        memcpy(&version2, tls_section + 4, 2);
+        fprintf(fp, "       Version: ");
+        version2 = ntohs(version2);
+        if(version2 == 0x0303)
+        fprintf(fp, "TLS 1.2 ");
+        else if(version2 == 0x0304)
+        fprintf(fp, "TLS 1.3 ");
+        else if(version2 == 0x0302)
+        fprintf(fp, "TLS 1.1 ");
+        else if(version2 == 0x0301)
+        fprintf(fp, "TLS 1.0 ");
+        else if(version2 == 0x0300)
+        fprintf(fp, "SSLv3 ");
+        fprintf(fp, " (0x%04x)\n", version2);
 
+        tls_section += 6;
+        fprintf(fp, "       Random: ");
+        for(int i = 0; i < 32; i++)
+            fprintf(fp, "%02x", tls_section[i] & 0xff);
+        fprintf(fp, "\n");
 
+        tls_section += 32;
+        unsigned char sID_length = tls_section[0];
+        fprintf(fp, "       Session ID Length: %d\n", sID_length);
+        tls_section++;
+
+        if(sID_length != 0)
+        {
+            fprintf(fp, "       Session ID: ");
+            for(int i = 0; i < sID_length; i++)
+                fprintf(fp, "%02x", tls_section[i] & 0xff);
+            fprintf(fp, "\n");
+        }
+        
+        tls_section += sID_length;
+
+        uint16_t cipher_suites_length;
+        memcpy(&cipher_suites_length, tls_section, 2);
+        cipher_suites_length = ntohs(cipher_suites_length);
+        fprintf(fp, "       Cipher Suites Length: %d\n", cipher_suites_length);
+        fprintf(fp, "       Cipher Suites (%d suites)\n", cipher_suites_length / 2);
+
+        tls_section += 2;
+        uint16_t check_cipher;
+        for(int i = 0; i < cipher_suites_length / 2; i++)
+        {
+            memcpy(&check_cipher, tls_section, 2);
+            check_cipher = ntohs(check_cipher);
+            for(int i = 0; i < 416; i++)
+            {
+                if(ssl_31_ciphersuite[i].value == check_cipher)
+                {
+                    fprintf(fp, "           Cipher Suite: %s (0x%04x)\n", ssl_31_ciphersuite[i].name, check_cipher);
+                    break;
+                }
+            }
+            tls_section += 2;
+        }
+
+        unsigned char compression_m_length = tls_section[0];
+        fprintf(fp, "       Compression Methods Length: %d\n", compression_m_length);
+        tls_section++;
+        if(compression_m_length != 0)
+        {
+            fpritnf(fp, "       Compression Methods (%d method)\n", compression_m_length);
+            for(int i = 0; i < compression_m_length; i++)
+            {
+                
+            }
+        }
+        
+
+    }
+    else if(handshake_type == SERVER_HELLO)
+    {
+        printf(" Server Hello");
+
+    }
+    else if(handshake_type == NEW_SESSION_TICKET)
+    {
+
+    }
+    else if(handshake_type == END_OF_EARLY_DATA)
+    {
+
+    }
+    else if(handshake_type == ENCRYPTED_EXTENSIONS)
+    {
+
+    }
+    else if(handshake_type == CERTIFICATE)
+    {
+
+    }
+    else if(handshake_type == CERTIFICATE_REQUEST)
+    {
+
+    }
+    else if(handshake_type == CERTIFICATE_VERIFY)
+    {
+
+    }
+    else if(handshake_type == FINISHED)
+    {
+
+    }
+    else if(handshake_type == FINISHED)
+    {
+
+    }
+    else if(handshake_type == MESSAGE_HASH)
+    {
+
+    }
 }
 
 void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE *fp)

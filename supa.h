@@ -265,12 +265,12 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
 
                             https_case = SPLIT_1;
                             https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, https_case);
-                            printf("Captured byte: %d\n", c_byte);
+                            printf(" Captured byte: %d\n", c_byte);
                         }
                         else if (size - HTTPS_HLEN < https_length)
                         {
                             https_case = SPLIT_2;
-                            printf("Captured byte: %d\n", c_byte);
+                            printf(" Captured byte: %d\n", c_byte);
                             int offset = 0;
                             unsigned char *tracer = tls_section;
 
@@ -315,12 +315,12 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                 if (size3 + HTTPS_HLEN == https_length)
                                 {
                                     https_case = SPLIT_3;
-                                    printf("Captured byte: %d\n", c_byte);
+                                    printf(" Captured byte: %d\n", c_byte);
                                 }
                                 else if (size3 + HTTPS_HLEN < https_length)
                                 {
                                     https_case = SPLIT_4;
-                                    printf("Captured byte: %d\n", c_byte);
+                                    printf(" Captured byte: %d\n", c_byte);
                                 }
                             }
                             else
@@ -356,10 +356,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                             if (end_tcp_stream >= stream_size)
                             {
                                 https_case = SPLIT_5;
-                                printf("Captured byte: %d\n", c_byte);
-                                fprintf(fp, "start!");
-                                dump_mem(tcp_reassem, stream_size, fp);
-                                fprintf(fp, "\n");
+                                printf(" Captured byte: %d\n", c_byte);
 
                                 split_flag = 0;
                                 end_tcp_stream = 0;
@@ -369,7 +366,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                 {
                                     tls_section += tmp_offset;
                                     uint16_t size4;
-                                    char *tracer2 = tls_section;
+                                    unsigned char *tracer2 = tls_section;
                                     unsigned char check2[2];
                                     memcpy(check2, tls_section + 1, 2);
                                     if (((check2[0] == 0x03) && (check2[1] == 0x03)) || ((check2[0] == 0x03) && (check2[1] == 0x01)) || ((check2[0] == 0x03) && (check2[1] == 0x02)) || ((check[0] == 0x03) && (check2[1] == 0x04)))
@@ -390,7 +387,7 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
                                             else
                                             {
                                                 tmp_offset += size4 + HTTPS_HLEN;
-                                                tracer2 += size4 + HTTPS_HLEN;
+                                                tracer2 += tmp_offset;
                                                 if (tmp_offset >= https_length)
                                                     break;
                                             }

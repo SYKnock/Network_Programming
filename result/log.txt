@@ -1,0 +1,61 @@
+===============================================
+< Ethernet >
+Destination: 00:50:56:fd:59:1d(Broadcast)
+Source: 00:0c:29:1b:08:d3
+Type: IPv4 (0x0800)
+-----------------------------------------------
+< Internet Protocl Version 4 protocol(IPv4) >
+Version: 4
+Header Length: 20 bytes (5)
+Type Of Servie: 0x00
+Total Length: 285
+Identification: 0xf338 (62264)
+Flags: 0x4000, Do not fragment
+Fragment Offset: 0
+Time to Live: 64
+Protocol: TCP (6)
+Header Checksum: 0xce07
+Source: 192.168.118.128
+Destination: 54.149.10.221
+-----------------------------------------------
+< Transmission Control Protocol(TCP) >
+Source Port: 49062
+Destination Port: 443
+Sequence Number: 2913315622
+Acknowledgment Number: 532288366
+TCP Header Length: 20 bytes (5)
+Reserved: 000
+Flags: XXXXAPXXX
+Window size value: 64240
+Checksum: 0x3ee9
+Urgent Pointer: 0
+-----------------------------------------------
+< Transport Layer Security(TLS) >
+TLS Record Layer: Handshake Protocol: Client Hello
+   Content Type: Handshake (22)
+   Version: TLS 1.0  (0x0301)
+   Length: 240
+   Handshake Protocol: Client Hello
+       Handshake Type: Client Hello (1)
+       Length: 236
+       Version: TLS 1.2  (0x0303)
+       Random: 441430df5115f227dbe2f87b6558f868096c754fda2cec81a58509a33504827a
+       Session ID Length: 32
+       Session ID: 9abd2d8acc7562102201a3c9b80ebb07e324d0bd95b209820ea52bfcb916a953
+       Cipher Suites Length: 30
+       Cipher Suites (15 suites)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca9)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (0xcca8)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (0xc02c)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (0xc030)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+           Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+           Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+           Cipher Suite: TLS_RSA_WITH_AES_128_GCM_SHA256 (0x009c)
+           Cipher Suite: TLS_RSA_WITH_AES_256_GCM_SHA384 (0x009d)
+           Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+           Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+           Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
