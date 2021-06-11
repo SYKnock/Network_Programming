@@ -31,7 +31,7 @@
 #define HTTP_VIDEO 13
 #define HTTP_APP 14
 
-char tcp_reassem[100000];
+char tcp_reassem[1000000];
 int end_tcp_stream = 0;
 int split_flag = 0;
 int stream_size = 0;
@@ -977,6 +977,8 @@ void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE
         fprintf(fp, "TLS 1.1 ");
     else if(version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
+    else if(version == 0x0300)
+        fprintf(fp, "SSLv3 ");
 
     fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
@@ -1005,6 +1007,8 @@ void tls_alert(int section_length, unsigned char *tls_section, FILE *fp)
         fprintf(fp, "TLS 1.1 ");
     else if(version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
+    else if(version == 0x0300)
+        fprintf(fp, "SSLv3 ");
     
     fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");
@@ -1033,6 +1037,8 @@ void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
         fprintf(fp, "TLS 1.1 ");
     else if(version == 0x0301)
         fprintf(fp, "TLS 1.0 ");
+    else if(version == 0x0300)
+        fprintf(fp, "SSLv3 ");
 
     fprintf(fp, "(0x%04x)", version);
     fprintf(fp, "\n");

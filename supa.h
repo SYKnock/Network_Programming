@@ -1,6 +1,7 @@
 #include "./includes/parser.h"
 
 int mode = 0;
+int tmptmp_cnt = 0;
 #define MODE_ARP 1
 #define MODE_DNS 2
 #define MODE_HTTP 3
@@ -147,19 +148,22 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
             {
             }
             else
-            {
-                // dns identifier 체크 필요
-                fprintf(fp, "#DNS#\n");
+            { // check qdc count should be 0x0001
                 dns_head *dns = (dns_head *)malloc(sizeof(dns_head));
                 memcpy(dns, buff + ETH_HLEN + ip_head_length + tcp_head_length, DNS_HLEN);
-                int dns_message_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
-                int offset = ETH_HLEN + ip_head_length + tcp_head_length;
-                ether_parser(buff, eth, fp);
-                ipv4_parser(buff, ip, fp, c_byte);
-                tcp_parser(buff, tcp, fp);
-                dns_parser(buff, dns, fp, dns_message_length, offset);
-                dump_mem(buff, c_byte, fp);
-                printf("Captured byte: %d\n", c_byte);
+                int qdc = ntohs(dns->dns_qdc);
+                if (qdc)
+                {
+                    fprintf(fp, "#DNS#\n");
+                    int dns_message_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
+                    int offset = ETH_HLEN + ip_head_length + tcp_head_length;
+                    ether_parser(buff, eth, fp);
+                    ipv4_parser(buff, ip, fp, c_byte);
+                    tcp_parser(buff, tcp, fp);
+                    dns_parser(buff, dns, fp, dns_message_length, offset);
+                    dump_mem(buff, c_byte, fp);
+                    printf("Captured byte: %d\n", c_byte);
+                }
                 free(dns);
             }
         }
@@ -207,151 +211,189 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
     if ((ntohs(tcp->tcp_src) == 443) || (ntohs(tcp->tcp_dst) == 443)) // HTTPS
     {
         // we should merge the splitted packet
-        int https_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
-        int https_case = 0;
-        if (https_length != 0)
+        if (mode == MODE_HTTPS || mode == MODE_ALL)
         {
-            if (mode == MODE_HTTPS || mode == MODE_ALL)
+
+            int https_length = c_byte - ETH_HLEN - ip_head_length - tcp_head_length;
+            int https_case = 0;
+            int go_flag = 0;
+
+            if (https_length > 0)
             {
                 unsigned char *tls_section = buff + ETH_HLEN + ip_head_length + tcp_head_length;
+                unsigned char c[2];
+                memcpy(c, tls_section + 1, 2);
+                unsigned char tmp3 = tls_section[0];
 
-                if (split_flag == 0)
+                if (((c[0] == 0x03) && (c[1] == 0x03)) || ((c[0] == 0x03) && (c[1] == 0x01)) || ((c[0] == 0x03) && (c[1] == 0x02)) || ((c[0] == 0x03) && (c[1] == 0x04)) || ((c[0] == 0x03) && (c[1] == 0x00)))
                 {
-                    uint16_t size;
-                    memcpy(&size, tls_section + 3, 2);
-                    size = ntohs(size);
-
-                    if (size + HTTPS_HLEN > https_length)
-                    {
-                        stream_size = size + HTTPS_HLEN;
-                        split_flag = 1;
-
-                        memcpy(tcp_reassem, tls_section, https_length);
-                        end_tcp_stream += https_length;
-                    }
-                    else if (size + HTTPS_HLEN == https_length)
-                    {
-                        ether_parser(buff, eth, fp);
-                        ipv4_parser(buff, ip, fp, c_byte);
-                        tcp_parser(buff, tcp, fp);
-                        
-                        https_case = SPLIT_1;
-                        https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, https_case);
-                        printf("Captured byte: %d\n", c_byte);
-                    }
-                    else if (size - HTTPS_HLEN < https_length)
-                    {
-                        https_case = SPLIT_2;
-                        printf("Captured byte: %d\n", c_byte);
-                        int offset = size + HTTPS_HLEN;
-                        unsigned char *tracer = tls_section + size + HTTPS_HLEN;
-
-                        while (1)
-                        {
-                            uint16_t size2;
-                            memcpy(&size2, tracer + 3, 2);
-                            size2 = ntohs(size2);
-                            if (size2 + HTTPS_HLEN > https_length - offset)
-                            {
-                                stream_size = size2 + HTTPS_HLEN;
-                                split_flag = 1;
-
-                                memcpy(tcp_reassem, tracer, https_length - offset);
-                                end_tcp_stream += https_length - offset;
-                                break;
-                            }
-                            else
-                            {
-                                offset += size2 + HTTPS_HLEN;
-                                tracer += size2 + HTTPS_HLEN;
-                                if (offset >= https_length)
-                                    break;
-                            }
-                        }
-                    }
-                }
-                else if (split_flag == 1)
-                {
-                    unsigned char check[2];
-                    memcpy(check, tls_section + 1, 2);
-
-                    if (((check[0] == 0x03) && (check[1] == 0x03)) || ((check[0] == 0x03) && (check[1] == 0x01)) || ((check[0] == 0x03) && (check[1] == 0x02)) || ((check[0] == 0x03) && (check[1] == 0x04)))
-                    {
-                        uint16_t size3;
-                        memcpy(&size3, tls_section + 3, 2);
-                        size3 = ntohs(size3);
-                        if (size3 + HTTPS_HLEN == https_length)
-                        {
-                            https_case = SPLIT_3;
-                            printf("Captured byte: %d\n", c_byte);
-                        }
-                        else if (size3 + HTTPS_HLEN < https_length)
-                        {
-                            https_case = SPLIT_4;
-                            printf("Captured byte: %d\n", c_byte);
-                        }
-                    }
+                    if ((tmp3 == 20) || (tmp3 == 21) || (tmp3 == 22) || (tmp3 == 23) || (tmp3 == 24) || (tmp3 == 26))
+                        go_flag = 1;
                     else
                     {
-                        int flag1 = 0;
-                        int tmp_offset = 0;
-                        if (end_tcp_stream < stream_size)
+                        if (split_flag == 1)
+                            go_flag = 1;
+                    }
+                }
+                else
+                {
+                    if (split_flag == 1)
+                        go_flag = 1;
+                }
+
+                if (go_flag)
+                {
+                    if (split_flag == 0)
+                    {
+                        uint16_t size;
+                        memcpy(&size, tls_section + 3, 2);
+                        size = ntohs(size);
+
+                        if (size + HTTPS_HLEN > https_length)
                         {
-                            if (https_length > stream_size - end_tcp_stream)
+                            stream_size = size + HTTPS_HLEN;
+                            split_flag = 1;
+
+                            memcpy(tcp_reassem, tls_section, https_length);
+                            end_tcp_stream += https_length;
+                        }
+                        else if (size + HTTPS_HLEN == https_length)
+                        {
+                            ether_parser(buff, eth, fp);
+                            ipv4_parser(buff, ip, fp, c_byte);
+                            tcp_parser(buff, tcp, fp);
+
+                            https_case = SPLIT_1;
+                            https_parser(ip_head_length, tcp_head_length, https_length, tls_section, fp, https_case);
+                            printf("Captured byte: %d\n", c_byte);
+                        }
+                        else if (size - HTTPS_HLEN < https_length)
+                        {
+                            https_case = SPLIT_2;
+                            printf("Captured byte: %d\n", c_byte);
+                            int offset = 0;
+                            unsigned char *tracer = tls_section;
+
+                            while (1)
                             {
-                                memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
-                                end_tcp_stream = stream_size;
-                                flag1 = 1;
-                                tmp_offset = stream_size - end_tcp_stream;
-                            }
-                            else if (https_length < stream_size - end_tcp_stream)
-                            {
-                                memcpy(tcp_reassem + end_tcp_stream, tls_section, https_length);
-                                end_tcp_stream += https_length;
-                            }
-                            else if (https_length == stream_size - end_tcp_stream)
-                            {
-                                memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
-                                end_tcp_stream = stream_size;
+                                uint16_t size2;
+                                memcpy(&size2, tracer + 3, 2);
+                                size2 = ntohs(size2);
+                                if (size2 + HTTPS_HLEN > https_length - offset)
+                                {
+                                    stream_size = size2 + HTTPS_HLEN;
+                                    split_flag = 1;
+
+                                    memcpy(tcp_reassem, tracer, https_length - offset);
+                                    end_tcp_stream += https_length - offset;
+                                    break;
+                                }
+                                else
+                                {
+                                    offset += size2 + HTTPS_HLEN;
+                                    tracer += size2 + HTTPS_HLEN;
+                                    if (offset >= https_length)
+                                        break;
+                                }
                             }
                         }
-                        if (end_tcp_stream >= stream_size)
+                    }
+                    else if (split_flag == 1)
+                    {
+                        unsigned char check[2];
+                        memcpy(check, tls_section + 1, 2);
+                        int go_flag3 = 0;
+
+                        if (((check[0] == 0x03) && (check[1] == 0x03)) || ((check[0] == 0x03) && (check[1] == 0x01)) || ((check[0] == 0x03) && (check[1] == 0x02)) || ((check[0] == 0x03) && (check[1] == 0x04)))
                         {
-                            https_case = SPLIT_5;
-                            printf("Captured byte: %d\n", c_byte);
-
-                            split_flag = 0;
-                            end_tcp_stream = 0;
-                            stream_size = 0;
-
-                            if (flag1)
+                            unsigned char tmp2 = tls_section[0];
+                            if((tmp2 == 20) || (tmp2 == 21) || (tmp2 == 22) || (tmp2 == 23) || (tmp2 == 24) || (tmp2 == 26))
                             {
-                                tls_section += tmp_offset;
-                                uint16_t size4;
-                                char *tracer2 = tls_section;
-                                unsigned char check2[2];
-                                memcpy(check2, tls_section + 1, 2);
-                                if (((check2[0] == 0x03) && (check2[1] == 0x03)) || ((check2[0] == 0x03) && (check2[1] == 0x01)) || ((check2[0] == 0x03) && (check2[1] == 0x02)) || ((check[0] == 0x03) && (check2[1] == 0x04)))
+                                uint16_t size3;
+                                memcpy(&size3, tls_section + 3, 2);
+                                size3 = ntohs(size3);
+                                if (size3 + HTTPS_HLEN == https_length)
                                 {
-                                    while (1)
-                                    {
-                                        memcpy(&size4, tracer2 + 3, 2);
-                                        size4 = ntohs(size4);
-                                        if (size4 + HTTPS_HLEN > https_length - tmp_offset)
-                                        {
-                                            stream_size = size4 + HTTPS_HLEN;
-                                            split_flag = 1;
+                                    https_case = SPLIT_3;
+                                    printf("Captured byte: %d\n", c_byte);
+                                }
+                                else if (size3 + HTTPS_HLEN < https_length)
+                                {
+                                    https_case = SPLIT_4;
+                                    printf("Captured byte: %d\n", c_byte);
+                                }
+                            }
+                            else
+                                 go_flag3 = 1;
+                        }
+                        else
+                            go_flag3 = 1;
+                        
+                        if(go_flag3)
+                        {
+                            int flag1 = 0;
+                            int tmp_offset = 0;
+                            if (end_tcp_stream < stream_size)
+                            {
+                                if (https_length > stream_size - end_tcp_stream)
+                                {
+                                    memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
+                                    tmp_offset = stream_size - end_tcp_stream;
+                                    end_tcp_stream = stream_size;
+                                    flag1 = 1;
+                                }
+                                else if (https_length < stream_size - end_tcp_stream)
+                                {
+                                    memcpy(tcp_reassem + end_tcp_stream, tls_section, https_length);
+                                    end_tcp_stream += https_length;
+                                }
+                                else if (https_length == stream_size - end_tcp_stream)
+                                {
+                                    memcpy(tcp_reassem + end_tcp_stream, tls_section, stream_size - end_tcp_stream);
+                                    end_tcp_stream = stream_size;
+                                }
+                            }
+                            if (end_tcp_stream >= stream_size)
+                            {
+                                https_case = SPLIT_5;
+                                printf("Captured byte: %d\n", c_byte);
+                                fprintf(fp, "start!");
+                                dump_mem(tcp_reassem, stream_size, fp);
+                                fprintf(fp, "\n");
 
-                                            memcpy(tcp_reassem, tracer2, https_length - tmp_offset);
-                                            end_tcp_stream += https_length - tmp_offset;
-                                            break;
-                                        }
-                                        else
+                                split_flag = 0;
+                                end_tcp_stream = 0;
+                                stream_size = 0;
+
+                                if (flag1)
+                                {
+                                    tls_section += tmp_offset;
+                                    uint16_t size4;
+                                    char *tracer2 = tls_section;
+                                    unsigned char check2[2];
+                                    memcpy(check2, tls_section + 1, 2);
+                                    if (((check2[0] == 0x03) && (check2[1] == 0x03)) || ((check2[0] == 0x03) && (check2[1] == 0x01)) || ((check2[0] == 0x03) && (check2[1] == 0x02)) || ((check[0] == 0x03) && (check2[1] == 0x04)))
+                                    {
+                                        while (1)
                                         {
-                                            tmp_offset += size4 + HTTPS_HLEN;
-                                            tracer2 += size4 + HTTPS_HLEN;
-                                            if (tmp_offset >= https_length)
+                                            memcpy(&size4, tracer2 + 3, 2);
+                                            size4 = ntohs(size4);
+                                            if (size4 + HTTPS_HLEN > https_length - tmp_offset)
+                                            {
+                                                stream_size = size4 + HTTPS_HLEN;
+                                                split_flag = 1;
+
+                                                memcpy(tcp_reassem, tracer2, https_length - tmp_offset);
+                                                end_tcp_stream += https_length - tmp_offset;
                                                 break;
+                                            }
+                                            else
+                                            {
+                                                tmp_offset += size4 + HTTPS_HLEN;
+                                                tracer2 += size4 + HTTPS_HLEN;
+                                                if (tmp_offset >= https_length)
+                                                    break;
+                                            }
                                         }
                                     }
                                 }
@@ -363,7 +405,6 @@ void tcp_protocol(char *buff, tcp_head *tcp, FILE *fp, ether_head *eth, ip_head 
         }
     }
 }
-
 void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head *ip, int c_byte)
 {
     int ip_head_length = ip->ip_hdr_len * 4;
@@ -381,18 +422,22 @@ void udp_protocol(char *buff, udp_head *udp, FILE *fp, ether_head *eth, ip_head 
             {
             }
             else
-            {
-                fprintf(fp, "#DNS#\n");
+            { // check qdc count should be 0x0001
                 dns_head *dns = (dns_head *)malloc(sizeof(dns_head));
                 memcpy(dns, buff + ETH_HLEN + ip_head_length + UDP_HLEN, DNS_HLEN);
-                int dns_message_length = c_byte - ETH_HLEN - ip_head_length - UDP_HLEN;
-                int offset = ETH_HLEN + ip_head_length + UDP_HLEN;
-                ether_parser(buff, eth, fp);
-                ipv4_parser(buff, ip, fp, c_byte);
-                udp_parser(buff, udp, fp);
-                dns_parser(buff, dns, fp, dns_message_length, offset);
-                dump_mem(buff, c_byte, fp);
-                printf("Captured byte: %d\n", c_byte);
+                int qdc = ntohs(dns->dns_qdc);
+                if (qdc)
+                {
+                    fprintf(fp, "#DNS#\n");
+                    int dns_message_length = c_byte - ETH_HLEN - ip_head_length - UDP_HLEN;
+                    int offset = ETH_HLEN + ip_head_length + UDP_HLEN;
+                    ether_parser(buff, eth, fp);
+                    ipv4_parser(buff, ip, fp, c_byte);
+                    udp_parser(buff, udp, fp);
+                    dns_parser(buff, dns, fp, dns_message_length, offset);
+                    dump_mem(buff, c_byte, fp);
+                    printf("Captured byte: %d\n", c_byte);
+                }
                 free(dns);
             }
         }
