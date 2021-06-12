@@ -31,7 +31,8 @@
 #define HTTP_VIDEO 13
 #define HTTP_APP 14
 
-char tcp_reassem[1000000];
+// for packet reassemble
+char tcp_reassem[1000000]; 
 int end_tcp_stream = 0;
 int split_flag = 0;
 int stream_size = 0;
