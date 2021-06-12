@@ -866,8 +866,19 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
     {
         if (buff != NULL)
         {
-            if ((c_flag == 1) || (http_body > 0))
+            const unsigned char *r_check = strchr(content_type, '-');
+            r_check++;
+
+            if (strncmp(r_check, "response", 7) == 0)
             {
+                fprintf(fp, "   OSCP Response\n");
+                if ((c_flag == 1) || (http_body > 0))
+                {
+                    fprintf(fp, "       Data dump: ");
+                    for(int i = 0; i < size; i++)
+                        fprintf(fp, "%02x", buff[i] & 0xff);
+                    fprintf(fp, "\n");
+                }
             }
         }
     }
@@ -996,17 +1007,17 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
     int length2;
     unsigned char handshake_type;
 
-    memcpy(length_tmp, tls_section + 1, 3);
-    length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
 
     int offset = 0;
-    if (length2 + 4 <= length - offset)
+
+    while (1)
     {
-        while (1)
+        memcpy(length_tmp, tls_section + 1, 3);
+        length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
+
+        if (length2 + 4 <= length - offset)
         {
             handshake_type = tls_section[0];
-            memcpy(length_tmp, tls_section + 1, 3);
-            length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
 
             if (handshake_type == CLIENT_HELLO)
             {
@@ -1208,26 +1219,166 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 fprintf(fp, "       Handshake Type: Encrypted Extensions (8)\n");
                 fprintf(fp, "       Length: %d\n", length2);
             }
-            else if (handshake_type == CERTIFICATE) // not completed
+            else if (handshake_type == CERTIFICATE) 
             {
                 printf(" Certificate");
                 fprintf(fp, "   Handshake Protocol: Certificate\n");
                 fprintf(fp, "       Handshake Type: Certificate (11)\n");
                 fprintf(fp, "       Length: %d\n", length2);
+                unsigned char *cer_tracer = tls_section + 4;
+
+                unsigned char cer_len[3];
+                memcpy(cer_len, cer_tracer, 3);
+                int certi_len = cer_len[0] * (16 * 16 * 16 * 16) + cer_len[1] * (16 * 16) + cer_len[2];
+                fprintf(fp, "       Certificate Length: %d\n", certi_len);
+                cer_tracer += 3;
+                fprintf(fp, "       Certificates (%d bytes)\n", certi_len);
+
+                int cer_offset = 0;
+
+                while (1)
+                {
+                    memcpy(cer_len, cer_tracer, 3);
+                    cer_tracer += 3;
+                    int certi_len2 = cer_len[0] * (16 * 16 * 16 * 16) + cer_len[1] * (16 * 16) + cer_len[2];
+                    fprintf(fp, "           Certificate Length: %d\n", certi_len2);
+                    fprintf(fp, "           Certificate: ");
+                    for (int i = 0; i < certi_len2; i++)
+                        fprintf(fp, "%02x", cer_tracer[i] & 0xff);
+                    fprintf(fp, "\n");
+
+                    cer_tracer += certi_len2;
+                    cer_offset += (certi_len2 + 3);
+
+                    if (cer_offset >= certi_len)
+                        break;
+                }
             }
-            else if (handshake_type == SERVER_KEY_EXCHANGE) 
+            else if (handshake_type == CLIENT_KEY_EXHANGE)
+            {
+                printf(" Client Key Exchange");
+                fprintf(fp, "   Handshake Protocol: Client Key Exchange\n");
+                fprintf(fp, "       Handshake Type: Client Key Exchange (13)\n");
+                fprintf(fp, "       Length: %d\n", length2);
+                unsigned char *client_key_tracer = tls_section + 4;
+                fprintf(fp, "       EC Diffie-Hellman Client Params\n");
+                uint8_t pubkey_length = client_key_tracer[0];
+                client_key_tracer++;
+                fprintf(fp, "           Pubkey Length: %d\n", pubkey_length);
+                fprintf(fp, "           Pubkey: ");
+                for(int i = 0; i < pubkey_length; i++)
+                    fprintf(fp, "%02x", client_key_tracer[i] & 0xff);
+                fprintf(fp, "\n");
+            }
+            else if (handshake_type == SERVER_KEY_EXCHANGE)
             {
                 printf(" Server Key Exchange");
                 fprintf(fp, "   Handshake Protocol: Server Key Exchange\n");
                 fprintf(fp, "       Handshake Type: Server Key Exchange (11)\n");
                 fprintf(fp, "       Length: %d\n", length2);
+                fprintf(fp, "       EC Diffie-Hellman Server Params\n");
+                unsigned char *server_key_tracer = tls_section + 4;
+                uint8_t curve_type = server_key_tracer[0];
+                server_key_tracer++;
+                for (int i = 0; i < 4; i++)
+                {
+                    if (curve_type == ssl_curve_types[i].value)
+                    {
+                        fprintf(fp, "           Curve Type: %s (0x%02x)\n", ssl_curve_types[i].name, ssl_curve_types[i].value & 0xff);
+                        break;
+                    }
+                }
+                uint16_t named_curve;
+                memcpy(&named_curve, server_key_tracer, 2);
+                named_curve = ntohs(named_curve);
+                server_key_tracer += 2;
+                for (int i = 0; i < 55; i++)
+                {
+                    if (named_curve == ssl_extension_curves[i].value)
+                    {
+                        fprintf(fp, "           Named Curve: %s (0x%04x)\n", ssl_extension_curves[i].name, named_curve);
+                        break;
+                    }
+                }
+                uint8_t pubkey_len = server_key_tracer[0];
+                server_key_tracer++;
+                fprintf(fp, "           Pubkey Length: %d\n", pubkey_len);
+                fprintf(fp, "           Pubkey: ");
+                for (int i = 0; i < pubkey_len; i++)
+                    fprintf(fp, "%02x", server_key_tracer[i] & 0xff);
+
+                fprintf(fp, "\n");
+                server_key_tracer += pubkey_len;
+
+                uint16_t sig_algor;
+                memcpy(&sig_algor, server_key_tracer, 2);
+                sig_algor = ntohs(sig_algor);
+
+                for (int i = 0; i < 18; i++)
+                {
+                    if (sig_algor == tls13_signature_algorithm[i].value)
+                    {
+                        fprintf(fp, "           Signature Algorithm: %s (0x%04x)\n", tls13_signature_algorithm[i].name, sig_algor);
+                        break;
+                    }
+                }
+                server_key_tracer += 2;
+
+                uint16_t sig_algor_len;
+                memcpy(&sig_algor_len, server_key_tracer, 2);
+                sig_algor_len = ntohs(sig_algor_len);
+                fprintf(fp, "           Signature Length: %d\n", sig_algor_len);
+                server_key_tracer += 2;
+
+                fprintf(fp, "           Signature: ");
+                for (int i = 0; i < sig_algor_len; i++)
+                    fprintf(fp, "%02x", server_key_tracer[i] & 0xff);
+                fprintf(fp, "\n");
             }
-            else if (handshake_type == CERTIFICATE_REQUEST) // not comptleted
+            else if (handshake_type == CERTIFICATE_REQUEST)
             {
                 printf(" Certificate Request");
                 fprintf(fp, "   Handshake Protocol: Certificate Request\n");
                 fprintf(fp, "       Handshake Type: Certificate Request (13)\n");
                 fprintf(fp, "       Length: %d\n", length2);
+                unsigned char *certi_request_tracer = tls_section + 4;
+                
+                unsigned char certi_request_type = certi_request_tracer[0];
+                if(certi_request_type == 1)
+                    fprintf(fp, "           Certificate Types: rsa_sign(1)\n");
+                else if(certi_request_type == 2)
+                    fprintf(fp, "           Certificate Types: dss_sign(2)\n");
+                else if(certi_request_type == 3)
+                    fprintf(fp, "           Certificate Types: rsa_fixed_dh(3)\n");
+                else if(certi_request_type == 4)
+                    fprintf(fp, "           Certificate Types: dss_fixed_dh(4)\n");
+                else if(certi_request_type == 5)
+                    fprintf(fp, "           Certificate Types: rsa_ephemeral_dh_RESERVED(5)\n");
+                else if(certi_request_type == 6)
+                    fprintf(fp, "           Certificate Types: dss_ephermeral_dh_RESERVED(6)\n");
+                else if(certi_request_type == 20)
+                    fprintf(fp, "           Certificate Types: fortezza_dms_RESERVED(20)\n");
+                certi_request_tracer++;
+                uint16_t certi_sig_hash;
+                memcpy(&certi_sig_hash, certi_request_tracer, 2);
+                certi_request_tracer += 2;
+                certi_sig_hash = ntohs(certi_sig_hash);
+                
+                for(int i = 0; i < 18; i++)
+                {
+                    if(certi_sig_hash == tls13_signature_algorithm[i].value)
+                    {
+                        fprintf(fp, "Supported Signature Algorithms: %s (0x%04x)\n", tls13_signature_algorithm[i].name, tls13_signature_algorithm[i].value);
+                        break;
+                    }
+                }
+                uint16_t certi_author;
+                memcpy(&certi_author, certi_request_tracer, 2);
+                certi_request_tracer += 2;
+                certi_author = ntohs(certi_author);
+                fprintf(fp, "Certificate Authorities: 0x%04x\n", certi_author);
+
+                
             }
             else if (handshake_type == SERVER_HELLO_DONE)
             {
@@ -1236,12 +1387,17 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 fprintf(fp, "       Handshake Type: Server Hello Done (14)\n");
                 fprintf(fp, "       Length: %d\n", length2);
             }
-            else if (handshake_type == CERTIFICATE_VERIFY) // not comptleted
+            else if (handshake_type == CERTIFICATE_VERIFY) 
             {
                 printf(" Certificate Verify");
                 fprintf(fp, "   Handshake Protocol: Certificate Verify\n");
                 fprintf(fp, "       Handshake Type: Certificate Verify (15)\n");
                 fprintf(fp, "       Length: %d\n", length2);
+                unsigned char *certi_veri_tracer = tls_section + 4;
+                fprintf(fp, "           Handshake Messages: ");
+                for(int i = 0; i < length2; i++)
+                    fprintf(fp, "%c", certi_veri_tracer[i]);
+                fpritnf(fp, "\n");
             }
             else if (handshake_type == FINISHED)
             {
@@ -1262,11 +1418,12 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
             if (offset >= length)
                 break;
         }
-    }
-    else
-    {
-        printf(" Encrypted");
-        fprintf(fp, "   Handshake Protocol: Encrypted Handshake Message\n");
+        else
+        {
+            printf(" Encrypted");
+            fprintf(fp, "   Handshake Protocol: Encrypted Handshake Message\n");
+            break;
+        }
     }
 }
 
