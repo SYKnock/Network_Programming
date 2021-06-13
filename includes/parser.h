@@ -22,16 +22,18 @@
 #include "tcp.h"
 #include "udp.h"
 
+// http request or response
 #define HTTP_REQUEST 100
 #define HTTP_RESPONSE 101
 
+// http의 body 타입
 #define HTTP_TEXT 10
 #define HTTP_IMAGE 11
 #define HTTP_AUDIO 12
 #define HTTP_VIDEO 13
 #define HTTP_APP 14
 
-// for packet reassemble
+// 패킷 재조합을 위한 stream과 관련된 포인터들
 char tcp_reassem[1000000]; 
 int end_tcp_stream = 0;
 int split_flag = 0;
@@ -61,19 +63,18 @@ void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE
 void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp);
 void tls_handshake_extension(uint16_t section_length, int total_length, unsigned char *section, FILE *fp);
 
-void ether_parser(char *buff, ether_head *eth, FILE *fp)
+void ether_parser(char *buff, ether_head *eth, FILE *fp) // ethernet의 헤더를 parsing한다.
 {
     fprintf(fp, "===============================================\n");
     fprintf(fp, "< Ethernet >\n");
     fprintf(fp, "Destination: ");
     for (int i = 0; i < ETH_ALEN; i++)
     {
-        fprintf(fp, "%02hhx", eth->eth_dest_addr.eth_addr[i] & 0xff);
+        fprintf(fp, "%02hhx", eth->eth_dest_addr.eth_addr[i] & 0xff); 
         if (i != ETH_ALEN - 1)
             fprintf(fp, ":");
     }
-    if (strncmp("ffffffffffff", eth->eth_dest_addr.eth_addr, 12))
-        fprintf(fp, "(Broadcast)\n");
+    fprintf(fp, "\n");
 
     fprintf(fp, "Source: ");
     for (int i = 0; i < ETH_ALEN; i++)
@@ -94,9 +95,8 @@ void ether_parser(char *buff, ether_head *eth, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte)
+void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte) // IPv4 헤더를 parsing한다.
 {
-    //printf("IP detect. Captured byte: %d\n", byte);
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Internet Protocl Version 4 protocol(IPv4) >\n");
     fprintf(fp, "Version: %d\n", ip->ip_version);
@@ -124,7 +124,7 @@ void ipv4_parser(char *buff, ip_head *ip, FILE *fp, int byte)
     fprintf(fp, "Destination: %d.%d.%d.%d\n", ip->ip_dst & 0xff, (ip->ip_dst >> 8) & 0xff, (ip->ip_dst >> 16) & 0xff, (ip->ip_dst >> 24) & 0xff);
 }
 
-void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
+void tcp_parser(char *buff, tcp_head *tcp, FILE *fp) // tcp 헤더를 parsing한다.
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Transmission Control Protocol(TCP) >\n");
@@ -151,7 +151,7 @@ void tcp_parser(char *buff, tcp_head *tcp, FILE *fp)
     fprintf(fp, "Urgent Pointer: %d\n", ntohs(tcp->tcp_urg_ptr));
 }
 
-void udp_parser(char *buff, udp_head *udp, FILE *fp)
+void udp_parser(char *buff, udp_head *udp, FILE *fp) // udp 헤더를 parsing한다.
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< User Datagram Protocol(UDP) >\n");
@@ -161,11 +161,11 @@ void udp_parser(char *buff, udp_head *udp, FILE *fp)
     fprintf(fp, "Checksum: 0x%04x\n", ntohs(udp->udp_checksum));
 }
 
-void arp_parser(char *buff, arp_head *arp, FILE *fp)
+void arp_parser(char *buff, arp_head *arp, FILE *fp) // arp 프로토콜을 parsing한다.
 {
     memcpy(arp, buff + ETH_HLEN, ARP_HLEN);
 
-    printf("ARP ");
+    printf("ARP "); // ARP OP을 확인하여 어떤 종류인지 파악한다.
     if (ntohs(arp->arp_op) == ARPOP_REPLY)
         printf("reply");
     else if (ntohs(arp->arp_op) == ARPOP_REQUEST)
@@ -182,7 +182,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
         printf("re request");
     printf(" detected: ");
 
-    if (ntohs(arp->arp_op) == ARPOP_REPLY)
+    if (ntohs(arp->arp_op) == ARPOP_REPLY) // reply의 경우 다음과 같이 처리한다.
     {
         for (int i = 0; i < ARP_IP; i++)
         {
@@ -198,7 +198,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
                 printf(":");
         }
     }
-    else if (ntohs(arp->arp_op) == ARPOP_REQUEST)
+    else if (ntohs(arp->arp_op) == ARPOP_REQUEST) // request의 경우 다음과 같이 처리한다.
     {
         printf("Who has ");
         for (int i = 0; i < ARP_IP; i++)
@@ -214,8 +214,8 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
             if (i != ARP_IP - 1)
                 printf(".");
         }
-    }
-    printf(" Captured byte: %d\n", ARP_HLEN + ETH_HLEN);
+    } 
+    printf(" Captured byte: %d\n", ARP_HLEN + ETH_HLEN); // 캡처한 바이트 크기
 
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Address Resolution Protocol(ARP) >\n");
@@ -251,7 +251,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     else if (ntohs(arp->arp_op) == ARPOP_RREQUEST)
         fprintf(fp, "re request (0x%04x)\n", ntohs(arp->arp_op));
 
-    fprintf(fp, "Sender MAC address: ");
+    fprintf(fp, "Sender MAC address: "); // MAC 주소 출력
     for (int i = 0; i < ARP_MAC; i++)
     {
         fprintf(fp, "%02hhx", arp->arp_src_mac.hw_addr[i] & 0xff);
@@ -260,7 +260,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     }
     fprintf(fp, "\n");
 
-    fprintf(fp, "Sender IP address: ");
+    fprintf(fp, "Sender IP address: "); // IP 주소 출력
     for (int i = 0; i < ARP_IP; i++)
     {
         fprintf(fp, "%d", arp->arp_src_ip.prt_addr[i]);
@@ -269,7 +269,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     }
     fprintf(fp, "\n");
 
-    fprintf(fp, "Target MAC address: ");
+    fprintf(fp, "Target MAC address: "); // MAC 주소 출력
     for (int i = 0; i < ARP_MAC; i++)
     {
         fprintf(fp, "%02hhx", arp->arp_dest_mac.hw_addr[i] & 0xff);
@@ -278,7 +278,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     }
     fprintf(fp, "\n");
 
-    fprintf(fp, "Target IP address: ");
+    fprintf(fp, "Target IP address: "); // IP 주소 출력
     for (int i = 0; i < ARP_IP; i++)
     {
         fprintf(fp, "%d", arp->arp_dest_ip.prt_addr[i]);
@@ -289,7 +289,7 @@ void arp_parser(char *buff, arp_head *arp, FILE *fp)
     dump_mem(buff, ETH_HLEN + ARP_HLEN, fp);
 }
 
-void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
+void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset) // dns parser
 {
     unsigned int opcode = dns->dns_opcode;
     unsigned int rcode = dns->dns_rcode;
@@ -298,7 +298,7 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
     fprintf(fp, "< Domain Name System Protocol(DNS) >\n");
     fprintf(fp, "Transaction ID: 0x%04x\n", ntohs(dns->dns_id));
     fprintf(fp, "QR: %s (%c)\n", (dns->dns_qr ? "DNS response" : "DNS query"), (dns->dns_qr ? '1' : '0'));
-
+    // opcode에 맞춰서 출력
     if (opcode == 0)
         fprintf(fp, "Opcode: Standard query (0)\n");
     else if (opcode == 1)
@@ -323,7 +323,7 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
     unsigned int z = dns->dns_z;
     fprintf(fp, "Z: %u\n", z);
 
-    if (dns->dns_qr)
+    if (dns->dns_qr) // qr값도 값에 맞추어 출력
     {
         if (rcode == 0)
             fprintf(fp, "Reply code: No error (0)\n");
@@ -383,17 +383,17 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
     unsigned char *dns_message_buff = dns_buff + DNS_HLEN;
     unsigned char *dns_buff_end = dns_buff + dns_byte;
 
-    if (qdc)
+    if (qdc) // question sectin이 존재한다면
     {
         fprintf(fp, "[Queries]\n");
-        for (int i = 0; i < qdc; i++)
+        for (int i = 0; i < qdc; i++) // 개수만큼 출력(거의 무조건 1이다)
         {
             fprintf(fp, "#(%d)\n", i + 1);
             dns_message_buff = dns_query(dns_buff, dns_message_buff, dns_buff_end, fp);
         }
     }
 
-    if (anc)
+    if (anc) // answer section이 존재한다면 개수만큼 출력한다
     {
         fprintf(fp, "[Answer]\n");
         for (int i = 0; i < anc; i++)
@@ -403,7 +403,7 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
         }
     }
 
-    if (asc)
+    if (asc) // asc의 경우 anc와 포맷이 동일하다.
     {
         fprintf(fp, "[Autohrity]\n");
         for (int i = 0; i < asc; i++)
@@ -413,17 +413,17 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
         }
     }
 
-    if (arc)
+    if (arc) // arc의 경우 포맷이 다르기에 따로 정의한다.
     {
         fprintf(fp, "[Additional]\n");
         for (int i = 0; i < arc; i++)
         {
-            if (dns_message_buff[0] == 0x00) // OPT type
-            {
+            if (dns_message_buff[0] == 0x00) // 이런 경우는 OPT type이다.
+            { // 관련된 내용을 parsing한다.
                 fprintf(fp, "Name: <Root>\n");
                 dns_message_buff++;
                 int dns_opt_type = (dns_message_buff[0] << 8) + (dns_message_buff[1]);
-                if (dns_opt_type == 0x0029)
+                if (dns_opt_type == 0x0029) // opt_type이 0x0029인 경우에만 처리한다.
                 {
                     fprintf(fp, "Type: OPT (%d)\n", dns_opt_type);
                     dns_message_buff += 2;
@@ -450,7 +450,7 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
                 else
                     fprintf(fp, "Type: ? (%d)", dns_opt_type);
             }
-            else
+            else // opt 타입이 아닌 경우에는 ans와 동일하게 처리한다.
             {
                 fprintf(fp, "#(%d)\n", i + 1);
                 dns_message_buff = dns_answer(dns_buff, dns_message_buff, dns_buff_end, fp);
@@ -458,7 +458,7 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
         }
     }
 
-    printf("DNS %s detected: ", (dns->dns_qr ? "response" : "query"));
+    printf("DNS %s detected: ", (dns->dns_qr ? "response" : "query")); // console에 띄울 내용
     if (opcode == 0)
         printf("Standard query ");
     else if (opcode == 1)
@@ -468,9 +468,10 @@ void dns_parser(char *buff, dns_head *dns, FILE *fp, int dns_byte, int offset)
     free(dns_buff);
 }
 
-unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp)
+unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp) // dns answer를 처리하는 함수이다.
 {
     dns_message_buff = dns_query(dns_buff, dns_message_buff, dns_buff_end, fp);
+    // 관련된 내용을 전부 parsing한다.
 
     unsigned int dns_ttl = (dns_message_buff[0] << 24) + (dns_message_buff[1] << 16) + (dns_message_buff[2] << 8) + (dns_message_buff[3]);
     fprintf(fp, "TTL: %u\n", dns_ttl);
@@ -480,15 +481,15 @@ unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_bu
     dns_message_buff += 2;
     char *dns_tmp = dns_message_buff - 2 - 4 - 4;
     int qtype = (dns_tmp[0] << 8) + dns_tmp[1];
-
-    if (dns_rdl == 4 && qtype == 1)
+    // 특정 조건에 맞는 rdata만 parsing을 진행한다.
+    if (dns_rdl == 4 && qtype == 1) // ipv4
     {
         fprintf(fp, "Rdata: Address, ");
         fprintf(fp, "%d.%d.%d.%d\n", (int)dns_message_buff[0], (int)dns_message_buff[1], (int)dns_message_buff[2], (int)dns_message_buff[3]);
     }
     else if (dns_rdl == 16 && qtype == 28)
     {
-        fprintf(fp, "Rdata: IPv6, ");
+        fprintf(fp, "Rdata: IPv6, "); // ipv6
         for (int i = 0; i < dns_rdl; i += 2)
         {
             fprintf(fp, "%02x%02x", dns_message_buff[i], dns_message_buff[i + 1]);
@@ -497,21 +498,21 @@ unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_bu
         }
         fprintf(fp, "\n");
     }
-    else if (qtype == 5)
+    else if (qtype == 5) // cname
     {
         fprintf(fp, "Rdata: CNAME, ");
         dns_print_name(dns_buff, dns_message_buff, dns_buff_end, fp);
         fprintf(fp, "\n");
     }
 
-    else if (dns_rdl > 3 && qtype == 15)
+    else if (dns_rdl > 3 && qtype == 15) // MX
     {
         int p = (dns_message_buff[0] << 8) + dns_message_buff[1];
         fprintf(fp, "Rdata: MX, pref : %d, ", p);
         dns_print_name(dns_buff, dns_message_buff + 2, dns_buff_end, fp);
         fprintf(fp, "\n");
     }
-    else if (qtype == 16)
+    else if (qtype == 16) // TXT
         fprintf(fp, "Rdata: TXT, '%.*s'\n", dns_rdl - 1, dns_message_buff + 1);
 
     else
@@ -523,7 +524,7 @@ unsigned char *dns_answer(unsigned char *dns_buff, unsigned char *dns_message_bu
 }
 
 unsigned char *dns_query(unsigned char *dns_buff, unsigned char *dns_message_buff, unsigned char *dns_buff_end, FILE *fp)
-{
+{ // dns query를 parsing한다.
     fprintf(fp, "Name: ");
     dns_message_buff = dns_print_name(dns_buff, dns_message_buff, dns_buff_end, fp);
     fprintf(fp, "\n");
@@ -551,15 +552,15 @@ unsigned char *dns_query(unsigned char *dns_buff, unsigned char *dns_message_buf
     return dns_message_buff;
 }
 
-unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsigned char *end, FILE *fp)
-{
+unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsigned char *end, FILE *fp) // name field를 parsing한다.
+{ // 강의 예제 코드를 참고하여 작성했다.
     if (pointer + 2 > end)
     {
         fprintf(stderr, "<Error> : Print name 1\n");
         exit(1);
     }
 
-    if ((*pointer & 0xc0) == 0xc0)
+    if ((*pointer & 0xc0) == 0xc0) // 포인터 부분은 0xc0으로 시작한다
     {
         int k = ((*pointer & 0x3f) << 8) + pointer[1];
         pointer += 2;
@@ -586,12 +587,12 @@ unsigned char *dns_print_name(unsigned char *msg, unsigned char *pointer, unsign
     }
 }
 
-void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte)
+void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp, int r_flag, int c_byte) // http 패킷을 parsing한다.
 {
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< HyperText Transfer Protocol(HTTP) >\n");
 
-    unsigned char *end_point = strstr(http_buff, "\r\n\r\n");
+    unsigned char *end_point = strstr(http_buff, "\r\n\r\n"); // 헤더 부분의 끝을 파악하기 위함이다.
     int http_message_length = end_point - http_buff;
 
     unsigned char *http_head = (char *)malloc(sizeof(char) * http_message_length + 1);
@@ -624,7 +625,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
         fprintf(fp, "\n");
     }
 
-    char *data_length_field = strstr(http_head, "Content-Length: ");
+    char *data_length_field = strstr(http_head, "Content-Length: "); // length field를 찾아 parsing한다
 
     int chunk_flag = 0;
     int http_body_byte = -1;
@@ -638,7 +639,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
     }
     else
     {
-        char *data_chunk_field = strstr(http_head, "Transfer-Encoding: chunked");
+        char *data_chunk_field = strstr(http_head, "Transfer-Encoding: chunked"); // chuncked 됐는지 확인한다.
         if (data_chunk_field != NULL)
             chunk_flag = 1;
 
@@ -650,7 +651,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
         }
     }
 
-    unsigned char *http_body = end_point + 4;
+    unsigned char *http_body = end_point + 4; // body 부분의 포인터 계산
     int real_body = http_length - (http_body - http_buff);
 
     char *content_type_field = strstr(http_head, "Content-Type: ");
@@ -658,13 +659,13 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
     int content_type_flag = 0;
     int content_type;
 
-    if (content_type_field != NULL)
+    if (content_type_field != NULL) // content type을 체크하기 위함
     {
         content_type_field = strchr(content_type_field, ' ');
         content_type_field += 1;
 
         char *content_type_name;
-        content_type_flag = 1;
+        content_type_flag = 1; // text, application, image, audio, video 구현
         if (strncmp(content_type_field, "text", 4) == 0)
             content_type = HTTP_TEXT;
         else if (strncmp(content_type_field, "application", 11) == 0)
@@ -686,7 +687,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
     if (content_type_flag)
     {
         fprintf(fp, "\n");
-        if (content_type == HTTP_TEXT)
+        if (content_type == HTTP_TEXT) // text의 경우 ASCII 문자로 출력한다.
         {
             fprintf(fp, "<Line based text: %s>\n", content_type_field_save + 5);
 
@@ -702,7 +703,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
                 }
             }
         }
-        else if (content_type == HTTP_APP)
+        else if (content_type == HTTP_APP) // APP의 경우 OCSP만 따로 처리하고, 나머지는 이진 데이터를 출력한다.
         {
             if (strncmp(content_type_field_save + 12, "ocsp", 4) == 0)
                 ocsp_parser(http_body, content_type_field_save, real_body, chunk_flag, http_body_byte, fp);
@@ -719,7 +720,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
                 }
             }
         }
-        else if (content_type == HTTP_IMAGE)
+        else if (content_type == HTTP_IMAGE) // Image의 경우 이진 데이터로 출력한다
         {
             fprintf(fp, "<Image data: %s>\n", content_type_field_save + 6);
 
@@ -732,7 +733,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
                 }
             }
         }
-        else if (content_type == HTTP_VIDEO)
+        else if (content_type == HTTP_VIDEO) // Video의 경우 이진 데이터로 출력한다.
         {
             fprintf(fp, "<Video data: %s>\n", content_type_field_save + 6);
 
@@ -745,7 +746,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
                 }
             }
         }
-        else if (content_type == HTTP_AUDIO)
+        else if (content_type == HTTP_AUDIO) // audio의 경우 이진 데이터로 출력한다.
         {
             fprintf(fp, "<Audio data: %s>\n", content_type_field_save + 6);
             if (http_body != NULL)
@@ -757,7 +758,7 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
                 }
             }
         }
-        else if (content_type == -1)
+        else if (content_type == -1) // 지원하지 않는 포맷이 온다면, 데이터를 dump한다.
         {
             fprintf(fp, "<Unknown type: %s>\n", content_type_field_save);
 
@@ -778,14 +779,14 @@ void http_parser(char *buff, unsigned char *http_buff, int http_length, FILE *fp
         free(http_head);
 }
 
-void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, size_t size, int c_flag, int http_body, FILE *fp)
+void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, size_t size, int c_flag, int http_body, FILE *fp) // request만 구현
 {
     fprintf(fp, "Online Certificate Status Protocol\n");
 
-    const unsigned char *r_check = strchr(content_type, '-');
+    const unsigned char *r_check = strchr(content_type, '-'); // content type에서 -부분까지 이동
     r_check++;
 
-    if (strncmp(r_check, "request", 7) == 0)
+    if (strncmp(r_check, "request", 7) == 0) // request의 경우
     {
         if (buff != NULL)
         {
@@ -863,7 +864,7 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
             }
         }
     }
-    else if (strncmp(r_check, "response", 8) == 0)
+    else if (strncmp(r_check, "response", 8) == 0) // response는 미완성이다.
     {
         if (buff != NULL)
         {
@@ -885,7 +886,7 @@ void ocsp_parser(const unsigned char *buff, const unsigned char *content_type, s
     }
 }
 
-void dump_data(const void *mem, size_t len, FILE *fp)
+void dump_data(const void *mem, size_t len, FILE *fp) // 디버깅용 함수
 {
     const char *buffer = mem;
     for (int i = 0; i < len; i++)
@@ -899,15 +900,16 @@ void dump_data(const void *mem, size_t len, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain, int s_flag)
-{
+void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tls_section, FILE *fp, int remain, int s_flag) // tls 프로토콜을 parsing한다.
+{ // app, alert, change cipher spec, handshake 프로토콜을 지원한다.
+    // tls1.1, tls1.2, tls1.3, tls1.0, sslv.3버전만을 지원한다.
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Transport Layer Security(TLS) >\n");
     uint16_t length;
     unsigned char content;
     printf("TLS detected:");
-    if ((split_flag == 1) && (s_flag))
-    {
+    if ((split_flag == 1) && (s_flag)) // s_flag는 split_flag가 올라간 상태에서 쪼개진것과 관련 없는 새로운 패킷이 들어왔을 때를 대비하기 위함이다
+    { // 이 경우에서는 stream에 있던 패킷이 전부 조립된 것이니 parsing을 진행하면 된다.
         content = tcp_reassem[0];
 
         memcpy(&length, tcp_reassem + 3, 2);
@@ -934,9 +936,9 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
     }
     int offset = https_length - remain;
 
-    if (remain != 0)
+    if (remain != 0) // 남아있는 내용이 0이 아니라면
     {
-        while (1)
+        while (1) // tls는 한 패킷에 여러개의 프로토콜이 담겨있는 경우가 많다. 이를 처리한다.
         {
             content = tls_section[0];
 
@@ -976,7 +978,7 @@ void https_parser(int ip_hlen, int tcp_hlen, int https_length, unsigned char *tl
     }
 }
 
-void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
+void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp) // tls handshake
 {
     unsigned char content = tls_section[0];
     uint16_t version;
@@ -1011,16 +1013,16 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
 
     int offset = 0;
 
-    while (1)
+    while (1) // multiple handshake message를 지원한다
     {
         memcpy(length_tmp, tls_section + 1, 3);
         length2 = length_tmp[0] * (16 * 16 * 16 * 16) + length_tmp[1] * (16 * 16) + length_tmp[2];
 
-        if (length2 + 4 <= length - offset)
+        if (length2 + 4 <= length - offset) // length의 값을 계산해서 비정상적일 경우 encypted로 판단, parsing을 진행하지 않는다.
         {
             handshake_type = tls_section[0];
 
-            if (handshake_type == CLIENT_HELLO)
+            if (handshake_type == CLIENT_HELLO) // client hello
             {
                 printf(" Client Hello");
                 fprintf(fp, "   Handshake Protocol: Client Hello\n");
@@ -1042,6 +1044,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 else if (version2 == 0x0300)
                     fprintf(fp, "SSLv3 ");
                 fprintf(fp, " (0x%04x)\n", version2);
+                // tls 1.2, tls 1.3, tls 1.1, tls 1.0, sslv3만 지원한다.
 
                 tls_section += 6;
                 fprintf(fp, "       Random: ");
@@ -1114,12 +1117,12 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 extensions_length = ntohs(extensions_length);
                 fprintf(fp, "       Extensions Length: %d\n", extensions_length);
                 tls_section += 2;
-                if (extensions_length != 0)
+                if (extensions_length != 0) // extension field
                 {
                     tls_handshake_extension(extensions_length, section_length, tls_section, fp);
                 }
             }
-            else if (handshake_type == SERVER_HELLO)
+            else if (handshake_type == SERVER_HELLO) // server hello, client hello와 거의 유사하다.
             {
                 printf(" Sever Hello");
                 fprintf(fp, "   Handshake Protocol: Server Hello\n");
@@ -1220,7 +1223,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 fprintf(fp, "       Handshake Type: Encrypted Extensions (8)\n");
                 fprintf(fp, "       Length: %d\n", length2);
             }
-            else if (handshake_type == CERTIFICATE) 
+            else if (handshake_type == CERTIFICATE) // certificate
             {
                 printf(" Certificate");
                 fprintf(fp, "   Handshake Protocol: Certificate\n");
@@ -1255,7 +1258,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                         break;
                 }
             }
-            else if (handshake_type == CLIENT_KEY_EXHANGE)
+            else if (handshake_type == CLIENT_KEY_EXHANGE) // client key exchange
             {
                 printf(" Client Key Exchange");
                 fprintf(fp, "   Handshake Protocol: Client Key Exchange\n");
@@ -1271,7 +1274,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                     fprintf(fp, "%02x", client_key_tracer[i] & 0xff);
                 fprintf(fp, "\n");
             }
-            else if (handshake_type == SERVER_KEY_EXCHANGE)
+            else if (handshake_type == SERVER_KEY_EXCHANGE) // sever key exchange
             {
                 printf(" Server Key Exchange");
                 fprintf(fp, "   Handshake Protocol: Server Key Exchange\n");
@@ -1336,7 +1339,7 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                     fprintf(fp, "%02x", server_key_tracer[i] & 0xff);
                 fprintf(fp, "\n");
             }
-            else if (handshake_type == CERTIFICATE_REQUEST)
+            else if (handshake_type == CERTIFICATE_REQUEST) // certificate request
             {
                 printf(" Certificate Request");
                 fprintf(fp, "   Handshake Protocol: Certificate Request\n");
@@ -1381,14 +1384,14 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
 
                 
             }
-            else if (handshake_type == SERVER_HELLO_DONE)
+            else if (handshake_type == SERVER_HELLO_DONE) // server hello done
             {
                 printf(" Server Hello Done");
                 fprintf(fp, "   Handshake Protocol: Server Hello Done\n");
                 fprintf(fp, "       Handshake Type: Server Hello Done (14)\n");
                 fprintf(fp, "       Length: %d\n", length2);
             }
-            else if (handshake_type == CERTIFICATE_VERIFY) 
+            else if (handshake_type == CERTIFICATE_VERIFY) // certificate verify
             {
                 printf(" Certificate Verify");
                 fprintf(fp, "   Handshake Protocol: Certificate Verify\n");
@@ -1398,9 +1401,9 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
                 fprintf(fp, "           Handshake Messages: ");
                 for(int i = 0; i < length2; i++)
                     fprintf(fp, "%c", certi_veri_tracer[i]);
-                fpritnf(fp, "\n");
+                fprintf(fp, "\n");
             }
-            else if (handshake_type == FINISHED)
+            else if (handshake_type == FINISHED) // finished
             {
                 printf(" Finished");
                 fprintf(fp, "   Handshake Protocol: Finished\n");
@@ -1428,8 +1431,8 @@ void tls_handshake(int section_length, unsigned char *tls_section, FILE *fp)
     }
 }
 
-void tls_handshake_extension(uint16_t section_length, int total_length, unsigned char *section, FILE *fp)
-{
+void tls_handshake_extension(uint16_t section_length, int total_length, unsigned char *section, FILE *fp) // handshake extension field를 parsing한다.
+{ // 15개의 extension field를 지원한다.
     uint16_t offset = 0;
     uint16_t type;
     uint16_t length;
@@ -1851,7 +1854,7 @@ void tls_handshake_extension(uint16_t section_length, int total_length, unsigned
     }
 }
 
-void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE *fp)
+void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE *fp) // cipher spec
 {
     unsigned char content = tls_section[0];
     uint16_t version;
@@ -1880,7 +1883,7 @@ void tls_change_cipher_spec(int section_length, unsigned char *tls_section, FILE
     fprintf(fp, "   Change Cipher Spec Message\n");
 }
 
-void tls_alert(int section_length, unsigned char *tls_section, FILE *fp)
+void tls_alert(int section_length, unsigned char *tls_section, FILE *fp) // tls alert
 {
     unsigned char content = tls_section[0];
     uint16_t version;
@@ -1910,7 +1913,7 @@ void tls_alert(int section_length, unsigned char *tls_section, FILE *fp)
     fprintf(fp, "   Alert Message: Encrypted Alert\n");
 }
 
-void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
+void tls_record(int section_length, unsigned char *tls_section, FILE *fp) // tls record
 {
     unsigned char content = tls_section[0];
     uint16_t version;
@@ -1945,8 +1948,8 @@ void tls_record(int section_length, unsigned char *tls_section, FILE *fp)
     fprintf(fp, "\n");
 }
 
-void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
-{
+void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset) // dhcp parser
+{ // header를 parsing함
     fprintf(fp, "-----------------------------------------------\n");
     fprintf(fp, "< Dynamic Host Configuration Protocol(DHCP) >\n");
 
@@ -2015,9 +2018,9 @@ void dhcp_parser(char *buff, dhcp_head *dhcp, FILE *fp, int offset)
     printf("Transaction ID: 0x%08x ", ntohl(dhcp->dhcp_xid));
 }
 
-void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option) // this function is very long
+void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char *dhcp_option) // 함수가 굉장히 길다
 {
-    // this fucntion parse the option field of DHCP packet
+    // 1~40, 50~60, 119번 option을 처리할 수 있도록 구현했다.
     unsigned char option;
     unsigned char length;
     char *dhcp_option_point = dhcp_option;
@@ -2952,7 +2955,7 @@ void dhcp_option_parser(char *buff, dhcp_head *dhcp, int offset, FILE *fp, char 
     }
 }
 
-void dump_mem(const void *mem, size_t len, FILE *fp)
+void dump_mem(const void *mem, size_t len, FILE *fp) // 패킷의 메모리를 덤프하는 함수이다
 {
     fprintf(fp, "\n< Memory >\n");
     fprintf(fp, "Captured byte : %ld\n", len);
