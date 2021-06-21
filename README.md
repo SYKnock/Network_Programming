@@ -1,3 +1,3 @@
-Network Packet Parser
+SUPA
 ---
-Including ETHERNET, TCP, UDP, IP, ARP, DNS, HTTP, HTTPS, DHCP
+Network Parser Including ETHERNET, TCP, UDP, IP, ARP, DNS, HTTP, HTTPS, DHCP
